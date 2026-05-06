@@ -1,0 +1,26 @@
+# Cloned upstream repo — has its own .git
+artificial-hivemind/
+
+# Local Claude project memory (personal, not project state)
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Local outputs (uncomment if you want to keep result files local-only)
+# *.json
+# *.log
