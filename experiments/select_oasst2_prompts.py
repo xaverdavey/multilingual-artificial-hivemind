@@ -16,14 +16,14 @@ from pathlib import Path
 import pandas as pd
 
 LANGS = ["en", "es", "ru", "zh", "de", "fr", "ca", "pt-BR", "it", "ja", "eu", "pl", "vi"]
-K = 30
+DEFAULT_K = 30
 MIN_SIBLINGS = 3
 SEED = 42
 
 PARQUET_URL = "https://huggingface.co/api/datasets/OpenAssistant/oasst2/parquet/default/train/0.parquet"
 
 
-def main(out_path: Path, parquet_path: Path | None):
+def main(out_path: Path, parquet_path: Path | None, k: int):
     src = parquet_path or PARQUET_URL
     df = pd.read_parquet(src)
     df = df[(~df["deleted"]) & df["review_result"]]
@@ -36,14 +36,24 @@ def main(out_path: Path, parquet_path: Path | None):
     roots["n_responses"] = roots["message_id"].map(sibling_counts).fillna(0).astype(int)
     roots["human_responses"] = roots["message_id"].map(siblings_by_parent)
 
+    pool_sizes = {
+        lang: int(((roots["lang"] == lang) & (roots["n_responses"] >= MIN_SIBLINGS)).sum())
+        for lang in LANGS
+    }
+    print("Eligible prompts per language (n_responses >= {}):".format(MIN_SIBLINGS))
+    for lang in LANGS:
+        print(f"  {lang}: {pool_sizes[lang]}")
+    print(f"Bottleneck: {min(pool_sizes, key=pool_sizes.get)} ({min(pool_sizes.values())})")
+    print(f"Requested K={k}")
+
     selected = []
     rng = random.Random(SEED)
     for lang in LANGS:
         pool = roots[(roots["lang"] == lang) & (roots["n_responses"] >= MIN_SIBLINGS)]
         ids = sorted(pool["message_id"].tolist())  # deterministic order
-        if len(ids) < K:
-            raise RuntimeError(f"{lang}: only {len(ids)} prompts meet criteria, need {K}")
-        picked = rng.sample(ids, K)
+        if len(ids) < k:
+            raise RuntimeError(f"{lang}: only {len(ids)} prompts meet criteria, need {k}")
+        picked = rng.sample(ids, k)
         selected.append(pool[pool["message_id"].isin(picked)])
 
     out = pd.concat(selected)[
@@ -62,5 +72,7 @@ if __name__ == "__main__":
     ap.add_argument("--out", type=Path, default=Path(__file__).parent / "oasst2_prompts.parquet")
     ap.add_argument("--parquet", type=Path, default=None,
                     help="Local OASST2 parquet path; default downloads from HF")
+    ap.add_argument("--k", type=int, default=DEFAULT_K,
+                    help="Prompts per language (must be <= smallest eligible pool)")
     args = ap.parse_args()
-    main(args.out, args.parquet)
+    main(args.out, args.parquet, args.k)
