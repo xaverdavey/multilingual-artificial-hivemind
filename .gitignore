@@ -21,6 +21,6 @@ venv/
 .vscode/
 .idea/
 
-# Local outputs (uncomment if you want to keep result files local-only)
-# *.json
-# *.log
+# Experiment artifacts (regenerate via experiments/select_*.py and run_generation.py)
+experiments/*.parquet
+results/
