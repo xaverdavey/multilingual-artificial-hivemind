@@ -99,7 +99,8 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True, help="HF model id, e.g. Qwen/Qwen2.5-72B-Instruct-FP8")
     ap.add_argument("--prompts-dir", type=Path, default=Path(__file__).parent)
-    ap.add_argument("--out-dir", type=Path, default=Path(__file__).parent / "raw")
+    ap.add_argument("--out-dir", type=Path,
+                    default=Path(__file__).parent.parent / "results" / "raw")
     ap.add_argument("--gpu-mem-util", type=float, default=0.9,
                     help="Fraction of GPU memory vLLM may use (lower on shared GPUs)")
     args = ap.parse_args()
