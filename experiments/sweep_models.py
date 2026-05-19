@@ -2,14 +2,25 @@
 
 Downloads model N+1 while model N is running, then deletes model N's HF cache
 once its run finishes. One subprocess per model so vLLM/CUDA state is isolated.
+
+Models default to those listed in `experiments/models.yaml` (top-level YAML list
+of HF ids). Override with `--models id1 id2 ...`.
 """
 
 import argparse
 import subprocess
 import sys
+from pathlib import Path
 from threading import Thread
 
+import yaml
 from huggingface_hub import scan_cache_dir, snapshot_download
+
+DEFAULT_MODELS_FILE = Path(__file__).parent / "models.yaml"
+
+
+def load_models(path: Path) -> list[str]:
+    return yaml.safe_load(path.read_text())
 
 
 def prefetch(model: str) -> None:
@@ -43,7 +54,10 @@ def main(models: list[str], passthrough: list[str], keep: bool) -> None:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--models", nargs="+", required=True, help="HF model ids to sweep")
+    ap.add_argument("--models", nargs="+", help="HF model ids (overrides --models-file)")
+    ap.add_argument("--models-file", type=Path, default=DEFAULT_MODELS_FILE,
+                    help="YAML file with a top-level list of HF model ids")
     ap.add_argument("--keep", action="store_true", help="Don't delete model from HF cache after run")
     args, passthrough = ap.parse_known_args()
-    main(args.models, passthrough, args.keep)
+    models = args.models or load_models(args.models_file)
+    main(models, passthrough, args.keep)
