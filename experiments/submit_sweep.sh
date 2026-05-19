@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$(realpath "$0")")/.."
 
-N=$(python -c "import yaml; print(len(yaml.safe_load(open('experiments/models.yaml'))))")
+N=$(grep -c '^- ' experiments/models.yaml)
 echo "submitting array of $N models"
 mkdir -p logs
 sbatch --array=0-$((N - 1)) experiments/sbatch_run.sh
