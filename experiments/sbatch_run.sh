@@ -21,8 +21,8 @@ MIMER_BASE=/mimer/NOBACKUP/groups/naiss2025-22-675/xaver-hivemind
 export HF_HOME=$MIMER_BASE/hf-cache
 export HF_HUB_ENABLE_HF_TRANSFER=1
 
-# TODO: point this at your actual venv
-source "$HOME/Alvis/envs/hivemind/bin/activate"
+module load Python/3.12.3-GCCcore-13.3.0
+source "$MIMER_BASE/envs/hivemind/bin/activate"
 
 MODEL=$(python -c "import yaml; print(yaml.safe_load(open('experiments/models.yaml'))[$SLURM_ARRAY_TASK_ID])")
 echo "[$(date -Is)] task $SLURM_ARRAY_TASK_ID -> $MODEL on $(hostname)"
