@@ -1,0 +1,12 @@
+# analysis (notebook)
+openai
+pandas
+numpy
+matplotlib
+scikit-learn
+pyarrow
+
+# generation (experiments/run_generation.py + sweep_models.py)
+anthropic
+vllm         # GPU cluster only
+huggingface_hub
