@@ -20,6 +20,8 @@ cd "$SLURM_SUBMIT_DIR"
 MIMER_BASE=/mimer/NOBACKUP/groups/naiss2025-22-675/xaver-hivemind
 export HF_HOME=$MIMER_BASE/hf-cache
 export HF_HUB_ENABLE_HF_TRANSFER=1
+# Pick up the cephyr-cached token since HF_HOME no longer points at it.
+export HF_TOKEN=$(cat "$HOME/.cache/huggingface/token")
 
 module load Python/3.12.3-GCCcore-13.3.0
 source "$MIMER_BASE/envs/hivemind/bin/activate"
