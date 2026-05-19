@@ -8,5 +8,8 @@ pyarrow
 
 # generation (experiments/run_generation.py + sweep_models.py)
 anthropic
-vllm         # GPU cluster only
+vllm             # GPU cluster only
 huggingface_hub
+
+# embedding ablations (experiments/run_embeddings.py, non-OpenAI models)
+sentence-transformers  # optional; only needed for HuggingFace embed ablations
