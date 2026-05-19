@@ -117,7 +117,7 @@ def main(embed_model: str, embed_dir: Path, out_dir: Path):
     for mf in meta_files:
         meta = json.loads(mf.read_text())
         gen_model = meta["gen_model"]
-        file_slug = mf.stem
+        file_slug = mf.name.removesuffix(".meta.json")
 
         llm_emb = np.load(embed_dir / f"{file_slug}_llm.npy")
         llm_idx = pd.read_parquet(embed_dir / f"{file_slug}_llm_index.parquet")
