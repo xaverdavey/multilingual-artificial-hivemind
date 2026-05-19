@@ -28,7 +28,7 @@ def detect_embed_backend(embed_model: str) -> str:
     return "sentence-transformers"
 
 
-def _embed_openai(texts: list[str], model: str, batch_size: int = 2048) -> np.ndarray:
+def _embed_openai(texts: list[str], model: str, batch_size: int = 200) -> np.ndarray:
     from openai import OpenAI
     client = OpenAI()
     vecs = []
