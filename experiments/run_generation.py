@@ -36,6 +36,11 @@ def load_prompt_pool(prompts_dir: Path) -> pd.DataFrame:
         if "human_responses" not in df.columns:
             df["human_responses"] = None
         frames.append(df[["prompt_id", "language", "prompt_text", "human_responses", "dataset"]])
+    if not frames:
+        raise FileNotFoundError(
+            f"No prompt parquets found in {prompts_dir}\n"
+            f"Run first: python -m experiments.select_oasst2_prompts"
+        )
     return pd.concat(frames, ignore_index=True)
 
 
