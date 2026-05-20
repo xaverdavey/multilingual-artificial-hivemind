@@ -23,7 +23,7 @@ export HF_HUB_ENABLE_HF_TRANSFER=1
 # Pick up the cephyr-cached token since HF_HOME no longer points at it.
 export HF_TOKEN=$(cat "$HOME/.cache/huggingface/token")
 
-module load Python/3.12.3-GCCcore-13.3.0
+module load Python/3.12.3-GCCcore-13.3.0 CUDA/13.0.0
 source "$MIMER_BASE/envs/hivemind/bin/activate"
 
 MODEL=$(python -c "import yaml; print(yaml.safe_load(open('experiments/models.yaml'))[$SLURM_ARRAY_TASK_ID])")
