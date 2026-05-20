@@ -59,6 +59,9 @@ pip install -r requirements.txt
 # 4. HF auth -- needed for gated models (meta-llama, mistralai, google/gemma).
 # Request access on each model's HF page first, then:
 huggingface-cli login   # writes token to ~/.cache/huggingface/token
+
+# 5. build the prompt parquet (deterministic, seed=42; gitignored so not in the repo)
+python -m experiments.select_oasst2_prompts
 ```
 
 Cluster-specific bits to edit before submitting:
