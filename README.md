@@ -30,7 +30,7 @@ python -m experiments.run_generation --model Qwen/Qwen2.5-7B-Instruct
 python -m experiments.sweep_models --models Qwen/Qwen2.5-7B-Instruct microsoft/Phi-3.5-mini-instruct
 ```
 
-Requires vLLM, pandas, huggingface_hub, sentence-transformers, scikit-learn, matplotlib. (Dependency manifest TODO.)
+Dependencies pinned in [`requirements.txt`](requirements.txt): `pip install -r requirements.txt`.
 
 ## Running the sweep on a SLURM cluster
 
@@ -51,7 +51,7 @@ mkdir -p "$SCRATCH_BASE"/{hf-cache,envs,results/raw} logs
 module load Python/3.12 CUDA/13.0
 python -m venv "$SCRATCH_BASE/envs/hivemind"
 source "$SCRATCH_BASE/envs/hivemind/bin/activate"
-pip install vllm pandas pyyaml huggingface_hub[hf_transfer]
+pip install -r requirements.txt
 
 # 4. HF auth -- needed for gated models (meta-llama, mistralai, google/gemma).
 # Request access on each model's HF page first, then:
@@ -59,7 +59,7 @@ huggingface-cli login   # writes token to ~/.cache/huggingface/token
 ```
 
 Cluster-specific bits to edit before submitting:
-- `experiments/sbatch_run.sh`: `#SBATCH -A` account, `module load` lines, and the scratch path (currently `MIMER_BASE`).
+- `experiments/sbatch_run.sh`: `#SBATCH -A` account, `module load` lines, and `SCRATCH_BASE`.
 - `experiments/models.yaml`: the `gpus` field — typed-GRES clusters use `A40:1` / `A100:2`; others may want a bare count (`1`, `2`) plus a partition selector.
 
 To submit a sweep:

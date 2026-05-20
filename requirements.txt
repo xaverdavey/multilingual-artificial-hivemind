@@ -1,0 +1,11 @@
+# Sweep runtime (cluster + local)
+vllm
+pandas
+pyarrow
+pyyaml
+huggingface_hub[hf_transfer]
+
+# Analysis (notebook + downstream metrics)
+sentence-transformers
+scikit-learn
+matplotlib
