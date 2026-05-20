@@ -1,9 +1,14 @@
 # Sweep runtime (cluster + local)
 vllm
 pandas
+numpy
 pyarrow
 pyyaml
 huggingface_hub[hf_transfer]
+
+# API backends (used by experiments/run_generation.py dispatch)
+openai
+anthropic
 
 # Analysis (notebook + downstream metrics)
 sentence-transformers
