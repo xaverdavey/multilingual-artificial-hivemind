@@ -39,9 +39,12 @@ The submit scripts assume a multi-GPU SLURM cluster with typed GRES (e.g. `--gpu
 One-time setup (login node):
 
 ```sh
-# 1. clone
+# 1. get the repo onto the cluster
 ssh <login-node>
 git clone <this-repo>.git && cd multilingual-artificial-hivemind
+# If the repo is private and the cluster has no GitHub SSH key, rsync from your laptop instead:
+#   rsync -av --exclude={'.git/objects','__pycache__','results/','logs/','.DS_Store'} \
+#       /path/to/repo/ <user>@<cluster>:/path/to/repo/
 
 # 2. scratch dirs on cluster-persistent storage
 export SCRATCH_BASE=/path/to/project/scratch
