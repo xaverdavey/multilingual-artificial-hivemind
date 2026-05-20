@@ -24,3 +24,4 @@ venv/
 # Experiment artifacts (regenerate via experiments/select_*.py and run_generation.py)
 experiments/*.parquet
 results/
+logs/
