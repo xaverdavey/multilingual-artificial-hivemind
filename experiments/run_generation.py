@@ -43,7 +43,9 @@ def prompt_set_sha256(prompts_dir: Path) -> str:
 
 def main(model: str, prompts_dir: Path, out_dir: Path, gpu_mem_util: float):
     prompts = load_prompt_pool(prompts_dir)
-    llm = LLM(model=model, gpu_memory_utilization=gpu_mem_util)
+    # Shard across whatever GPUs SLURM gave us; vLLM defaults to TP=1 otherwise.
+    tp_size = max(1, torch.cuda.device_count())
+    llm = LLM(model=model, gpu_memory_utilization=gpu_mem_util, tensor_parallel_size=tp_size)
 
     messages = [[{"role": "user", "content": t}] for t in prompts["prompt_text"]]
     t0 = time.time()

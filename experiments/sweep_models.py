@@ -3,8 +3,8 @@
 Downloads model N+1 while model N is running, then deletes model N's HF cache
 once its run finishes. One subprocess per model so vLLM/CUDA state is isolated.
 
-Models default to those listed in `experiments/models.yaml` (top-level YAML list
-of HF ids). Override with `--models id1 id2 ...`.
+Models default to the `id` field of each entry in `experiments/models.yaml`.
+Override with `--models id1 id2 ...`.
 """
 
 import argparse
@@ -20,7 +20,7 @@ DEFAULT_MODELS_FILE = Path(__file__).parent / "models.yaml"
 
 
 def load_models(path: Path) -> list[str]:
-    return yaml.safe_load(path.read_text())
+    return [m["id"] for m in yaml.safe_load(path.read_text())]
 
 
 def prefetch(model: str) -> None:

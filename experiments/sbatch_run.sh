@@ -1,6 +1,6 @@
 #!/bin/bash
-# One model per array task. Submit via experiments/submit_sweep.sh, which
-# auto-sizes the array to the number of active entries in models.yaml.
+# One model per job. Submit via experiments/submit_sweep.sh, which sets MODEL
+# and the per-model --gpus-per-node / -t overrides.
 #
 # Run-once setup (not done by this script):
 #   - create venv with vllm, pandas, huggingface_hub, pyyaml, torch (CUDA build)
@@ -8,12 +8,12 @@
 #   - mkdir -p $MIMER_BASE/{hf-cache,results/raw,logs}
 
 #SBATCH -A NAISS2025-22-1727
-#SBATCH -t 02:00:00
-#SBATCH --gpus-per-node=A40:1
 #SBATCH -J hivemind
-#SBATCH -o logs/sweep-%A_%a.out
+#SBATCH -o logs/sweep-%j.out
 
 set -euo pipefail
+
+: "${MODEL:?MODEL env var not set -- submit via experiments/submit_sweep.sh}"
 
 cd "$SLURM_SUBMIT_DIR"
 
@@ -26,8 +26,7 @@ export HF_TOKEN=$(cat "$HOME/.cache/huggingface/token")
 module load Python/3.12.3-GCCcore-13.3.0 CUDA/13.0.0
 source "$MIMER_BASE/envs/hivemind/bin/activate"
 
-MODEL=$(python -c "import yaml; print(yaml.safe_load(open('experiments/models.yaml'))[$SLURM_ARRAY_TASK_ID])")
-echo "[$(date -Is)] task $SLURM_ARRAY_TASK_ID -> $MODEL on $(hostname)"
+echo "[$(date -Is)] $MODEL on $(hostname) with ${SLURM_GPUS_PER_NODE:-?}"
 
 python -m experiments.run_generation \
   --model "$MODEL" \
