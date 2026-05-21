@@ -21,27 +21,27 @@
 #   python -m experiments.run_generation --model gemini-2.5-pro
 
 # === Qwen2.5 (7 sizes; full public Instruct ladder) ===
-- id: Qwen/Qwen2.5-0.5B-Instruct
-  gpus: A40:1
-  time: "01:00:00"
-- id: Qwen/Qwen2.5-1.5B-Instruct
-  gpus: A40:1
-  time: "01:30:00"
-- id: Qwen/Qwen2.5-3B-Instruct
-  gpus: A40:1
-  time: "02:00:00"
-- id: Qwen/Qwen2.5-7B-Instruct
-  gpus: A40:1
-  time: "03:00:00"
-- id: Qwen/Qwen2.5-14B-Instruct
-  gpus: A40:1                    # 28GB weights on 48GB; tight but feasible
-  time: "04:00:00"
-- id: Qwen/Qwen2.5-32B-Instruct
-  gpus: A100fat:2                # 64GB weights, needs >1 GPU
-  time: "06:00:00"
-- id: RedHatAI/Qwen2.5-72B-Instruct-FP8-dynamic
-  gpus: A100fat:2                # ~72GB FP8 weights, fits in 160GB
-  time: "08:00:00"
+# - id: Qwen/Qwen2.5-0.5B-Instruct
+#   gpus: A40:1
+#   time: "01:00:00"
+# - id: Qwen/Qwen2.5-1.5B-Instruct
+#   gpus: A40:1
+#   time: "01:30:00"
+# - id: Qwen/Qwen2.5-3B-Instruct
+#   gpus: A40:1
+#   time: "02:00:00"
+# - id: Qwen/Qwen2.5-7B-Instruct
+#   gpus: A40:1
+#   time: "03:00:00"
+# - id: Qwen/Qwen2.5-14B-Instruct
+#   gpus: A40:1                    # 28GB weights on 48GB; tight but feasible
+#   time: "04:00:00"
+# - id: Qwen/Qwen2.5-32B-Instruct
+#   gpus: A100fat:2                # 64GB weights, needs >1 GPU
+#   time: "06:00:00"
+# - id: RedHatAI/Qwen2.5-72B-Instruct-FP8-dynamic
+#   gpus: A100fat:2                # ~72GB FP8 weights, fits in 160GB
+#   time: "08:00:00"
 
 # === Qwen3 dense (6 sizes; full public ladder) ===
 - id: Qwen/Qwen3-0.6B
@@ -89,25 +89,25 @@
   time: "05:00:00"
 
 # === Llama 3 (4 sizes; 3.2 for 1B/3B, 3.1 for 8B, 3.3 for 70B) ===
-- id: meta-llama/Llama-3.2-1B-Instruct
-  gpus: A40:1
-  time: "01:30:00"
-- id: meta-llama/Llama-3.2-3B-Instruct
-  gpus: A40:1
-  time: "02:00:00"
-- id: meta-llama/Llama-3.1-8B-Instruct
-  gpus: A40:1
-  time: "03:00:00"
-- id: RedHatAI/Llama-3.3-70B-Instruct-FP8-dynamic
-  gpus: A100fat:2                # ~70GB FP8
-  time: "08:00:00"
+# - id: meta-llama/Llama-3.2-1B-Instruct
+#   gpus: A40:1
+#   time: "01:30:00"
+# - id: meta-llama/Llama-3.2-3B-Instruct
+#   gpus: A40:1
+#   time: "02:00:00"
+# - id: meta-llama/Llama-3.1-8B-Instruct
+#   gpus: A40:1
+#   time: "03:00:00"
+# - id: RedHatAI/Llama-3.3-70B-Instruct-FP8-dynamic
+#   gpus: A100fat:2                # ~70GB FP8
+#   time: "08:00:00"
 # Llama-3.1-405B-FP8 is ~406GB and exceeds the 4x80GB=320GB single-node ceiling.
 # Would need INT4 (no official RedHatAI build) or a multi-node Ray cluster -- skipped.
 
 # === Llama 4 (Scout MoE; gated, requires HF access request) ===
-- id: meta-llama/Llama-4-Scout-17B-16E-Instruct  # 109B / 17B active; ~218GB bf16
-  gpus: A100fat:4
-  time: "08:00:00"
+# - id: meta-llama/Llama-4-Scout-17B-16E-Instruct  # 109B / 17B active; ~218GB bf16
+#   gpus: A100fat:4
+#   time: "08:00:00"
 
 # === Mistral (5 sizes; Ministral-8B and Mistral-Large are non-commercial research license) ===
 - id: mistralai/Ministral-8B-Instruct-2410       # 8B, MRL non-commercial
@@ -127,24 +127,24 @@
   time: "10:00:00"
 
 # === Phi (5 variants; covers Phi-3 small/medium ladder + Phi-3.5/4 mini gen comparison) ===
-- id: microsoft/Phi-3-small-8k-instruct
-  gpus: A40:1                    # 7B
-  time: "03:00:00"
-- id: microsoft/Phi-3-medium-4k-instruct
-  gpus: A40:1                    # 14B, tight on 48GB
-  time: "04:00:00"
-- id: microsoft/Phi-3.5-mini-instruct
-  gpus: A40:1                    # 3.8B
-  time: "02:00:00"
-- id: microsoft/Phi-4-mini-instruct
-  gpus: A40:1                    # 3.8B (newer generation)
-  time: "02:00:00"
-- id: microsoft/phi-4
-  gpus: A40:1                    # 14B, tight on 48GB
-  time: "04:00:00"
-- id: microsoft/Phi-3.5-MoE-instruct              # 16x3.8B = 42B total / 6.6B active
-  gpus: A100fat:2                # ~84GB bf16
-  time: "05:00:00"
+# - id: microsoft/Phi-3-small-8k-instruct
+#   gpus: A40:1                    # 7B
+#   time: "03:00:00"
+# - id: microsoft/Phi-3-medium-4k-instruct
+#   gpus: A40:1                    # 14B, tight on 48GB
+#   time: "04:00:00"
+# - id: microsoft/Phi-3.5-mini-instruct
+#   gpus: A40:1                    # 3.8B
+#   time: "02:00:00"
+# - id: microsoft/Phi-4-mini-instruct
+#   gpus: A40:1                    # 3.8B (newer generation)
+#   time: "02:00:00"
+# - id: microsoft/phi-4
+#   gpus: A40:1                    # 14B, tight on 48GB
+#   time: "04:00:00"
+# - id: microsoft/Phi-3.5-MoE-instruct              # 16x3.8B = 42B total / 6.6B active
+#   gpus: A100fat:2                # ~84GB bf16
+#   time: "05:00:00"
 
 # === OLMo 2 (4 sizes; full public ladder) ===
 - id: allenai/OLMo-2-0425-1B-Instruct
