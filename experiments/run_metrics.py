@@ -1,14 +1,27 @@
-"""Compute per-cell diversity metrics from saved embeddings.
+"""Compute intra- and inter-model similarity metrics from saved embeddings.
 
-Reads all (gen_model, embed_model) pairs matching --embed-model from
-results/embeddings/ and writes:
-  results/metrics/per_cell__{embed_model}.parquet
+Config JSON maps display name → file slug (the prefix used in embeddings/):
+    {"Qwen 0.5B": "Qwen_Qwen2.5-0.5B-Instruct", "GPT-4o": "gpt-4o-2024-11", ...}
 
-One row per (model × lang × prompt_id) with intra_sim, human_sim, sim_gap,
-inter_sim, and the embed_model used — so ablation runs never overwrite each other.
+Metrics computed for all models in the config:
+  Intra-model similarity (N values, one per model):
+    Per prompt: mean pairwise cosine similarity across all samples from that model.
+    Reported as mean ± std over all prompts.
+
+  Inter-model similarity (N-choose-2 values, one per model pair):
+    Per prompt: E_{a~A, b~B}[cos(a,b)] — the expected cosine between a random sample
+    from model A and a random sample from model B.  Computed exactly as
+    dot(sum_A, sum_B) / (K_A * K_B), which is the closed-form of the bootstrap mean.
+    Reported as mean ± std over all prompts.
+
+Outputs (written to --out-dir):
+  intra__{embed_slug}.parquet    per (model, language, prompt_id)
+  inter__{embed_slug}.parquet    per (model_a, model_b, language, prompt_id)
+  summary__{embed_slug}.json     aggregate scalars
 """
 
 import argparse
+import itertools
 import json
 import time
 from pathlib import Path
@@ -19,11 +32,14 @@ import pandas as pd
 DEFAULT_EMBED_MODEL = "text-embedding-3-small"
 
 
-def mean_pairwise_cosine(emb: np.ndarray) -> float:
-    """Mean cosine similarity over all i<j pairs for L2-normalized rows.
+# ---------------------------------------------------------------------------
+# Core math
+# ---------------------------------------------------------------------------
 
-    Uses the identity: mean_cos = (||sum||^2 - n) / (n*(n-1))
-    which is O(n*d) instead of O(n^2*d).
+def mean_pairwise_cosine(emb: np.ndarray) -> float:
+    """Mean cosine similarity over all i<j pairs for L2-normalised rows.
+
+    Uses identity: mean_cos = (||sum||^2 - n) / (n*(n-1))  — O(n*d) not O(n^2*d).
     """
     n = len(emb)
     if n < 2:
@@ -32,137 +48,173 @@ def mean_pairwise_cosine(emb: np.ndarray) -> float:
     return float((np.dot(s, s) - n) / (n * (n - 1)))
 
 
-def compute_intra(emb: np.ndarray, idx: pd.DataFrame) -> pd.DataFrame:
-    """Per (model, language, prompt_id) intra_sim."""
-    idx = idx.reset_index(drop=True)
-    rows = []
-    for (model, lang, prompt_id), grp in idx.groupby(["model", "language", "prompt_id"]):
-        rows.append({
-            "model": model, "language": lang, "prompt_id": prompt_id,
-            "intra_sim": mean_pairwise_cosine(emb[grp.index.to_numpy()]),
-            "n_samples": len(grp),
-        })
-    return pd.DataFrame(rows)
+def expected_cross_cosine(emb_a: np.ndarray, emb_b: np.ndarray) -> float:
+    """E_{a~A, b~B}[cos(a,b)] for L2-normalised embeddings.
 
-
-def compute_human(emb: np.ndarray, idx: pd.DataFrame) -> pd.DataFrame:
-    """Per (language, prompt_id) human_sim."""
-    idx = idx.reset_index(drop=True)
-    rows = []
-    for (lang, prompt_id), grp in idx.groupby(["language", "prompt_id"]):
-        rows.append({
-            "language": lang, "prompt_id": prompt_id,
-            "human_sim": mean_pairwise_cosine(emb[grp.index.to_numpy()]),
-            "n_human": len(grp),
-        })
-    return pd.DataFrame(rows)
-
-
-def compute_inter(all_llm: dict[str, tuple[np.ndarray, pd.DataFrame]]) -> pd.DataFrame:
-    """Per (language, prompt_id) inter_sim.
-
-    For each sample_idx slice, compute mean pairwise cosine across all models;
-    report the mean over slices. Vectorized: uses ||sum||^2 identity per slice.
+    Closed form of the bootstrap mean: dot(sum_A, sum_B) / (K_A * K_B).
+    Sampling one embedding uniformly from A and one from B and averaging
+    converges to this value.
     """
-    parts = []
-    for model, (emb, idx) in all_llm.items():
-        df = idx.reset_index(drop=True).copy()
-        df["_row"] = np.arange(len(df))
-        df["_model"] = model
-        parts.append(df)
-    lookup = pd.concat(parts, ignore_index=True)
+    return float(np.dot(emb_a.sum(axis=0), emb_b.sum(axis=0)) / (len(emb_a) * len(emb_b)))
 
-    result = []
-    for (lang, prompt_id), grp in lookup.groupby(["language", "prompt_id"]):
-        try:
-            pivot = grp.pivot(index="sample_idx", columns="_model", values="_row")
-        except ValueError:
-            continue
-        models = pivot.columns.tolist()
-        n_models = len(models)
-        if n_models < 2:
-            result.append({"language": lang, "prompt_id": prompt_id, "inter_sim": float("nan")})
-            continue
 
-        # stack to (n_samples, n_models, D)
-        arrays = [all_llm[m][0][pivot[m].dropna().astype(int).to_numpy()] for m in models]
-        min_len = min(len(a) for a in arrays)
-        batch = np.stack([a[:min_len] for a in arrays], axis=1)  # (n_samples, n_models, D)
+# ---------------------------------------------------------------------------
+# Per-prompt computations
+# ---------------------------------------------------------------------------
 
-        sums = batch.sum(axis=1)                                   # (n_samples, D)
-        gram_sums = np.einsum("nd,nd->n", sums, sums)             # (n_samples,)
-        slice_sims = (gram_sums - n_models) / (n_models * (n_models - 1))
+def _build_lookup(idx: pd.DataFrame) -> dict[tuple, np.ndarray]:
+    """Map (language, prompt_id) -> row-index array for fast slicing."""
+    return {key: grp.index.to_numpy() for key, grp in idx.groupby(["language", "prompt_id"])}
 
-        result.append({
+
+def compute_intra(name: str, emb: np.ndarray, idx: pd.DataFrame) -> pd.DataFrame:
+    idx = idx.reset_index(drop=True)
+    rows = []
+    for (lang, prompt_id), row_ids in _build_lookup(idx).items():
+        rows.append({
+            "model": name,
             "language": lang,
             "prompt_id": prompt_id,
-            "inter_sim": float(slice_sims.mean()),
+            "intra_sim": mean_pairwise_cosine(emb[row_ids]),
+            "n_samples": len(row_ids),
         })
-    return pd.DataFrame(result)
+    return pd.DataFrame(rows)
 
 
-def main(embed_model: str, embed_dir: Path, out_dir: Path):
-    slug = embed_model.replace("/", "_")
-    meta_files = sorted(embed_dir.glob(f"*__{slug}.meta.json"))
-    if not meta_files:
+def compute_inter_pair(
+    name_a: str, emb_a: np.ndarray, idx_a: pd.DataFrame,
+    name_b: str, emb_b: np.ndarray, idx_b: pd.DataFrame,
+) -> pd.DataFrame:
+    idx_a = idx_a.reset_index(drop=True)
+    idx_b = idx_b.reset_index(drop=True)
+    map_a = _build_lookup(idx_a)
+    map_b = _build_lookup(idx_b)
+    rows = []
+    for key in sorted(set(map_a) & set(map_b)):
+        lang, prompt_id = key
+        rows.append({
+            "model_a": name_a,
+            "model_b": name_b,
+            "language": lang,
+            "prompt_id": prompt_id,
+            "inter_sim": expected_cross_cosine(emb_a[map_a[key]], emb_b[map_b[key]]),
+        })
+    return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
+# I/O
+# ---------------------------------------------------------------------------
+
+def load_model(
+    slug: str, embed_model: str, embed_dir: Path
+) -> tuple[np.ndarray, pd.DataFrame]:
+    """Load (and L2-normalise) LLM embeddings + index for one model slug."""
+    embed_slug = embed_model.replace("/", "_")
+    stem = f"{slug}__{embed_slug}"
+    npy_path = embed_dir / f"{stem}_llm.npy"
+    idx_path = embed_dir / f"{stem}_llm_index.parquet"
+    if not npy_path.exists():
         raise FileNotFoundError(
-            f"No embeddings found for embed_model={embed_model} in {embed_dir}\n"
-            f"Run: python -m experiments.run_embeddings --embed-model {embed_model}"
+            f"Embeddings not found: {npy_path}\n"
+            f"Run: python -m experiments.run_embeddings --model {slug!r} --embed-model {embed_model}"
         )
-    print(f"Found {len(meta_files)} model(s) embedded with {embed_model}")
+    emb = np.load(npy_path)
+    idx = pd.read_parquet(idx_path)
+    norms = np.linalg.norm(emb, axis=1, keepdims=True)
+    emb = emb / np.where(norms > 0, norms, 1.0)
+    return emb, idx
 
-    all_llm: dict[str, tuple[np.ndarray, pd.DataFrame]] = {}
-    human_emb, human_idx = None, None
 
-    for mf in meta_files:
-        meta = json.loads(mf.read_text())
-        gen_model = meta["gen_model"]
-        file_slug = mf.name.removesuffix(".meta.json")
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
-        llm_emb = np.load(embed_dir / f"{file_slug}_llm.npy")
-        llm_idx = pd.read_parquet(embed_dir / f"{file_slug}_llm_index.parquet")
-        llm_idx["model"] = gen_model
-        all_llm[gen_model] = (llm_emb, llm_idx)
+def main(config_path: Path, embed_model: str, embed_dir: Path, out_dir: Path):
+    config: dict[str, str] = json.loads(config_path.read_text())
+    if not config:
+        raise ValueError("Config is empty — add at least one model.")
 
-        if human_emb is None:
-            human_emb = np.load(embed_dir / f"{file_slug}_human.npy")
-            human_idx = pd.read_parquet(embed_dir / f"{file_slug}_human_index.parquet")
+    print(f"Models ({len(config)}) with embed_model={embed_model}:")
+    loaded: dict[str, tuple[np.ndarray, pd.DataFrame]] = {}
+    for name, slug in config.items():
+        print(f"  {name!r}  ←  {slug}")
+        loaded[name] = load_model(slug, embed_model, embed_dir)
 
     t0 = time.time()
+    embed_slug = embed_model.replace("/", "_")
+    names = list(loaded.keys())
 
-    print("Computing intra_sim ...")
+    # --- Intra-model ---
+    print("\nComputing intra-model similarities...")
     intra_df = pd.concat(
-        [compute_intra(emb, idx) for emb, idx in all_llm.values()],
+        [compute_intra(name, emb, idx) for name, (emb, idx) in loaded.items()],
         ignore_index=True,
     )
 
-    print("Computing human_sim ...")
-    human_df = compute_human(human_emb, human_idx)
+    # --- Inter-model (pairwise) ---
+    pairs = list(itertools.combinations(names, 2))
+    print(f"Computing inter-model similarities ({len(pairs)} pair(s))...")
+    if pairs:
+        inter_df = pd.concat(
+            [
+                compute_inter_pair(
+                    a, *loaded[a],
+                    b, *loaded[b],
+                )
+                for a, b in pairs
+            ],
+            ignore_index=True,
+        )
+    else:
+        inter_df = pd.DataFrame(columns=["model_a", "model_b", "language", "prompt_id", "inter_sim"])
 
-    print("Computing inter_sim ...")
-    inter_df = compute_inter(all_llm)
-
-    result = (
-        intra_df
-        .merge(human_df, on=["language", "prompt_id"], how="left")
-        .merge(inter_df, on=["language", "prompt_id"], how="left")
-    )
-    result["sim_gap"] = result["intra_sim"] - result["human_sim"]
-    result["embed_model"] = embed_model
-
+    # --- Save parquets ---
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"per_cell__{slug}.parquet"
-    result.to_parquet(out_path, index=False)
+    intra_path = out_dir / f"intra__{embed_slug}.parquet"
+    inter_path = out_dir / f"inter__{embed_slug}.parquet"
+    intra_df.to_parquet(intra_path, index=False)
+    inter_df.to_parquet(inter_path, index=False)
+
+    # --- Aggregate summary ---
+    summary: dict = {"embed_model": embed_model, "intra_sim": {}, "inter_sim": {}}
+
+    print("\n=== Intra-model similarity ===")
+    print(f"  (mean pairwise cosine within each model's samples, averaged over {intra_df['prompt_id'].nunique()} prompts)")
+    for name in names:
+        vals = intra_df.loc[intra_df["model"] == name, "intra_sim"].dropna()
+        mean, std = float(vals.mean()), float(vals.std())
+        summary["intra_sim"][name] = {"mean": round(mean, 6), "std": round(std, 6)}
+        print(f"  {name:<40s}  {mean:.4f} ± {std:.4f}")
+
+    if pairs:
+        print("\n=== Inter-model similarity (pairwise) ===")
+        print("  (expected cross-model cosine, averaged over prompts)")
+        for a, b in pairs:
+            mask = (inter_df["model_a"] == a) & (inter_df["model_b"] == b)
+            vals = inter_df.loc[mask, "inter_sim"].dropna()
+            mean, std = float(vals.mean()), float(vals.std())
+            key = f"{a}||{b}"
+            summary["inter_sim"][key] = {"mean": round(mean, 6), "std": round(std, 6)}
+            print(f"  {a} vs {b}:  {mean:.4f} ± {std:.4f}")
+
+    summary_path = out_dir / f"summary__{embed_slug}.json"
+    summary_path.write_text(json.dumps(summary, indent=2))
 
     elapsed = round(time.time() - t0, 1)
-    print(f"wrote {len(result)} rows to {out_path}  ({elapsed}s)")
-    print(result[["model", "language", "intra_sim", "human_sim", "sim_gap", "inter_sim"]].describe())
+    print(f"\nWrote:")
+    print(f"  {intra_path}  ({len(intra_df)} rows)")
+    print(f"  {inter_path}  ({len(inter_df)} rows)")
+    print(f"  {summary_path}")
+    print(f"Elapsed: {elapsed}s")
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--config", type=Path, required=True,
+                    help='JSON file mapping display name → file slug, e.g. {"Qwen 0.5B": "Qwen_Qwen2.5-0.5B-Instruct"}')
     ap.add_argument("--embed-model", default=DEFAULT_EMBED_MODEL)
     ap.add_argument("--embed-dir", type=Path, default=Path("results/embeddings"))
     ap.add_argument("--out-dir", type=Path, default=Path("results/metrics"))
     args = ap.parse_args()
-    main(args.embed_model, args.embed_dir, args.out_dir)
+    main(args.config, args.embed_model, args.embed_dir, args.out_dir)
