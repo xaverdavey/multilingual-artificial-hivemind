@@ -1,7 +1,8 @@
 """Run one model over the full prompt set; save raw generations to parquet.
 
 Designed for one SLURM job per model. Backend is auto-detected from the model
-name: claude-* → Anthropic API, gpt-*/o*-* → OpenAI API, everything else → vLLM.
+name: claude-* → Anthropic API, gpt-*/o*-* → OpenAI API, gemini-* → Google
+Gemini API, everything else → vLLM.
 """
 
 import argparse
@@ -25,6 +26,8 @@ def detect_backend(model: str) -> str:
         return "anthropic"
     if model.startswith(("gpt-", "o1-", "o3-", "o4-")):
         return "openai"
+    if model.startswith("gemini-"):
+        return "gemini"
     return "vllm"
 
 
@@ -151,6 +154,38 @@ def run_anthropic(model: str, prompts: pd.DataFrame) -> tuple[list[dict], dict]:
     return rows, {"elapsed_seconds": round(time.time() - t0, 1)}
 
 
+def run_gemini(model: str, prompts: pd.DataFrame) -> tuple[list[dict], dict]:
+    from google import genai
+    from google.genai import types
+    client = genai.Client()
+
+    config = types.GenerateContentConfig(
+        temperature=TEMPERATURE,
+        top_p=TOP_P,
+        max_output_tokens=MAX_TOKENS,
+    )
+
+    def _sample(prompt_row, idx: int) -> dict:
+        resp = client.models.generate_content(
+            model=model, contents=prompt_row.prompt_text, config=config,
+        )
+        text = resp.text or ""
+        n_tok = resp.usage_metadata.candidates_token_count if resp.usage_metadata else None
+        finish = resp.candidates[0].finish_reason.name if resp.candidates else None
+        return _row(model, prompt_row, idx, text, n_tok, finish)
+
+    rows = []
+    t0 = time.time()
+    for prompt_row in prompts.itertuples(index=False):
+        with ThreadPoolExecutor(max_workers=N_SAMPLES) as pool:
+            futures = [pool.submit(_sample, prompt_row, i) for i in range(N_SAMPLES)]
+            prompt_rows = [f.result() for f in as_completed(futures)]
+        prompt_rows.sort(key=lambda r: r["sample_idx"])
+        rows.extend(prompt_rows)
+
+    return rows, {"elapsed_seconds": round(time.time() - t0, 1)}
+
+
 def main(model: str, prompts_dir: Path, out_dir: Path, gpu_mem_util: float):
     prompts = load_prompt_pool(prompts_dir)
     backend = detect_backend(model)
@@ -159,6 +194,8 @@ def main(model: str, prompts_dir: Path, out_dir: Path, gpu_mem_util: float):
         rows, meta_extra = run_vllm(model, prompts, gpu_mem_util)
     elif backend == "openai":
         rows, meta_extra = run_openai(model, prompts)
+    elif backend == "gemini":
+        rows, meta_extra = run_gemini(model, prompts)
     else:
         rows, meta_extra = run_anthropic(model, prompts)
 
