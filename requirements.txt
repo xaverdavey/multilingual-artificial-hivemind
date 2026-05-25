@@ -9,6 +9,7 @@ huggingface_hub[hf_transfer]
 # API backends (used by experiments/run_generation.py dispatch)
 openai
 anthropic
+google-genai
 
 # Analysis (notebook + downstream metrics)
 sentence-transformers
