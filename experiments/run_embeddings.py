@@ -28,11 +28,13 @@ def detect_embed_backend(embed_model: str) -> str:
     return "sentence-transformers"
 
 
-def _embed_openai(texts: list[str], model: str, batch_size: int = 200) -> np.ndarray:
+def _embed_openai(texts: list[str], model: str, batch_size: int = 100) -> np.ndarray:
     from openai import OpenAI
+    from tqdm import tqdm
     client = OpenAI()
     vecs = []
-    for i in range(0, len(texts), batch_size):
+    batches = range(0, len(texts), batch_size)
+    for i in tqdm(batches, desc="batches", unit="batch"):
         resp = client.embeddings.create(model=model, input=texts[i : i + batch_size])
         vecs.extend(d.embedding for d in resp.data)
     arr = np.array(vecs, dtype=np.float32)
@@ -54,12 +56,19 @@ def embed(texts: list[str], embed_model: str) -> np.ndarray:
     return _embed_st(texts, embed_model)
 
 
-def run(gen_parquet: Path, embed_model: str, out_dir: Path):
-    df = (pd.read_parquet(gen_parquet)
-          .sort_values(["prompt_id", "sample_idx"])
-          .reset_index(drop=True))
-    gen_model = df["model"].iloc[0]
+def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path):
+    """Embed and save outputs for a single generation model."""
     slug = f"{gen_model.replace('/', '_')}__{embed_model.replace('/', '_')}"
+
+    if (out_dir / f"{slug}_llm.npy").exists():
+        print(f"[{gen_model}] embeddings already exist, skipping")
+        return
+
+    mask = df["response_text"].fillna("").str.strip() != ""
+    n_dropped = (~mask).sum()
+    if n_dropped:
+        print(f"[{gen_model}] dropping {n_dropped} empty response(s)")
+        df = df[mask].reset_index(drop=True)
 
     print(f"[{gen_model}] embedding {len(df)} LLM responses with {embed_model} ...")
     t0 = time.time()
@@ -100,6 +109,20 @@ def run(gen_parquet: Path, embed_model: str, out_dir: Path):
     print(f"[{gen_model}] saved to {out_dir}/{slug}_{{llm,human}}.npy  ({elapsed}s)")
 
 
+def run(gen_parquet: Path, embed_model: str, out_dir: Path, model_filter: str | None = None):
+    df = (pd.read_parquet(gen_parquet)
+          .sort_values(["prompt_id", "sample_idx"])
+          .reset_index(drop=True))
+
+    if model_filter:
+        df = df[df["model"] == model_filter]
+        if df.empty:
+            raise ValueError(f"Model {model_filter!r} not found in {gen_parquet}")
+
+    for gen_model, model_df in df.groupby("model"):
+        _run_one(gen_model, model_df.reset_index(drop=True), embed_model, out_dir)
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", help="HF model id to embed; omit to process all parquets in --raw-dir")
@@ -109,10 +132,6 @@ if __name__ == "__main__":
                     help="Embedding model (OpenAI or HuggingFace sentence-transformers)")
     args = ap.parse_args()
 
-    if args.model:
-        parquets = [args.raw_dir / f"{args.model.replace('/', '_')}.parquet"]
-    else:
-        parquets = sorted(args.raw_dir.glob("*.parquet"))
-
+    parquets = sorted(args.raw_dir.glob("*.parquet"))
     for p in parquets:
-        run(p, args.embed_model, args.out_dir)
+        run(p, args.embed_model, args.out_dir, model_filter=args.model or None)
