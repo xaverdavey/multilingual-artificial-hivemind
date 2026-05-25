@@ -14,3 +14,4 @@ anthropic
 sentence-transformers
 scikit-learn
 matplotlib
+plotly
