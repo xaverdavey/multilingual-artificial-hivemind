@@ -1,9 +1,18 @@
-# One entry per model in the GPU sweep. Comment out to skip.
+# Canonical model registry. Consumed by:
+#   experiments/sweep_models.py     - SLURM sweep (entries with gpus/time)
+#   experiments/submit_sweep.sh     - SLURM submission (entries with gpus/time)
+#   experiments/run_metrics.py      - Analysis & F-tests (all entries with embeddings)
+#
+# Comment an entry out to skip it everywhere.
 #
 # Fields:
-#   id    HF repo id
-#   gpus  SLURM --gpus-per-node value, e.g. A40:1 or A100fat:2
-#   time  SLURM walltime (HH:MM:SS)
+#   id            HF repo id (OSS) or bare model name (API). Required.
+#   display_name  Human-readable label used in plot legends and metric outputs.
+#   family        Group label used for F-tests / family-level aggregation.
+#   gpus          SLURM --gpus-per-node value (OSS only). Presence => included in sweep.
+#   time          SLURM walltime HH:MM:SS (OSS only).
+#
+# On-disk slug for embeddings is derived as id.replace("/", "_").
 #
 # Single-node ceilings (typed-GRES cluster): A40 4x48GB=192GB, A100 4x40GB=160GB,
 # A100fat 4x80GB=320GB. Sizing rule of thumb: total VRAM >= 1.5 * params * bytes_per_param
@@ -11,94 +20,136 @@
 # at n=50, max_tokens=2048. Tighten gpu_memory_utilization in run_generation if a
 # specific model still OOMs. Times are best guesses -- bump after a first run.
 #
-# API models do NOT go through this file. Run them directly (no SLURM):
-#   python -m experiments.run_generation --model claude-haiku-4-5
-#   python -m experiments.run_generation --model claude-sonnet-4-6
+# API entries have no gpus/time and skip SLURM. Run them directly:
 #   python -m experiments.run_generation --model claude-opus-4-7
-#   python -m experiments.run_generation --model gpt-5-nano
-#   python -m experiments.run_generation --model gpt-5-mini
-#   python -m experiments.run_generation --model gpt-5
-#   python -m experiments.run_generation --model gemini-2.5-pro
 
 # === Qwen2.5 (7 sizes; full public Instruct ladder) ===
 # - id: Qwen/Qwen2.5-0.5B-Instruct
+#   display_name: "Qwen2.5 0.5B"
+#   family: Qwen2.5
 #   gpus: A40:1
 #   time: "01:00:00"
 # - id: Qwen/Qwen2.5-1.5B-Instruct
+#   display_name: "Qwen2.5 1.5B"
+#   family: Qwen2.5
 #   gpus: A40:1
 #   time: "01:30:00"
 # - id: Qwen/Qwen2.5-3B-Instruct
+#   display_name: "Qwen2.5 3B"
+#   family: Qwen2.5
 #   gpus: A40:1
 #   time: "02:00:00"
 # - id: Qwen/Qwen2.5-7B-Instruct
+#   display_name: "Qwen2.5 7B"
+#   family: Qwen2.5
 #   gpus: A40:1
 #   time: "03:00:00"
 # - id: Qwen/Qwen2.5-14B-Instruct
+#   display_name: "Qwen2.5 14B"
+#   family: Qwen2.5
 #   gpus: A40:1                    # 28GB weights on 48GB; tight but feasible
 #   time: "04:00:00"
 # - id: Qwen/Qwen2.5-32B-Instruct
+#   display_name: "Qwen2.5 32B"
+#   family: Qwen2.5
 #   gpus: A100fat:2                # 64GB weights, needs >1 GPU
 #   time: "06:00:00"
 # - id: RedHatAI/Qwen2.5-72B-Instruct-FP8-dynamic
+#   display_name: "Qwen2.5 72B"
+#   family: Qwen2.5
 #   gpus: A100fat:2                # ~72GB FP8 weights, fits in 160GB
 #   time: "08:00:00"
 
 # === Qwen3 dense (6 sizes; full public ladder) ===
 - id: Qwen/Qwen3-0.6B
+  display_name: "Qwen3 0.6B"
+  family: Qwen3
   gpus: A40:1
   time: "01:00:00"
 - id: Qwen/Qwen3-1.7B
+  display_name: "Qwen3 1.7B"
+  family: Qwen3
   gpus: A40:1
   time: "01:30:00"
 - id: Qwen/Qwen3-4B-Instruct-2507        # only size with a 2507 dense refresh (256K ctx)
+  display_name: "Qwen3 4B"
+  family: Qwen3
   gpus: A40:1
   time: "02:00:00"
 - id: Qwen/Qwen3-8B
+  display_name: "Qwen3 8B"
+  family: Qwen3
   gpus: A40:1
   time: "03:00:00"
 - id: Qwen/Qwen3-14B
+  display_name: "Qwen3 14B"
+  family: Qwen3
   gpus: A40:1
   time: "04:00:00"
 - id: Qwen/Qwen3-32B
+  display_name: "Qwen3 32B"
+  family: Qwen3
   gpus: A100fat:2
   time: "06:00:00"
 
 # === Qwen3 MoE (2 sizes; total-vs-active param plots need both axes) ===
 - id: Qwen/Qwen3-30B-A3B-Instruct-2507    # 30B total / 3B active; ~60GB bf16
+  display_name: "Qwen3 30B"
+  family: Qwen3
   gpus: A100fat:1
   time: "04:00:00"
 - id: Qwen/Qwen3-235B-A22B-Instruct-2507-FP8  # 235B/22B active; ~235GB FP8 fits 4x80GB
+  display_name: "Qwen3 235B"
+  family: Qwen3
   gpus: A100fat:4
   time: "10:00:00"
 
 # === Gemma 3 (5 sizes; multilingual-trained, 140+ languages) ===
 - id: google/gemma-3-270m-it
+  display_name: "Gemma-3 270M"
+  family: Gemma-3
   gpus: A40:1
   time: "00:45:00"
 - id: google/gemma-3-1b-it
+  display_name: "Gemma-3 1B"
+  family: Gemma-3
   gpus: A40:1
   time: "01:30:00"
 - id: google/gemma-3-4b-it
+  display_name: "Gemma-3 4B"
+  family: Gemma-3
   gpus: A40:1
   time: "02:00:00"
 - id: google/gemma-3-12b-it
+  display_name: "Gemma-3 12B"
+  family: Gemma-3
   gpus: A40:1                    # 24GB weights, fits
   time: "04:00:00"
 - id: google/gemma-3-27b-it
+  display_name: "Gemma-3 27B"
+  family: Gemma-3
   gpus: A100fat:1                # 54GB weights
   time: "05:00:00"
 
 # === Llama 3 (4 sizes; 3.2 for 1B/3B, 3.1 for 8B, 3.3 for 70B) ===
 # - id: meta-llama/Llama-3.2-1B-Instruct
+#   display_name: "Llama-3.2 1B"
+#   family: Llama
 #   gpus: A40:1
 #   time: "01:30:00"
 # - id: meta-llama/Llama-3.2-3B-Instruct
+#   display_name: "Llama-3.2 3B"
+#   family: Llama
 #   gpus: A40:1
 #   time: "02:00:00"
 # - id: meta-llama/Llama-3.1-8B-Instruct
+#   display_name: "Llama-3.1 8B"
+#   family: Llama
 #   gpus: A40:1
 #   time: "03:00:00"
 # - id: RedHatAI/Llama-3.3-70B-Instruct-FP8-dynamic
+#   display_name: "Llama-3.3 70B"
+#   family: Llama
 #   gpus: A100fat:2                # ~70GB FP8
 #   time: "08:00:00"
 # Llama-3.1-405B-FP8 is ~406GB and exceeds the 4x80GB=320GB single-node ceiling.
@@ -106,64 +157,123 @@
 
 # === Llama 4 (Scout MoE; gated, requires HF access request) ===
 # - id: meta-llama/Llama-4-Scout-17B-16E-Instruct  # 109B / 17B active; ~218GB bf16
+#   display_name: "Llama-4 Scout 17B"
+#   family: Llama
 #   gpus: A100fat:4
 #   time: "08:00:00"
 
 # === Mistral (5 sizes; Ministral-8B and Mistral-Large are non-commercial research license) ===
 - id: mistralai/Ministral-8B-Instruct-2410       # 8B, MRL non-commercial
+  display_name: "Ministral 8B"
+  family: Mistral
   gpus: A40:1
   time: "03:00:00"
 - id: mistralai/Mistral-7B-Instruct-v0.3
+  display_name: "Mistral 7B v0.3"
+  family: Mistral
   gpus: A40:1
   time: "03:00:00"
 - id: mistralai/Mistral-Nemo-Instruct-2407
+  display_name: "Mistral Nemo 12B"
+  family: Mistral
   gpus: A40:1                    # 12B, ~24GB
   time: "04:00:00"
 - id: mistralai/Mistral-Small-3.2-24B-Instruct-2506
+  display_name: "Mistral Small 3.2 24B"
+  family: Mistral
   gpus: A100fat:1                # 48GB weights -> step up to 80GB
   time: "05:00:00"
-- id: mistralai/Mistral-Large-Instruct-2411      # 123B, MRL non-commercial, gated
-  gpus: A100fat:4                # ~246GB bf16
-  time: "10:00:00"
+# - id: mistralai/Mistral-Large-Instruct-2411      # 123B, MRL non-commercial, gated
+#   display_name: "Mistral Large 123B"
+#   family: Mistral
+#   gpus: A100fat:4                # ~246GB bf16
+#   time: "10:00:00"
 
 # === Phi (5 variants; covers Phi-3 small/medium ladder + Phi-3.5/4 mini gen comparison) ===
 # - id: microsoft/Phi-3-small-8k-instruct
+#   display_name: "Phi-3 small"
+#   family: Phi
 #   gpus: A40:1                    # 7B
 #   time: "03:00:00"
 # - id: microsoft/Phi-3-medium-4k-instruct
+#   display_name: "Phi-3 medium"
+#   family: Phi
 #   gpus: A40:1                    # 14B, tight on 48GB
 #   time: "04:00:00"
 # - id: microsoft/Phi-3.5-mini-instruct
+#   display_name: "Phi-3.5 mini"
+#   family: Phi
 #   gpus: A40:1                    # 3.8B
 #   time: "02:00:00"
 # - id: microsoft/Phi-4-mini-instruct
+#   display_name: "Phi-4 mini"
+#   family: Phi
 #   gpus: A40:1                    # 3.8B (newer generation)
 #   time: "02:00:00"
 # - id: microsoft/phi-4
+#   display_name: "Phi-4"
+#   family: Phi
 #   gpus: A40:1                    # 14B, tight on 48GB
 #   time: "04:00:00"
 # - id: microsoft/Phi-3.5-MoE-instruct              # 16x3.8B = 42B total / 6.6B active
+#   display_name: "Phi-3.5 MoE"
+#   family: Phi
 #   gpus: A100fat:2                # ~84GB bf16
 #   time: "05:00:00"
 
 # === OLMo 2 (4 sizes; full public ladder) ===
 - id: allenai/OLMo-2-0425-1B-Instruct
+  display_name: "OLMo-2 1B"
+  family: OLMo-2
   gpus: A40:1
   time: "01:30:00"
 - id: allenai/OLMo-2-1124-7B-Instruct
+  display_name: "OLMo-2 7B"
+  family: OLMo-2
   gpus: A40:1
   time: "03:00:00"
 - id: allenai/OLMo-2-1124-13B-Instruct
+  display_name: "OLMo-2 13B"
+  family: OLMo-2
   gpus: A40:1
   time: "04:00:00"
 - id: allenai/OLMo-2-0325-32B-Instruct
+  display_name: "OLMo-2 32B"
+  family: OLMo-2
   gpus: A100fat:2
   time: "06:00:00"
 
 # === Cohere Aya Expanse (2 sizes; multilingual-trained, 23 languages; CC-BY-NC research license) ===
 - id: CohereLabs/aya-expanse-8b
+  display_name: "Aya Expanse 8B"
+  family: Aya Expanse
   gpus: A40:1
   time: "03:00:00"
 - id: CohereLabs/aya-expanse-32b
+  display_name: "Aya Expanse 32B"
+  family: Aya Expanse
   gpus: A100fat:2                # 64GB bf16
   time: "06:00:00"
+
+# === API models (no SLURM; run via experiments/run_generation directly) ===
+# - id: claude-haiku-4-5
+#   display_name: "Claude Haiku 4.5"
+#   family: Claude
+# - id: claude-sonnet-4-6
+#   display_name: "Claude Sonnet 4.6"
+#   family: Claude
+# - id: claude-opus-4-7
+#   display_name: "Claude Opus 4.7"
+#   family: Claude
+# - id: gpt-5-nano
+#   display_name: "GPT-5 nano"
+#   family: GPT-5
+# - id: gpt-5-mini
+#   display_name: "GPT-5 mini"
+#   family: GPT-5
+# - id: gpt-5
+#   display_name: "GPT-5"
+#   family: GPT-5
+# - id: gemini-2.5-pro
+#   display_name: "Gemini 2.5 Pro"
+#   family: Gemini

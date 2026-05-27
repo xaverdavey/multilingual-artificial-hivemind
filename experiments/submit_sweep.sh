@@ -7,10 +7,13 @@ cd "$(dirname "$(realpath "$0")")/.."
 
 mkdir -p logs
 
-# Emit one TSV line per active model: id<TAB>gpus<TAB>time
+# Emit one TSV line per active cluster-bound model: id<TAB>gpus<TAB>time.
+# Entries without gpus/time are API models and are skipped.
 mapfile -t entries < <(python -c "
 import yaml
 for m in yaml.safe_load(open('experiments/models.yaml')):
+    if not m.get('gpus') or not m.get('time'):
+        continue
     print(f\"{m['id']}\t{m['gpus']}\t{m['time']}\")
 ")
 
