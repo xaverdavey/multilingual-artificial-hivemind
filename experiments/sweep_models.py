@@ -20,7 +20,11 @@ DEFAULT_MODELS_FILE = Path(__file__).parent / "models.yaml"
 
 
 def load_models(path: Path) -> list[str]:
-    return [m["id"] for m in yaml.safe_load(path.read_text())]
+    """Return HF ids of all cluster-bound entries (entries with a `gpus` field).
+
+    API entries lack `gpus`/`time` and are skipped — they don't go through SLURM.
+    """
+    return [m["id"] for m in yaml.safe_load(path.read_text()) if m.get("gpus")]
 
 
 def prefetch(model: str) -> None:

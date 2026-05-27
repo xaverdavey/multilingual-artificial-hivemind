@@ -14,5 +14,6 @@ google-genai
 # Analysis (notebook + downstream metrics)
 sentence-transformers
 scikit-learn
+scipy
 matplotlib
 plotly
