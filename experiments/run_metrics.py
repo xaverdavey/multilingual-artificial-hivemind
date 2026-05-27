@@ -389,6 +389,12 @@ def compute_cross_model_f_tests(
     for pair, sub in inter.groupby("family_pair"):
         row("family_pair", pair, sub["inter_sim"].dropna().to_numpy(), human_all)
 
+    # family_pair x language — drives the cross-model heatmap.
+    for (pair, lang), sub in inter.groupby(["family_pair", "language"]):
+        row("family_pair_language", pair,
+            sub["inter_sim"].dropna().to_numpy(),
+            human_by_lang.get(lang, np.array([])), language=lang)
+
     return pd.DataFrame([r for r in rows if r is not None])
 
 
@@ -696,65 +702,6 @@ def plot_f_test_bars(
     print(f"  {out_path}")
 
 
-def plot_f_test_volcano(
-    f_tests_df: pd.DataFrame,
-    embed_slug: str,
-    plot_dir: Path,
-) -> None:
-    """Volcano scatter: effect size (mean_a − mean_b) vs −log10(p_means).
-
-    One point per F-test row; colored by level. Dashed lines mark p=0.05 and
-    p=0.01. Top 10 points by |effect| × −log10(p) are labelled.
-    """
-    import matplotlib.pyplot as plt
-
-    df = f_tests_df.copy()
-    df = df[df["p_means"].notna() & (df["p_means"] > 0)]
-    if df.empty:
-        return
-    df["effect"] = df["mean_a"] - df["mean_b"]
-    df["nlp"] = -np.log10(df["p_means"])
-
-    level_colors = {
-        "general": "black",
-        "family": "tab:blue",
-        "model": "tab:orange",
-        "language": "tab:green",
-        "family_language": "tab:purple",
-        "model_language": "tab:red",
-    }
-
-    fig, ax = plt.subplots(figsize=(11, 7))
-    for level, sub in df.groupby("level"):
-        ax.scatter(sub["effect"], sub["nlp"],
-                   color=level_colors.get(level, "gray"),
-                   alpha=0.7, s=40, label=level, edgecolors="white", linewidths=0.5)
-    ax.axhline(-np.log10(0.05), color="gray", linestyle="--", linewidth=0.8, alpha=0.6)
-    ax.axhline(-np.log10(0.01), color="gray", linestyle=":",  linewidth=0.8, alpha=0.6)
-    ax.axvline(0, color="black", linewidth=0.5, alpha=0.4)
-    ax.text(ax.get_xlim()[1], -np.log10(0.05), " p=0.05", va="center", fontsize=8, color="gray")
-    ax.text(ax.get_xlim()[1], -np.log10(0.01), " p=0.01", va="center", fontsize=8, color="gray")
-
-    df["score"] = df["effect"].abs() * df["nlp"]
-    for _, r in df.nlargest(10, "score").iterrows():
-        label = r["group"] if pd.isna(r["language"]) else f"{r['group']} ({r['language']})"
-        ax.annotate(label, (r["effect"], r["nlp"]), fontsize=7,
-                    xytext=(3, 2), textcoords="offset points")
-
-    ax.set_xlabel("effect size  =  mean_intra_sim(LLM) − mean_intra_sim(Human)\n"
-                  "(positive ⇒ LLM less diverse than humans)")
-    ax.set_ylabel("−log₁₀(p)  from one-way ANOVA F-test on means")
-    ax.set_title("Volcano plot: LLM vs Human diversity, all F-test rows")
-    ax.legend(fontsize=9, loc="best")
-    ax.grid(alpha=0.25)
-    plt.tight_layout()
-    plot_dir.mkdir(parents=True, exist_ok=True)
-    out_path = plot_dir / f"f_tests_volcano__{embed_slug}.png"
-    fig.savefig(out_path, dpi=150, bbox_inches="tight")
-    plt.close(fig)
-    print(f"  {out_path}")
-
-
 def _plot_effect_heatmap(
     sub: pd.DataFrame,
     title: str,
@@ -802,29 +749,24 @@ def _plot_effect_heatmap(
     print(f"  {out_path}")
 
 
-def plot_f_test_heatmap(
+def plot_f_test_heatmap_model(
     f_tests_df: pd.DataFrame,
     embed_slug: str,
     plot_dir: Path,
 ) -> None:
-    """Two heatmaps for the LLM-vs-Human intra-sim test:
-    family × language and model × language. Cell = LLM − Human intra-sim.
+    """Model × language heatmap. Cell = LLM − Human intra-sim.
+
+    Reads `model_language` rows from the LLM-vs-Human intra-sim F-test.
     """
-    cbar = "mean(LLM) − mean(Human) intra-sim  (red = LLM less diverse)"
-    fam = f_tests_df[f_tests_df["level"] == "family_language"].copy()
     mod = f_tests_df[f_tests_df["level"] == "model_language"].copy()
-    if not fam.empty:
-        fam["effect"] = fam["mean_a"] - fam["mean_b"]
-        _plot_effect_heatmap(
-            fam, "F-test effect: family × language  (+ = LLM less diverse than humans)",
-            cbar, plot_dir / f"f_tests_heatmap_family__{embed_slug}.png",
-        )
-    if not mod.empty:
-        mod["effect"] = mod["mean_a"] - mod["mean_b"]
-        _plot_effect_heatmap(
-            mod, "F-test effect: model × language  (+ = LLM less diverse than humans)",
-            cbar, plot_dir / f"f_tests_heatmap_model__{embed_slug}.png",
-        )
+    if mod.empty:
+        return
+    mod["effect"] = mod["mean_a"] - mod["mean_b"]
+    _plot_effect_heatmap(
+        mod, "F-test effect: model × language  (+ = LLM less diverse than humans)",
+        "mean(LLM) − mean(Human) intra-sim  (red = LLM less diverse)",
+        plot_dir / f"f_tests_heatmap_model__{embed_slug}.png",
+    )
 
 
 # --- Plots for Test 2: LLM cross-model vs Human cross-respondent ----------
@@ -889,124 +831,28 @@ def plot_cross_model_bars(
     print(f"  {out_path}")
 
 
-def plot_cross_model_family_pair_matrix(
+def plot_cross_model_heatmap(
     cross_df: pd.DataFrame,
-    families_in_use: list[str],
     embed_slug: str,
     plot_dir: Path,
 ) -> None:
-    """5×5 symmetric heatmap of mean LLM↔LLM cosine per family pair.
+    """Family-pair × language heatmap of the cross-model hivemind effect.
 
-    Diagonal cells = within-family cross-model cosine (Qwen3 model vs another
-    Qwen3 model); off-diagonal = cross-family cosine. Cell annotation: mean
-    cosine + significance star from the F-test vs Human↔Human baseline.
+    Cell value = mean(LLM↔LLM cosine for that family-pair in that language)
+                 − mean(Human↔Human cosine in that language).
+    Positive (red) ⇒ the family-pair clusters more tightly than humans do
+    in that language. Reads `family_pair_language` rows from cross-model parquet.
     """
-    import matplotlib.pyplot as plt
-
-    sub = cross_df[cross_df["level"] == "family_pair"].copy()
+    sub = cross_df[cross_df["level"] == "family_pair_language"].copy()
     if sub.empty:
         return
-    # parse "fa || fb" labels back into (fa, fb)
-    parts = sub["group"].str.split(" \\|\\| ", expand=True)
-    sub["fa"] = parts[0]
-    sub["fb"] = parts[1]
-
-    fams = sorted(families_in_use)
-    n = len(fams)
-    mat_mean = np.full((n, n), np.nan)
-    mat_p = np.full((n, n), np.nan)
-    for _, r in sub.iterrows():
-        if r["fa"] not in fams or r["fb"] not in fams:
-            continue
-        i, j = fams.index(r["fa"]), fams.index(r["fb"])
-        mat_mean[i, j] = mat_mean[j, i] = r["mean_a"]
-        mat_p[i, j] = mat_p[j, i] = r["p_means"]
-
-    fig, ax = plt.subplots(figsize=(max(6, n * 1.1), max(5, n * 0.9)))
-    im = ax.imshow(mat_mean, cmap="YlOrRd",
-                   vmin=float(np.nanmin(mat_mean)), vmax=float(np.nanmax(mat_mean)))
-    plt.colorbar(im, ax=ax, fraction=0.04, pad=0.02,
-                 label="mean LLM↔LLM cosine on same prompt")
-    ax.set_xticks(range(n)); ax.set_xticklabels(fams, rotation=30, ha="right")
-    ax.set_yticks(range(n)); ax.set_yticklabels(fams)
-    for i in range(n):
-        for j in range(n):
-            v, p = mat_mean[i, j], mat_p[i, j]
-            if not np.isfinite(v):
-                continue
-            star = _sig_marker(p) if np.isfinite(p) else ""
-            color = "white" if v > 0.82 else "black"
-            ax.text(j, i, f"{v:.2f}{star}", ha="center", va="center",
-                    fontsize=10, color=color)
-    ax.set_title("Mean LLM↔LLM cosine by family pair\n"
-                 "(diagonal = within-family; star = significance vs Human↔Human baseline)")
-    plt.tight_layout()
-    plot_dir.mkdir(parents=True, exist_ok=True)
-    out_path = plot_dir / f"f_tests_cross_family_pairs__{embed_slug}.png"
-    fig.savefig(out_path, dpi=150, bbox_inches="tight")
-    plt.close(fig)
-    print(f"  {out_path}")
-
-
-# --- Plot for Test 3: family-vs-family pairwise intra-diversity -----------
-
-def plot_family_pairwise_heatmap(
-    pairwise_df: pd.DataFrame,
-    families_in_use: list[str],
-    embed_slug: str,
-    plot_dir: Path,
-) -> None:
-    """5×5 symmetric heatmap of pairwise family intra-diversity differences.
-
-    Cell value = mean intra-sim of family-row minus mean intra-sim of family-col
-    (so red = row is less diverse than col). Star = ANOVA significance.
-    """
-    import matplotlib.pyplot as plt
-
-    if pairwise_df.empty:
-        return
-
-    fams = sorted(families_in_use)
-    n = len(fams)
-    mat_eff = np.full((n, n), np.nan)
-    mat_p = np.full((n, n), np.nan)
-    for _, r in pairwise_df.iterrows():
-        fa, fb = r["label_a"], r["label_b"]
-        if fa not in fams or fb not in fams:
-            continue
-        i, j = fams.index(fa), fams.index(fb)
-        eff = r["mean_a"] - r["mean_b"]
-        mat_eff[i, j] = eff
-        mat_eff[j, i] = -eff
-        mat_p[i, j] = mat_p[j, i] = r["p_means"]
-
-    fig, ax = plt.subplots(figsize=(max(6, n * 1.1), max(5, n * 0.9)))
-    vmax = float(np.nanmax(np.abs(mat_eff))) if np.isfinite(mat_eff).any() else 0.1
-    im = ax.imshow(mat_eff, cmap="RdBu_r", vmin=-vmax, vmax=vmax)
-    plt.colorbar(im, ax=ax, fraction=0.04, pad=0.02,
-                 label="mean(row family) − mean(col family) intra-sim  "
-                       "(red = row less diverse than col)")
-    ax.set_xticks(range(n)); ax.set_xticklabels(fams, rotation=30, ha="right")
-    ax.set_yticks(range(n)); ax.set_yticklabels(fams)
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                ax.text(j, i, "—", ha="center", va="center", fontsize=9, color="gray")
-                continue
-            eff, p = mat_eff[i, j], mat_p[i, j]
-            if not np.isfinite(eff):
-                continue
-            star = _sig_marker(p) if np.isfinite(p) else ""
-            color = "white" if abs(eff) > vmax * 0.55 else "black"
-            ax.text(j, i, f"{eff:+.3f}{star}", ha="center", va="center",
-                    fontsize=9, color=color)
-    ax.set_title("Pairwise family intra-diversity differences (F-test on means)")
-    plt.tight_layout()
-    plot_dir.mkdir(parents=True, exist_ok=True)
-    out_path = plot_dir / f"f_tests_family_pairwise__{embed_slug}.png"
-    fig.savefig(out_path, dpi=150, bbox_inches="tight")
-    plt.close(fig)
-    print(f"  {out_path}")
+    sub["effect"] = sub["mean_a"] - sub["mean_b"]
+    _plot_effect_heatmap(
+        sub, "F-test effect: family-pair × language  "
+             "(+ = LLMs cluster more than humans do in that language)",
+        "mean(LLM↔LLM) − mean(Human↔Human)  (red = LLM hivemind effect)",
+        plot_dir / f"f_tests_cross_heatmap__{embed_slug}.png",
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -1455,12 +1301,9 @@ def main(config_path: Path, embed_model: str, embed_dir: Path, out_dir: Path,
         plot_human_vs_llm(loaded, human_emb, human_idx, embed_slug, plot_dir)
         print("\nPlotting F-test results...")
         plot_f_test_bars(f_tests_df, embed_slug, plot_dir)
-        plot_f_test_volcano(f_tests_df, embed_slug, plot_dir)
-        plot_f_test_heatmap(f_tests_df, embed_slug, plot_dir)
-        families_in_use = sorted(set(families.values()))
+        plot_f_test_heatmap_model(f_tests_df, embed_slug, plot_dir)
         plot_cross_model_bars(cross_df, embed_slug, plot_dir)
-        plot_cross_model_family_pair_matrix(cross_df, families_in_use, embed_slug, plot_dir)
-        plot_family_pairwise_heatmap(family_pairwise_df, families_in_use, embed_slug, plot_dir)
+        plot_cross_model_heatmap(cross_df, embed_slug, plot_dir)
         if raw_parquet is not None:
             gen_df = pd.read_parquet(raw_parquet)
             plot_corr_matrix_html(corr_labels, corr_matrix, embed_slug, plot_dir)
