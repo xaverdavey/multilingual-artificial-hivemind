@@ -251,6 +251,7 @@ def plot_pca_by_model(
         plt.close(fig)
         print(f"  {out_path}")
 
+print("hi")
 
 def plot_corr_matrix(
     labels: list[str],
