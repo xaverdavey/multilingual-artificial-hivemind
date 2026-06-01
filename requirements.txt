@@ -17,3 +17,4 @@ scikit-learn
 scipy
 matplotlib
 plotly
+fasttext         # GlotLID multilingual language ID for fluency scoring
