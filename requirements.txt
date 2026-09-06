@@ -15,6 +15,8 @@ google-genai
 sentence-transformers
 scikit-learn
 scipy
+statsmodels      # crossed-effects model in experiments/run_linguistic.py
 matplotlib
 plotly
 fasttext         # GlotLID multilingual language ID for fluency scoring
+transformers     # tokenizers for experiments/run_fertility.py

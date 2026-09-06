@@ -12,10 +12,40 @@ Does the Artificial Hivemind effect (Jiang et al. 2025) generalize multilinguall
 | `experiments/sweep_models.py` | Sweep `run_generation` over a list of HF model ids with overlapping prefetch + per-model cache purge |
 | `experiments/models.yaml` | Sweep manifest: `id` / `gpus` / `time` per model |
 | `experiments/submit_sweep.sh` + `sbatch_run.sh` | Submit one SLURM job per active model with per-model GPU/time overrides |
+| `experiments/run_embeddings.py` | Embed generations with any OpenAI or sentence-transformers model → `results/embeddings/` |
+| `experiments/run_metrics.py` | Intra/inter similarity, F-tests, plots for one embedding model |
+| `experiments/run_lexical.py` | Embedder-free diversity: mean pairwise character n-gram Jaccard (`--truncate` for the length control) |
+| `experiments/run_robustness.py` | Compare the homogenization gap across every metric on disk → `results/robustness/` + LaTeX table |
+| `experiments/run_fertility.py` | Tokenization fertility per (tokenizer, language) on FLORES-200 parallel text |
+| `experiments/run_linguistic.py` | Regress the gap on fertility / competence / resource / morphology (crossed random effects) |
+| `experiments/plot_respondent_matrix.py` | Respondent-respondent similarity matrices, drawn at final print size |
+| `experiments/plot_linguistic.py` | Two-panel figure for the linguistic-property analysis |
+| `experiments/make_paper_tables.py` | Emit the appendix LaTeX tables from the analysis outputs |
 | `analysis.ipynb` | Scratch notebook (PCA visualizations of generations; not load-bearing) |
 | `artificial-hivemind/` | Cloned reference repo for the original Jiang et al. paper (read-only, gitignored) |
 
 `results/` (gitignored) is where generations and downstream metrics land.
+
+## Pipeline
+
+The core is still three stages. Each embedding-model ablation re-runs stages 2–3
+with a different `--embed-model`/`--out-dir`; `run_lexical` is the embedder-free
+stand-in for both (it emits `run_metrics`' output schema on purpose). Everything
+else is an analysis layer that only reads stage-3 outputs from disk.
+
+```
+1 generate     select_oasst2_prompts → sweep_models            → results/raw/
+2 embed        run_embeddings   (once per embedding model)     → results/embeddings*/
+3 metrics      run_metrics      (once per embedding model)     → results/metrics*/
+               run_lexical      (no embedder; stages 2+3)      → results/lexical/
+  predictors   run_fluency (GlotLID) · run_fertility (FLORES)  → results/fluency|linguistic/
+4 analysis     run_robustness   (every metric found on disk)   → results/robustness/
+               run_linguistic   (gap ~ predictors, crossed RE) → results/linguistic*/
+5 paper        plot_respondent_matrix · plot_linguistic · make_paper_tables
+```
+
+Stages 4–5 are deterministic given the parquets and regenerate the paper's
+figures and tables byte-for-byte.
 
 ## Reproducing a run
 
