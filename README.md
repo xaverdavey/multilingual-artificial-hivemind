@@ -15,7 +15,7 @@ Does the Artificial Hivemind effect (Jiang et al. 2025) generalize multilinguall
 | `experiments/run_embeddings.py` | Embed generations with any OpenAI or sentence-transformers model → `results/embeddings/` |
 | `experiments/run_metrics.py` | Intra/inter similarity, F-tests, plots for one embedding model |
 | `experiments/run_lexical.py` | Embedder-free diversity: mean pairwise character n-gram Jaccard (`--truncate` for the length control) |
-| `experiments/run_robustness.py` | Compare the homogenization gap across every metric on disk → `results/robustness/` + LaTeX table |
+| `experiments/run_robustness.py` | Compare the homogenization gap across every metric on disk → `results/robustness/` |
 | `experiments/run_fertility.py` | Tokenization fertility per (tokenizer, language) on FLORES-200 parallel text |
 | `experiments/run_linguistic.py` | Regress the gap on fertility / competence / resource / morphology (crossed random effects) |
 | `experiments/plot_respondent_matrix.py` | Respondent-respondent similarity matrices, drawn at final print size |

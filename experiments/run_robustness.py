@@ -19,7 +19,6 @@ minus human intra-similarity on the same prompts -- and reports:
 Outputs (to --out-dir):
   robustness_by_language.csv   per-language gap under every metric
   robustness_summary.csv       one row per metric
-  robustness_table.tex         LaTeX table for the paper
 """
 
 import argparse
@@ -92,33 +91,6 @@ def summarise(sources: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def latex_table(summary: pd.DataFrame) -> str:
-    lines = [
-        r"\begin{table}[t]", r"\centering", r"\small",
-        r"\setlength{\tabcolsep}{4pt}",
-        r"\begin{tabular}{@{}lccc@{}}", r"\toprule",
-        r"\textbf{Similarity metric} & \textbf{Gap} & \textbf{Langs.} & \textbf{$\rho$} \\",
-        r"\midrule",
-    ]
-    for _, r in summary.iterrows():
-        rho = "---" if pd.isna(r.get("spearman_vs_primary")) else f"{r['spearman_vs_primary']:.2f}"
-        # The parenthetical dimensions overflow \linewidth; they are in the text.
-        name = r["metric"].split(" (")[0]
-        lines.append(f"{name} & ${r['gap']:+.3f}$ & "
-                     f"{r['langs_positive']}/{r['n_langs']} & {rho} \\\\")
-    lines += [
-        r"\bottomrule", r"\end{tabular}",
-        r"\caption{The homogenization gap under three embedding spaces and an "
-        r"embedder-free lexical metric. \textbf{Gap} is the mean LLM minus human "
-        r"intra-similarity over all 299 (model, language) cells; \textbf{Langs.} "
-        r"counts languages with a positive gap; $\rho$ is the Spearman correlation "
-        r"of the per-cell gap against the primary metric. The effect is present in "
-        r"every language under every metric.}",
-        r"\label{tab:robustness}", r"\end{table}",
-    ]
-    return "\n".join(lines)
-
-
 def main(metrics_dir: Path, lexical_dir: Path, out_dir: Path):
     sources = discover(metrics_dir, lexical_dir)
     print(f"metrics found ({len(sources)}): {', '.join(sources)}\n")
@@ -132,7 +104,6 @@ def main(metrics_dir: Path, lexical_dir: Path, out_dir: Path):
     out_dir.mkdir(parents=True, exist_ok=True)
     by_lang.to_csv(out_dir / "robustness_by_language.csv")
     summary.to_csv(out_dir / "robustness_summary.csv", index=False)
-    (out_dir / "robustness_table.tex").write_text(latex_table(summary))
 
     print("=== per-language gap ===")
     print(by_lang.round(4).to_string())
