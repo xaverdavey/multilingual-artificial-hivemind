@@ -25,3 +25,6 @@ venv/
 experiments/*.parquet
 results/
 logs/
+
+# Local working notes (submission logistics; not project state)
+REVIEWER_RESPONSE.md

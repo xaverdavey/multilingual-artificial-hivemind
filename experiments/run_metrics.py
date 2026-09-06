@@ -469,8 +469,10 @@ def load_human(
 # ---------------------------------------------------------------------------
 
 def _model_colors(n: int) -> list:
-    import matplotlib.cm as cm
-    palette = list(cm.get_cmap("tab20").colors) + list(cm.get_cmap("tab20b").colors)
+    # matplotlib.cm.get_cmap was removed in 3.11; matplotlib.colormaps works from 3.6 on.
+    import matplotlib
+    palette = (list(matplotlib.colormaps["tab20"].colors)
+               + list(matplotlib.colormaps["tab20b"].colors))
     return [palette[i % len(palette)] for i in range(n)]
 
 

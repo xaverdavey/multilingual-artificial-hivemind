@@ -21,6 +21,14 @@ import pandas as pd
 DEFAULT_EMBED_MODEL = "text-embedding-3-small"
 OPENAI_PREFIXES = ("text-embedding-", "text-ada-")
 
+# Some sentence-transformers models expect a task-prefix. Measuring diversity is a
+# clustering-geometry question, so we use the clustering prompt where one is defined.
+ST_PROMPT_NAME = {"google/embeddinggemma-300m": "Clustering"}
+
+# Loaded models are reused across generation models -- run() embeds 23 x 2 text sets
+# per sweep and reloading a 500M-param encoder each time dominates the runtime.
+_ST_CACHE: dict[str, object] = {}
+
 
 def detect_embed_backend(embed_model: str) -> str:
     if any(embed_model.startswith(p) for p in OPENAI_PREFIXES):
@@ -42,21 +50,38 @@ def _embed_openai(texts: list[str], model: str, batch_size: int = 100) -> np.nda
     return arr
 
 
-def _embed_st(texts: list[str], model: str, batch_size: int = 256) -> np.ndarray:
+def _load_st(model: str, max_seq_length: int | None):
     from sentence_transformers import SentenceTransformer
-    enc = SentenceTransformer(model)
+    if model not in _ST_CACHE:
+        enc = SentenceTransformer(model)
+        if max_seq_length:
+            enc.max_seq_length = max_seq_length
+        print(f"loaded {model} on {enc.device} (max_seq_length={enc.max_seq_length})")
+        _ST_CACHE[model] = enc
+    return _ST_CACHE[model]
+
+
+def _embed_st(texts: list[str], model: str, batch_size: int,
+              max_seq_length: int | None) -> np.ndarray:
+    enc = _load_st(model, max_seq_length)
     if "e5" in model.lower():
         texts = ["passage: " + t for t in texts]
-    return enc.encode(texts, batch_size=batch_size, normalize_embeddings=True, show_progress_bar=True)
+    kwargs = {}
+    if model in ST_PROMPT_NAME:
+        kwargs["prompt_name"] = ST_PROMPT_NAME[model]
+    return enc.encode(texts, batch_size=batch_size, normalize_embeddings=True,
+                      show_progress_bar=True, **kwargs)
 
 
-def embed(texts: list[str], embed_model: str) -> np.ndarray:
+def embed(texts: list[str], embed_model: str, batch_size: int | None = None,
+          max_seq_length: int | None = None) -> np.ndarray:
     if detect_embed_backend(embed_model) == "openai":
-        return _embed_openai(texts, embed_model)
-    return _embed_st(texts, embed_model)
+        return _embed_openai(texts, embed_model, batch_size or 100)
+    return _embed_st(texts, embed_model, batch_size or 32, max_seq_length)
 
 
-def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path):
+def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path,
+             batch_size: int | None = None, max_seq_length: int | None = None):
     """Embed and save outputs for a single generation model."""
     slug = f"{gen_model.replace('/', '_')}__{embed_model.replace('/', '_')}"
 
@@ -72,7 +97,7 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path):
 
     print(f"[{gen_model}] embedding {len(df)} LLM responses with {embed_model} ...")
     t0 = time.time()
-    llm_emb = embed(df["response_text"].tolist(), embed_model)
+    llm_emb = embed(df["response_text"].tolist(), embed_model, batch_size, max_seq_length)
 
     human_df = (
         df.drop_duplicates("prompt_id")[["prompt_id", "language", "human_responses"]]
@@ -83,7 +108,7 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path):
     human_df["human_idx"] = human_df.groupby("prompt_id").cumcount()
 
     print(f"[{gen_model}] embedding {len(human_df)} human responses ...")
-    human_emb = embed(human_df["response_text"].tolist(), embed_model)
+    human_emb = embed(human_df["response_text"].tolist(), embed_model, batch_size, max_seq_length)
     elapsed = round(time.time() - t0, 1)
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -102,6 +127,9 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path):
         "n_llm": int(len(llm_emb)),
         "n_human": int(len(human_emb)),
         "embedding_dim": int(llm_emb.shape[1]),
+        "max_seq_length": (int(_ST_CACHE[embed_model].max_seq_length)
+                           if embed_model in _ST_CACHE else None),
+        "prompt_name": ST_PROMPT_NAME.get(embed_model),
         "elapsed_seconds": elapsed,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
     }
@@ -109,7 +137,8 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path):
     print(f"[{gen_model}] saved to {out_dir}/{slug}_{{llm,human}}.npy  ({elapsed}s)")
 
 
-def run(gen_parquet: Path, embed_model: str, out_dir: Path, model_filter: str | None = None):
+def run(gen_parquet: Path, embed_model: str, out_dir: Path, model_filter: str | None = None,
+        batch_size: int | None = None, max_seq_length: int | None = None):
     df = (pd.read_parquet(gen_parquet)
           .sort_values(["prompt_id", "sample_idx"])
           .reset_index(drop=True))
@@ -120,7 +149,8 @@ def run(gen_parquet: Path, embed_model: str, out_dir: Path, model_filter: str | 
             raise ValueError(f"Model {model_filter!r} not found in {gen_parquet}")
 
     for gen_model, model_df in df.groupby("model"):
-        _run_one(gen_model, model_df.reset_index(drop=True), embed_model, out_dir)
+        _run_one(gen_model, model_df.reset_index(drop=True), embed_model, out_dir,
+                 batch_size, max_seq_length)
 
 
 if __name__ == "__main__":
@@ -130,8 +160,13 @@ if __name__ == "__main__":
     ap.add_argument("--out-dir", type=Path, default=Path("results/embeddings"))
     ap.add_argument("--embed-model", default=DEFAULT_EMBED_MODEL,
                     help="Embedding model (OpenAI or HuggingFace sentence-transformers)")
+    ap.add_argument("--batch-size", type=int, default=None,
+                    help="Encode batch size (default: 100 OpenAI, 32 sentence-transformers)")
+    ap.add_argument("--max-seq-length", type=int, default=None,
+                    help="Override the encoder's token limit; omit to use its native default")
     args = ap.parse_args()
 
     parquets = sorted(args.raw_dir.glob("*.parquet"))
     for p in parquets:
-        run(p, args.embed_model, args.out_dir, model_filter=args.model or None)
+        run(p, args.embed_model, args.out_dir, model_filter=args.model or None,
+            batch_size=args.batch_size, max_seq_length=args.max_seq_length)
