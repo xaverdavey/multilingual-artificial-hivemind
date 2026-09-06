@@ -35,6 +35,24 @@ METRIC_SHORT = {"text-embedding-3-small": "OpenAI", "BGE-M3": "BGE-M3",
                 "char 4-gram Jaccard": "Jaccard", "char 4-gram Jaccard, 500-char cap": "Jacc.\\,500c"}
 
 
+def robustness_summary(path: Path) -> str:
+    df = pd.read_csv(path)
+    body = "\n".join(
+        f"{r['metric'].split(' (')[0]} & ${r['gap']:+.3f}$ & "
+        f"{r['langs_positive']}/{r['n_langs']} & "
+        + ("---" if pd.isna(r.get("spearman_vs_primary")) else f"{r['spearman_vs_primary']:.2f}")
+        + r" \\" for _, r in df.iterrows())
+    return _wrap(body, r"\textbf{Similarity metric} & \textbf{Gap} & \textbf{Langs.} & \textbf{$\rho$} \\",
+                 "@{}lccc@{}",
+                 "The homogenization gap under three embedding spaces and an embedder-free "
+                 "lexical metric. \\textbf{Gap} is the mean LLM minus human intra-similarity "
+                 "over all 299 (model, language) cells; \\textbf{Langs.} counts languages with "
+                 "a positive gap; $\\rho$ is the Spearman correlation of the per-cell gap "
+                 "against the primary metric. The effect is present in every language under "
+                 "every metric.",
+                 "tab:robustness", colsep_pt=4)
+
+
 def robustness_by_language(path: Path) -> str:
     df = pd.read_csv(path, index_col=0)
     short = {c: METRIC_SHORT.get(c.split(" (")[0], c.split(" (")[0]) for c in df.columns}
@@ -127,6 +145,7 @@ def main(robustness_csv: Path, fertility: Path, ling_table: Path, out_dir: Path,
             ling_tables[ALT_LABELS.get(alt.parent.name, alt.parent.name)] = alt
     out_dir.mkdir(parents=True, exist_ok=True)
     for name, text in [
+        ("tab_robustness", robustness_summary(robustness_csv.parent / "robustness_summary.csv")),
         ("tab_robustness_by_language", robustness_by_language(robustness_csv)),
         ("tab_fertility", fertility_table(fertility)),
         ("tab_regression", regression_table(ling_tables)),
