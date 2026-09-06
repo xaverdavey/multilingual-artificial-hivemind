@@ -63,7 +63,7 @@ def family_matrix(mat: pd.DataFrame, fam: dict[str, str]) -> tuple[pd.DataFrame,
 
 def draw(mat: pd.DataFrame, out_path: Path, width_in: float, cell_pt: float,
          label_pt: float, boundaries: list[int] | None = None,
-         show_values: bool = True) -> None:
+         show_values: bool = True, flipped: bool = True) -> None:
     r"""Single-hue sequential heatmap, drawn at the width it will occupy in print.
 
     `width_in` is the real figure width in inches (ACL: ~3.15 for a one-column
@@ -81,8 +81,8 @@ def draw(mat: pd.DataFrame, out_path: Path, width_in: float, cell_pt: float,
     vmin, vmax = np.nanmin(vals), np.nanmax(vals)
     im = ax.imshow(vals, vmin=vmin, vmax=vmax, cmap="Blues", aspect="equal")
 
-    cbar = fig.colorbar(im, ax=ax, fraction=0.030, pad=0.015)
-    cbar.set_label("mean pairwise cosine similarity", fontsize=label_pt)
+    cbar = fig.colorbar(im, ax=ax, fraction=0.045, pad=0.015)
+    cbar.set_label("Mean Cosine Similarity", fontsize=label_pt)
     cbar.ax.tick_params(labelsize=max(4.0, label_pt - 1))
 
     ax.set_xticks(range(n)); ax.set_yticks(range(n))
@@ -103,13 +103,15 @@ def draw(mat: pd.DataFrame, out_path: Path, width_in: float, cell_pt: float,
                     ax.text(j, i, f"{v*100:.0f}", ha="center", va="center",
                             fontsize=cell_pt, color="white" if v >= mid else "#1a1a1a")
 
-    # family separators + a heavier rule isolating Human
+    # family separators + a heavier rule isolating Human; rows may be reversed
+    # relative to columns, so horizontal rules mirror the vertical ones
     for b in (boundaries or []):
-        ax.axhline(b - 0.5, color="white", lw=1.6)
         ax.axvline(b - 0.5, color="white", lw=1.6)
-    h = list(mat.index).index(HUMAN)
-    ax.add_patch(Rectangle((-0.5, h - 0.5), n, 1, fill=False, ec="#c0392b", lw=1.8, zorder=5))
-    ax.add_patch(Rectangle((h - 0.5, -0.5), 1, n, fill=False, ec="#c0392b", lw=1.8, zorder=5))
+        ax.axhline((n - b if flipped else b) - 0.5, color="white", lw=1.6)
+    hr = list(mat.index).index(HUMAN)
+    hc = list(mat.columns).index(HUMAN)
+    ax.add_patch(Rectangle((-0.5, hr - 0.5), n, 1, fill=False, ec="#c0392b", lw=1.8, zorder=5))
+    ax.add_patch(Rectangle((hc - 0.5, -0.5), 1, n, fill=False, ec="#c0392b", lw=1.8, zorder=5))
 
     ax.tick_params(length=0)
     for s in ax.spines.values():
@@ -132,16 +134,18 @@ def main(csv: Path, models_yaml: Path, out_dir: Path, slug: str):
         order += [m for m in models if fam.get(m, "Other") == f]
         boundaries.append(len(order))
     order.append(HUMAN)
-    full = mat.loc[order, order]
+    # rows reversed relative to columns: self-pairs run bottom-left to
+    # top-right, the x = y diagonal in axis convention
+    full = mat.loc[order[::-1], order]
 
     # two-column figure*: every model, values at 5pt (legible in print, crisp on screen)
     draw(full, out_dir / f"respondent_matrix_full__{slug}.png",
-         width_in=6.3, cell_pt=5.0, label_pt=6.0, boundaries=boundaries)
+         width_in=6.3, cell_pt=6.0, label_pt=7.0, boundaries=boundaries)
 
     famm, self_sim = family_matrix(mat, fam)
     # one-column figure: family summary, comfortably legible
-    draw(famm, out_dir / f"respondent_matrix_family__{slug}.png",
-         width_in=3.15, cell_pt=8.0, label_pt=8.0)
+    draw(famm.loc[famm.index[::-1]], out_dir / f"respondent_matrix_family__{slug}.png",
+         width_in=3.15, cell_pt=10.0, label_pt=9.0)
 
     print("\n=== family matrix (x100) ===")
     print((famm * 100).round(1).to_string())
