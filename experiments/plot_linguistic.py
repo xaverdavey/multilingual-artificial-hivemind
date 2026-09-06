@@ -51,29 +51,36 @@ def main(table: Path, out_path: Path, width_in: float, alt_tables: list[Path] | 
     fits = {name: mixed_model_coefs(pd.read_parquet(t), PREDICTORS).set_index("predictor").loc[ORDER]
             for name, t in tables.items()}
 
-    fig, (ax1, ax2) = plt.subplots(
-        2, 1, figsize=(width_in, width_in * 1.30),
-        gridspec_kw={"height_ratios": [1.15, 1.0], "hspace": 0.62})
+    def style(ax):
+        ax.tick_params(labelsize=6.5)
+        ax.set_axisbelow(True)
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(False)
+        for side in ("left", "bottom"):
+            ax.spines[side].set_linewidth(0.7)
+            ax.spines[side].set_color("#888888")
 
     # --- (a) gap vs model competence, one point per (model, language) --------
+    # No on-plot title: the stats printed below belong in the LaTeX subcaption.
+    fig, ax1 = plt.subplots(figsize=(width_in, width_in * 0.82))
     ax1.scatter(cells["lid_match_rate"], cells["gap"], s=7, color=SERIES_COLORS[0],
                 alpha=0.34, linewidth=0, zorder=3)
     slope, intercept, r, p_, _ = stats.linregress(cells["lid_match_rate"], cells["gap"])
     xs = np.linspace(cells["lid_match_rate"].min(), cells["lid_match_rate"].max(), 20)
     ax1.plot(xs, intercept + slope * xs, color="#c0392b", lw=1.2, zorder=4)
     rho, prho = stats.spearmanr(cells["lid_match_rate"], cells["gap"])
-    ptxt = "$p$ < 0.001" if prho < 1e-3 else f"$p$ = {prho:.3f}"
-    ax1.set_xlabel("GlotLID target-language match rate", fontsize=7.5)
+    ax1.set_xlabel("GlotLID match rate", fontsize=7.5)
     ax1.set_ylabel("homogenization gap\n(LLM $-$ human intra-sim)", fontsize=7.5)
-    ax1.set_title(f"(a) Gap vs. model competence (text-embedding-3-small)\n"
-                  f"Spearman $\\rho$ = {rho:.2f}, {ptxt}  "
-                  f"($n$ = {len(cells)} model$\\times$language cells)",
-                  fontsize=7.5, pad=5)
-    ax1.tick_params(labelsize=6.5)
     ax1.grid(alpha=0.22, lw=0.5)
-    ax1.set_axisbelow(True)
+    style(ax1)
+    a_path = out_path.with_name(out_path.stem + "_competence.png")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(a_path, dpi=300, bbox_inches="tight")
+    plt.close(fig)
+    print(f"wrote {a_path}")
 
     # --- (b) standardised coefficients, one series per embedding space ------
+    fig, ax2 = plt.subplots(figsize=(width_in, width_in * 0.82))
     base = np.arange(len(ORDER))[::-1].astype(float)
     ax2.axvline(0, color="#999999", lw=0.8, zorder=1)
     offsets = np.linspace(0.17, -0.17, len(fits)) if len(fits) > 1 else [0.0]
@@ -87,27 +94,19 @@ def main(table: Path, out_path: Path, width_in: float, alt_tables: list[Path] | 
                     edgecolor=col, linewidth=1.1, zorder=3)
     ax2.set_yticks(base)
     ax2.set_yticklabels([PRETTY[p] for p in ORDER], fontsize=6.5)
-    ax2.set_xlabel("standardised coefficient on the gap (95% CI)", fontsize=7.5)
-    ax2.set_title("(b) Competence predicts the gap in all three embedding spaces;\n"
-                  "resource level only in one  (filled = $p<0.05$)", fontsize=7.5, pad=5)
+    ax2.set_xlabel("standardised coefficient (95% CI)", fontsize=7.5)
     if len(fits) > 1:
         ax2.legend(fontsize=6, frameon=False, loc="upper left", handletextpad=0.3,
                    borderaxespad=0.2)
-    ax2.tick_params(labelsize=6.5)
     ax2.grid(axis="x", alpha=0.22, lw=0.5)
-    ax2.set_axisbelow(True)
-
-    for ax in (ax1, ax2):
-        for side in ("top", "right"):
-            ax.spines[side].set_visible(False)
-        for side in ("left", "bottom"):
-            ax.spines[side].set_linewidth(0.7)
-            ax.spines[side].set_color("#888888")
-
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_path, dpi=300, bbox_inches="tight")
+    style(ax2)
+    b_path = out_path.with_name(out_path.stem + "_coefs.png")
+    fig.savefig(b_path, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"wrote {out_path}")
+    print(f"wrote {b_path}")
+
+    ptxt = "p < 0.001" if prho < 1e-3 else f"p = {prho:.3f}"
+    print(f"\nfor the subcaption of (a): Spearman rho = {rho:.2f}, {ptxt}, n = {len(cells)} cells")
     for name, f in fits.items():
         print(f"\n-- {name} --"); print(f.round(4).to_string())
 
