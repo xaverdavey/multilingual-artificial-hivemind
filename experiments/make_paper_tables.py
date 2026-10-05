@@ -20,12 +20,16 @@ def _wrap(body: str, header: str, colspec: str, caption: str, label: str,
           star: bool = False, size: str = "small", colsep_pt: float | None = None) -> str:
     """colsep_pt tightens inter-column padding; wide tables overflow \textwidth without it."""
     env = "table*" if star else "table"
+    # Paper convention: caption above the tabular, first sentence in bold.
+    if not caption.startswith("\\textbf"):
+        title, sep, rest = caption.partition(". ")
+        caption = f"\\textbf{{{title}.}} {rest}" if sep else caption
     return "\n".join([
-        f"\\begin{{{env}}}[t]", r"\centering", f"\\{size}",
+        f"\\begin{{{env}}}[t]", r"\centering", f"\\caption{{{caption}}}", f"\\{size}",
         *([f"\\setlength{{\\tabcolsep}}{{{colsep_pt}pt}}"] if colsep_pt else []),
         f"\\begin{{tabular}}{{{colspec}}}", r"\toprule", header, r"\midrule",
         body, r"\bottomrule", r"\end{tabular}",
-        f"\\caption{{{caption}}}", f"\\label{{{label}}}", f"\\end{{{env}}}",
+        f"\\label{{{label}}}", f"\\end{{{env}}}",
     ])
 
 
@@ -35,21 +39,45 @@ METRIC_SHORT = {"text-embedding-3-small": "OpenAI", "BGE-M3": "BGE-M3",
                 "char 4-gram Jaccard": "Jaccard", "char 4-gram Jaccard, 500-char cap": "Jacc.\\,500c"}
 
 
+# slug -> per-(model pair, prompt) inter-similarity parquet, for the "different models" rung
+INTER_PATHS = {
+    "text-embedding-3-small": Path("results/metrics/inter__text-embedding-3-small.parquet"),
+    "BAAI_bge-m3": Path("results/metrics/inter__BAAI_bge-m3.parquet"),
+    "Qwen_Qwen3-Embedding-0.6B": Path("results/metrics/inter__Qwen_Qwen3-Embedding-0.6B.parquet"),
+    "char4gram": Path("results/lexical/inter__char4gram.parquet"),
+    "char4gram_trunc500": Path("results/lexical/inter__char4gram_trunc500.parquet"),
+}
+PRIMARY_SLUG = "text-embedding-3-small"
+
+
 def robustness_summary(path: Path) -> str:
+    """The similarity ladder (same model / different models / different humans) per metric.
+
+    Same-model and different-humans values come from run_robustness' summary CSV;
+    the different-models rung is the mean inter-similarity over every (model pair,
+    prompt) row, which is what the cross-model F-test in run_metrics pools too.
+    """
     df = pd.read_csv(path)
+    df["inter"] = df["slug"].map(
+        lambda sl: float(pd.read_parquet(INTER_PATHS[sl], columns=["inter_sim"])["inter_sim"].mean()))
+    df = pd.concat([df[df["slug"] == PRIMARY_SLUG], df[df["slug"] != PRIMARY_SLUG]])
     body = "\n".join(
-        f"{r['metric'].split(' (')[0]} & ${r['gap']:+.3f}$ & "
+        f"{r['metric'].split(' (')[0]} & {r['llm_intra']:.3f} & {r['inter']:.3f} & {r['human_intra']:.3f} & "
         f"{r['langs_positive']}/{r['n_langs']} & "
         + ("---" if pd.isna(r.get("spearman_vs_primary")) else f"{r['spearman_vs_primary']:.2f}")
         + r" \\" for _, r in df.iterrows())
-    return _wrap(body, r"\textbf{Similarity metric} & \textbf{Gap} & \textbf{Langs.} & \textbf{$\rho$} \\",
-                 "@{}lccc@{}",
-                 "The homogenization gap under three embedding spaces and an embedder-free "
-                 "lexical metric. \\textbf{Gap} is the mean LLM minus human intra-similarity "
-                 "over all 299 (model, language) cells; \\textbf{Langs.} counts languages with "
-                 "a positive gap; $\\rho$ is the Spearman correlation of the per-cell gap "
-                 "against the primary metric. The effect is present in every language under "
-                 "every metric.",
+    return _wrap(body,
+                 r"\textbf{Similarity metric} & \textbf{Same model} & \textbf{Diff.\ models} & "
+                 r"\textbf{Diff.\ humans} & \textbf{Langs.} & \textbf{$\rho$} \\",
+                 "@{}lccccc@{}",
+                 "\\textbf{The similarity ladder under three embedding spaces and an embedder-free "
+                 "lexical metric.} Mean similarity between two answers to the same prompt when they come "
+                 "from the same model resampled, from two different models, and from two different humans, "
+                 "averaged over all prompts, models and model pairs. \\textbf{Langs.} counts languages in "
+                 "which the same-model value exceeds the human value; $\\rho$ is the Spearman correlation of "
+                 "the per-cell same-model-minus-human gap against the primary metric. The ordering holds in "
+                 "every embedding space; under the lexical metric the different-models rung falls to the "
+                 "human level.",
                  "tab:robustness", colsep_pt=4)
 
 
@@ -91,7 +119,7 @@ def regression_table(tables: dict[str, Path]) -> str:
     """Predictors x (embedding space x specification) coefficient table."""
     from experiments.run_linguistic import mixed_model_coefs, PREDICTORS
     no_morph = [p for p in PREDICTORS if p != "ttr"]
-    pretty = {"lid_match_rate": "Model competence", "log_wiki": "Resource level",
+    pretty = {"lid_match_rate": "Target-lang.\\ fidelity", "log_wiki": "Resource level",
               "fertility_vs_en": "Tokenization fertility", "ttr": "Morph. complexity"}
 
     fits: dict[tuple[str, str], pd.DataFrame] = {}
@@ -126,10 +154,11 @@ def regression_table(tables: dict[str, Path]) -> str:
     return _wrap("\n".join(rows), header, "ll" + "c" * len(order),
                  "Standardised coefficients from the crossed-effects model of the "
                  "homogenization gap, fitted in each embedding space. Spec A uses all four "
-                 "predictors (11 languages; morphology is undefined for \\texttt{zh}/"
+                 "predictors (21 models, since tokenization fertility is unavailable for the two Aya "
+                 "Expanse models, and 11 languages, since morphology is undefined for \\texttt{zh}/"
                  "\\texttt{ja}); B drops morphology to recover all 13; C repeats B on the "
                  "cells with a GlotLID match rate $\\geq 0.80$, confirming the effect is not "
-                 "driven by degenerate generation. Model competence is significant in every "
+                 "driven by degenerate generation. Target-language fidelity (the competence proxy) is significant in every "
                  "specification and all three embedding spaces; resource level is significant "
                  "only under \\texttt{text-embedding-3-small}, and is therefore a property of "
                  "that embedding geometry rather than a robust finding. "

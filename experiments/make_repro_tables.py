@@ -30,7 +30,8 @@ LEVELS = [("intra", "family", "Intra-model: per family"),
           ("intra", "language", "Intra-model: per language"),
           ("intra", "model_language", "Intra-model: per (model, language)"),
           ("cross", "language", "Inter-model: per language"),
-          ("cross", "family_pair", "Inter-model: per family pair")]
+          ("cross", "family_pair", "Inter-model: per family pair"),
+          ("ladder", "language", "Same vs.\\ different models: per language")]
 
 
 def prompt_tests_table(pt_dir: Path) -> str:
@@ -65,7 +66,9 @@ def prompt_tests_table(pt_dir: Path) -> str:
         r"whose 95\% prompt-bootstrap interval lies above zero, and that are positive and significant at $0.05$ after Holm "
         r"correction of the sign-flip permutation and Wilcoxon signed-rank $p$-values, and after Benjamini--Hochberg "
         r"correction of the permutation $p$-values, each corrected across the $k$ groups of its row (a group that is "
-        r"significant in the reverse direction, such as Basque in the inter-model comparison, is not counted). The lexical inter-model rows are "
+        r"significant in the reverse direction, such as Basque in the inter-model comparison, is not counted). "
+        r"The last row of each block tests the top rung of the ladder in Table~\\ref{tab:robustness}, one model "
+        r"resampled against two different models, which needs no human baseline. The lexical inter-model rows are "
         r"discussed in Section~\ref{sec:embedding_robustness}: character overlap between two different models is no "
         r"higher than between two different humans.}",
         r"\centering", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}",
