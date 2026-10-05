@@ -1,6 +1,12 @@
 # Multilingual Artificial Hivemind
 
+Code and analysis for **"The Multilingual Artificial Hivemind: Do All LLMs Think Alike in Every Language?"**
+(Davey, Mishra, Adelöw, Liu; Workshop on Linguistic Principles for Foundation Models, NeurIPS 2026).
 Does the Artificial Hivemind effect (Jiang et al. 2025) generalize multilingually? See [`PLAN.md`](PLAN.md) for the full plan, hypotheses, and metric definitions.
+
+Released with the code: the prompt set is rebuilt deterministically by `select_oasst2_prompts.py` (seed 42);
+per-model generation metadata (`results/raw/*.meta.json`: vLLM/PyTorch versions, dtype, GPUs, timestamps)
+and the Hugging Face revision snapshot (`experiments/hub_meta/`) document exactly what was run. Licensed under MIT.
 
 ## Layout
 
