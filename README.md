@@ -23,6 +23,9 @@ Does the Artificial Hivemind effect (Jiang et al. 2025) generalize multilinguall
 | `experiments/plot_pca_grid.py` | Per-language PCA grid over all 13 languages (appendix companion to the 4-language Figure 1) |
 | `experiments/plot_cross_bars.py` | Cross-respondent F-test bars (per model, per family pair) with the human baseline as a dashed line |
 | `experiments/make_paper_tables.py` | Emit the appendix LaTeX tables from the analysis outputs |
+| `experiments/run_prompt_tests.py` | Paired prompt-level tests of the gap (bootstrap CIs, Wilcoxon, permutation, Holm/BH) → `results/prompt_tests/` |
+| `experiments/fetch_hub_meta.py` | Snapshot HF commit histories and checkpoint dtypes → `experiments/hub_meta/` |
+| `experiments/make_repro_tables.py` | Emit the camera-ready appendix tables: prompt-level tests and per-model reproducibility details |
 | `analysis.ipynb` | Scratch notebook (PCA visualizations of generations; not load-bearing) |
 | `artificial-hivemind/` | Cloned reference repo for the original Jiang et al. paper (read-only, gitignored) |
 
@@ -43,7 +46,9 @@ else is an analysis layer that only reads stage-3 outputs from disk.
   predictors   run_fluency (GlotLID) · run_fertility (FLORES)  → results/fluency|linguistic/
 4 analysis     run_robustness   (every metric found on disk)   → results/robustness/
                run_linguistic   (gap ~ predictors, crossed RE) → results/linguistic*/
+               run_prompt_tests (paired, prompt-level, corrected) → results/prompt_tests/
 5 paper        plot_respondent_matrix · plot_linguistic · plot_pca_grid · plot_cross_bars · make_paper_tables
+               fetch_hub_meta · make_repro_tables
 ```
 
 Stages 4–5 are deterministic given the parquets and regenerate the paper's
