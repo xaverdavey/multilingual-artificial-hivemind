@@ -23,7 +23,10 @@ venv/
 
 # Experiment artifacts (regenerate via experiments/select_*.py and run_generation.py)
 experiments/*.parquet
-results/
+results/*
+!results/raw/
+results/raw/*
+!results/raw/*.meta.json
 logs/
 
 # Local working notes (submission logistics; not project state)
