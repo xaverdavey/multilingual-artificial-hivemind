@@ -21,11 +21,14 @@ analysis:
     every group tested at the same level (23 models, 13 languages, 299 cells,
     15 family pairs).
 
-Two comparisons, mirroring run_metrics:
+Three comparisons, the first two mirroring run_metrics:
   intra   one LLM resampled vs. the humans who answered the same prompt
   cross   two different LLMs vs. two different humans on the same prompt;
           the LLM side is averaged over the distinct model pairs in the group
           *per prompt*, so each prompt again contributes one observation.
+  ladder  one LLM resampled vs. two different LLMs (intra vs. inter, both
+          pooled per prompt); the top rung of the same-model / different-models /
+          different-humans ladder, which needs no human baseline.
 
 Inputs are the per-prompt parquets written by run_metrics / run_lexical. The
 human per-prompt intra-similarity for an embedding space is recomputed from the
@@ -168,6 +171,22 @@ def cross_frames(inter: pd.DataFrame, human: pd.DataFrame, families: dict[str, s
         yield "family_pair", pair, None, paired(sub)
 
 
+def ladder_frames(intra: pd.DataFrame, inter: pd.DataFrame):
+    """Top rung of the ladder: one model resampled vs. two different models, per prompt.
+
+    Needs no human baseline: LLM_p is the intra-similarity pooled over models and
+    Human_p's slot is taken by the inter-similarity pooled over distinct model pairs.
+    """
+    key = ["language", "prompt_id"]
+    same = intra.groupby(key)["intra_sim"].mean().rename("llm").reset_index()
+    diff = inter.groupby(key)["inter_sim"].mean().rename("human").reset_index()  # column name kept for _paired_tests
+    m = same.merge(diff, on=key, how="inner")
+    m = m.assign(gap=m["llm"] - m["human"])
+    yield "general", "all", None, m
+    for lang, sub in m.groupby("language"):
+        yield "language", lang, lang, sub
+
+
 # ---------------------------------------------------------------------------
 # Driver
 # ---------------------------------------------------------------------------
@@ -179,6 +198,7 @@ def run(intra: pd.DataFrame, inter: pd.DataFrame | None, human: pd.DataFrame,
     sources = [("intra", intra_frames(intra, human, families))]
     if inter is not None:
         sources.append(("cross", cross_frames(inter, human, families)))
+        sources.append(("ladder", ladder_frames(intra, inter)))
     for comparison, frames in sources:
         for level, group, lang, pf in frames:
             r = {"comparison": comparison, "level": level, "group": group, "language": lang}
