@@ -168,9 +168,19 @@
   "max_pos": 4096
  },
  "CohereLabs/aya-expanse-8b": {
-  "error": "403 Client Error. (Request ID: Root=1-6ac36543-2ecc92663c73386742952cbf;162bacd1"
+  "dtype": "float16",
+  "quant": "",
+  "arch": [
+   "CohereForCausalLM"
+  ],
+  "max_pos": 8192
  },
  "CohereLabs/aya-expanse-32b": {
-  "error": "403 Client Error. (Request ID: Root=1-6ac36543-6583a25174c22eb735a85d21;f275ccc6"
+  "dtype": "float16",
+  "quant": "",
+  "arch": [
+   "CohereForCausalLM"
+  ],
+  "max_pos": 8192
  }
 }

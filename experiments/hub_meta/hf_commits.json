@@ -1626,12 +1626,430 @@
    "title": "initial commit"
   }
  ],
- "CohereLabs/aya-expanse-8b": {
-  "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ac3644a-0324297f083224ea54b60206;e60b222f-58d0-4fda-ae15-9365cef6f89e)\n\nCannot ac"
- },
- "CohereLabs/aya-expanse-32b": {
-  "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ac3644a-45cfef027bb5e8095ccf5d45;deff4c3f-c151-4ab7-b4ab-710e021d2093)\n\nCannot ac"
- },
+ "CohereLabs/aya-expanse-8b": [
+  {
+   "sha": "5062468bf9bc0c6035fd64e06274333ec127d980",
+   "date": "2026-01-09T23:07:58+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "554c52e22d0f713bab9d3e360734d25cd15dda16",
+   "date": "2025-09-11T09:02:03+00:00",
+   "title": "Update assets via Huggy"
+  },
+  {
+   "sha": "967546185e2ab26f1b023db734e9c3a19aab0fa4",
+   "date": "2025-09-11T09:02:01+00:00",
+   "title": "Update README via Huggy"
+  },
+  {
+   "sha": "574bdb00b4dbbacae3d9666906045bafe5a5b44f",
+   "date": "2025-07-31T11:03:08+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "0ad43ec1e309e1351faa4b1d22713c065e37359a",
+   "date": "2025-04-15T21:47:19+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "06c357cc67254f80f51618b5710fae3f22876b55",
+   "date": "2025-04-15T21:29:14+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "fa82075a96f2d29dd30787b6cabfb0e7616a7fdd",
+   "date": "2025-04-15T08:49:09+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "0f7167f3c60d3530b415b4d4f0aac862e74ba4df",
+   "date": "2025-03-02T20:39:09+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2e80719ca010b26708e1cc7b0d5ededa5ec0c9bd",
+   "date": "2025-03-02T20:30:42+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d10159f8405826732641ce11c6892459d447d48c",
+   "date": "2024-12-06T15:43:04+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e46040a1bebe4f32f4d2f04b0a5b3af2c523d11b",
+   "date": "2024-10-30T13:46:42+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "bd3578acd4536796645a81067bc6ba70fb54a30b",
+   "date": "2024-10-30T13:29:46+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "c860e06308f12f16568fd7eba488aeba220c1a78",
+   "date": "2024-10-30T07:14:24+00:00",
+   "title": "Upload winrates_dolly.png"
+  },
+  {
+   "sha": "0c40ce92d52503e61f9b3e1172170066491a2845",
+   "date": "2024-10-30T06:42:09+00:00",
+   "title": "Update config.json"
+  },
+  {
+   "sha": "c6341ebec32dbde90612f77d595af86bad7f97a9",
+   "date": "2024-10-29T04:38:28+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "fd23c4170edbee13bd0f0d90d806adc8e5716a8f",
+   "date": "2024-10-29T04:34:41+00:00",
+   "title": "Upload winrates_dolly.png"
+  },
+  {
+   "sha": "1a4d18bb0e29096add70f89968fc708e63fe5397",
+   "date": "2024-10-29T04:29:52+00:00",
+   "title": "Upload winrates_marenahard_complete.png"
+  },
+  {
+   "sha": "48eee4d94465314247d1e9c144739c1eaec5d648",
+   "date": "2024-10-29T04:28:17+00:00",
+   "title": "Upload winrates_marenahard_complete.png"
+  },
+  {
+   "sha": "98f16cbf5ca9d25fca9f9bb3ea333ef5703a6f8a",
+   "date": "2024-10-28T10:57:35+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "23390c4e28f5de81cb0dba46705cd88ae8000bfc",
+   "date": "2024-10-28T08:19:47+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6e54f868c82b922413a6b054eb3068ef9fc398ac",
+   "date": "2024-10-28T08:12:11+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b9848575c8731981dfcf2e1f3bfbcb917a2e585d",
+   "date": "2024-10-24T10:10:17+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "cbaee9f1104625843d1fe1b1eb7fbde5c069b787",
+   "date": "2024-10-24T05:20:49+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3ab2aa89805f26124c32a162377cae5ee87434dd",
+   "date": "2024-10-24T05:19:56+00:00",
+   "title": "Upload winrates_by_lang.png"
+  },
+  {
+   "sha": "99bb0ea74e7f3041933e8ce0f46b19866bf1faa8",
+   "date": "2024-10-24T04:08:30+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c0695968a07478cdc0299aada345f4c9af3a45cc",
+   "date": "2024-10-24T01:01:26+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "9d4e340f2674205416469ea70290a1d62680d5b1",
+   "date": "2024-10-24T00:59:42+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "658da4c138b349d1dacc969dd8349f80ba78513b",
+   "date": "2024-10-23T23:44:25+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "220c7834eda96a0930f80bd72d703653c7d03072",
+   "date": "2024-10-23T23:35:25+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2bf9d9e605373f04ce126c8a8240eaa95bf82122",
+   "date": "2024-10-23T23:31:42+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3488e28d07d9a710e886198551c9b1e69857bd5c",
+   "date": "2024-10-23T23:08:28+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "0a4aba4ab646d3c8cef4c8004b10f4a9d9bdd8fd",
+   "date": "2024-10-23T22:59:27+00:00",
+   "title": "Rename Step by Step Improvement in Win-Rates Against Gemma-2 9B.png to winrates_step_by_step.png"
+  },
+  {
+   "sha": "da51be52859430923c6947270c810c278dfa874e",
+   "date": "2024-10-23T22:59:00+00:00",
+   "title": "Rename Aya Expanse 8B Win Rates (m-ArenaHard).png to winrates_marenahard.png"
+  },
+  {
+   "sha": "7fafde0ba693c33b8ae1684c864bfc9d75dc8e3e",
+   "date": "2024-10-23T22:58:35+00:00",
+   "title": "Upload 2 files"
+  },
+  {
+   "sha": "4c95323c66188a13f76a425fc313771d42846514",
+   "date": "2024-10-23T22:28:16+00:00",
+   "title": "Upload aya-expanse-8B.png"
+  },
+  {
+   "sha": "01733e329b187b4d46b64f68a287cbe4be5d29e5",
+   "date": "2024-10-23T22:26:38+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d0d570852421544eafaa925bf9fc0000e919b8a0",
+   "date": "2024-10-23T22:25:25+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6b2abb19e922eeb20ef57a73afbee78d0e854852",
+   "date": "2024-10-23T09:33:24+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "d4d1f0bf0b497deb7eb889c2f23a18633ff29e0a",
+   "date": "2024-10-23T06:37:22+00:00",
+   "title": "Upload tokenizer"
+  },
+  {
+   "sha": "1a58dae11c4bf3193d9fb461433e3a8749c78561",
+   "date": "2024-10-23T06:37:17+00:00",
+   "title": "Upload CohereForCausalLM"
+  },
+  {
+   "sha": "a6ac04fed64fafe478955844af5ec60ad9f70d34",
+   "date": "2024-10-23T06:34:13+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "CohereLabs/aya-expanse-32b": [
+  {
+   "sha": "b306ea27e360683b50c005d7fcbad6a242317910",
+   "date": "2026-01-09T23:08:52+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c84f816282293069bbfc2049ed7c32883e4d6580",
+   "date": "2025-09-11T09:02:16+00:00",
+   "title": "Update assets via Huggy"
+  },
+  {
+   "sha": "613ec3ecd62a5455db662f74709562d69bc16905",
+   "date": "2025-09-11T09:02:15+00:00",
+   "title": "Update README via Huggy"
+  },
+  {
+   "sha": "2963cf90c3a69ca9b65db9224804f377e0e11141",
+   "date": "2025-07-31T11:03:24+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "92ef6bfd7832b687474a79fba8badc0c286bed58",
+   "date": "2025-06-12T06:43:05+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "94bda1dcb97d260f732d230b832c7c685ae91e23",
+   "date": "2025-04-15T21:49:03+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "9000aa3a7786a19e1e1d5df8f724f82f2fd1014c",
+   "date": "2025-04-15T21:30:01+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a0a3a12ad1cba50c446aee5e415363b40979ff27",
+   "date": "2025-04-15T08:47:58+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c8c298c93cf33a47cd43c1c76f23235a8992ea33",
+   "date": "2025-03-22T09:37:08+00:00",
+   "title": "fix citation"
+  },
+  {
+   "sha": "0d86aea1e41a90605adda8c646f1033022597256",
+   "date": "2025-03-22T09:36:25+00:00",
+   "title": "add citation"
+  },
+  {
+   "sha": "3b7cf21e8850d7d459f3a23b51b4d0cc8022324f",
+   "date": "2025-03-02T20:43:16+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "edd25f1107cd806b3fb779c61c210d804202f5ce",
+   "date": "2024-12-06T15:43:26+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c1df2547e1f5fe22e1f4897f980f231dc74cfc27",
+   "date": "2024-11-01T01:34:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ebe0e71ddf09a6d56f411195a3df86455c0e79be",
+   "date": "2024-11-01T01:33:04+00:00",
+   "title": "Upload winrates_dolly_32b.png"
+  },
+  {
+   "sha": "43b5f4b48f38396ab2505df8ae2f0127f3a011a9",
+   "date": "2024-10-30T13:29:33+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "6807ad287400271995d6573122a47ea431fe3589",
+   "date": "2024-10-30T07:12:09+00:00",
+   "title": "Update config.json"
+  },
+  {
+   "sha": "ae89eda46ad3d686cb33abda90712e07c66f7314",
+   "date": "2024-10-29T04:57:09+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2d59d1799dbbaec9a7dd23286ed9ffa31819c6e3",
+   "date": "2024-10-29T04:53:50+00:00",
+   "title": "Upload winrates_marenahard_complete.png"
+  },
+  {
+   "sha": "a8643b0d7cbe14ca1fb9cd37137c30664d664161",
+   "date": "2024-10-28T10:57:53+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8a1625ee20e62ff64d57d31c255e88b0e4c2cb24",
+   "date": "2024-10-28T08:20:11+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "bed35b7492ae6ba7db83c8d263973e65b2b34f83",
+   "date": "2024-10-28T08:10:57+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "7cb67a63376327107a68c449133b69a247fc6b84",
+   "date": "2024-10-28T08:08:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "99e639a02a53fcac43167c47aef510a165207570",
+   "date": "2024-10-28T08:07:57+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "08b69cfa4240e2009c80ad304f000b491d1b8c38",
+   "date": "2024-10-24T10:09:38+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "22f2383a8747ece75300334b14cb5b87ced43589",
+   "date": "2024-10-24T04:09:29+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "079310b5bb98b50dcc8059652506afa97000ccf0",
+   "date": "2024-10-24T01:03:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "539874204087bc77031d228d3081b30af0255e14",
+   "date": "2024-10-23T23:44:57+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a810c039b35793232b07b47db4de2b893859fa05",
+   "date": "2024-10-23T23:37:00+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "7f9140f083ebae96795d8171e7e9396e7231754c",
+   "date": "2024-10-23T23:07:09+00:00",
+   "title": "update code example in readme"
+  },
+  {
+   "sha": "d96f6cea3be5f8ed334499be15b46a7036ad0775",
+   "date": "2024-10-23T22:56:15+00:00",
+   "title": "Rename winrates_marenahard.png.png to winrates_marenahard.png"
+  },
+  {
+   "sha": "a84dffb8616f82662a08a5695bdd5acbae6b9dc0",
+   "date": "2024-10-23T22:55:35+00:00",
+   "title": "Upload winrates_marenahard.png.png"
+  },
+  {
+   "sha": "10870c852b54bc69994be325590c80b38c37f0c4",
+   "date": "2024-10-23T22:54:32+00:00",
+   "title": "Delete winrates_marenahard.png"
+  },
+  {
+   "sha": "e2da5dc1b59837f1af57167b89b2f22512882100",
+   "date": "2024-10-23T22:46:43+00:00",
+   "title": "Delete winrates_step_by_step.png"
+  },
+  {
+   "sha": "7432e4b521f0901391bd207dcd3613664a77f24f",
+   "date": "2024-10-23T22:46:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "5b1cc05a5536adc7c5d5b3e0de18e11ac3050f14",
+   "date": "2024-10-23T22:44:53+00:00",
+   "title": "Upload 2 files"
+  },
+  {
+   "sha": "23a4367c03dd707485ec8707a9149cf1337592e1",
+   "date": "2024-10-23T22:28:45+00:00",
+   "title": "Upload aya-expanse-32B.png"
+  },
+  {
+   "sha": "d0ad1c0165ce6169ae1b1c05136ce11d9251dcc4",
+   "date": "2024-10-23T22:26:34+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8b5a2b6388f60431b8e136d34213b4be11632c3c",
+   "date": "2024-10-23T22:25:33+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2f3547dfd2f163dac60f41d2b82e95dd7f479009",
+   "date": "2024-10-23T22:17:07+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "7559228fb2c0e6e4adf22358aa6649f527f67ae3",
+   "date": "2024-10-23T09:34:17+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "5c2d9bbef3af7317101f618ac3908a4d6c009098",
+   "date": "2024-10-23T06:54:20+00:00",
+   "title": "Upload tokenizer"
+  },
+  {
+   "sha": "49fd6bf409a1f95acb06144c6bb92f553092b654",
+   "date": "2024-10-23T06:54:07+00:00",
+   "title": "Upload CohereForCausalLM"
+  },
+  {
+   "sha": "efeed24fb135f91456d2b0349719a445aaf05b03",
+   "date": "2024-10-23T06:42:44+00:00",
+   "title": "initial commit"
+  }
+ ],
  "BAAI/bge-m3": [
   {
    "sha": "5617a9f61b028005a4858fdac845db406aefb181",
