@@ -28,6 +28,8 @@ ST_PROMPT_NAME = {"google/embeddinggemma-300m": "Clustering"}
 # Loaded models are reused across generation models -- run() embeds 23 x 2 text sets
 # per sweep and reloading a 500M-param encoder each time dominates the runtime.
 _ST_CACHE: dict[str, object] = {}
+ST_HALF = False   # set by --fp16: load sentence-transformers encoders in float16
+_HUMAN_CACHE: dict[tuple, np.ndarray] = {}   # human embeddings reused across generation models
 
 
 def detect_embed_backend(embed_model: str) -> str:
@@ -53,7 +55,8 @@ def _embed_openai(texts: list[str], model: str, batch_size: int = 100) -> np.nda
 def _load_st(model: str, max_seq_length: int | None):
     from sentence_transformers import SentenceTransformer
     if model not in _ST_CACHE:
-        enc = SentenceTransformer(model)
+        import torch
+        enc = SentenceTransformer(model, model_kwargs={"torch_dtype": torch.float16} if ST_HALF else None)
         if max_seq_length:
             enc.max_seq_length = max_seq_length
         print(f"loaded {model} on {enc.device} (max_seq_length={enc.max_seq_length})")
@@ -69,8 +72,15 @@ def _embed_st(texts: list[str], model: str, batch_size: int,
     kwargs = {}
     if model in ST_PROMPT_NAME:
         kwargs["prompt_name"] = ST_PROMPT_NAME[model]
-    return enc.encode(texts, batch_size=batch_size, normalize_embeddings=True,
-                      show_progress_bar=True, **kwargs)
+    out = enc.encode(texts, batch_size=batch_size, normalize_embeddings=True,
+                     show_progress_bar=True, **kwargs)
+    # Apple MPS keeps freed blocks cached; release them between calls or a long
+    # sweep runs out of GPU memory after a few models.
+    import gc, torch
+    gc.collect()
+    if torch.backends.mps.is_available():
+        torch.mps.empty_cache()
+    return np.asarray(out, dtype=np.float32)
 
 
 def embed(texts: list[str], embed_model: str, batch_size: int | None = None,
@@ -81,9 +91,25 @@ def embed(texts: list[str], embed_model: str, batch_size: int | None = None,
 
 
 def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path,
-             batch_size: int | None = None, max_seq_length: int | None = None):
-    """Embed and save outputs for a single generation model."""
-    slug = f"{gen_model.replace('/', '_')}__{embed_model.replace('/', '_')}"
+             batch_size: int | None = None, max_seq_length: int | None = None,
+             truncate_chars: int | None = None, samples_per_prompt: int | None = None):
+    """Embed and save outputs for a single generation model.
+
+    With `truncate_chars`, every LLM and human response is cut to its first N
+    characters before embedding (the length control of the lexical metric,
+    applied in embedding space) and the embed-model slug gets a `_trunc{N}`
+    suffix, so run_metrics / run_prompt_tests see it as a separate space.
+    """
+    embed_slug = (embed_model.replace('/', '_') + (f"_trunc{truncate_chars}" if truncate_chars else "")
+                  + (f"_s{samples_per_prompt}" if samples_per_prompt else ""))
+    slug = f"{gen_model.replace('/', '_')}__{embed_slug}"
+    if samples_per_prompt:
+        df = df[df["sample_idx"] < samples_per_prompt].reset_index(drop=True)
+    if truncate_chars:
+        df = df.assign(
+            response_text=df["response_text"].fillna("").str.slice(0, truncate_chars),
+            human_responses=df["human_responses"].apply(
+                lambda hs: [str(h)[:truncate_chars] for h in (list(hs) if hs is not None else [])]))
 
     if (out_dir / f"{slug}_llm.npy").exists():
         print(f"[{gen_model}] embeddings already exist, skipping")
@@ -107,8 +133,17 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path,
     )
     human_df["human_idx"] = human_df.groupby("prompt_id").cumcount()
 
-    print(f"[{gen_model}] embedding {len(human_df)} human responses ...")
-    human_emb = embed(human_df["response_text"].tolist(), embed_model, batch_size, max_seq_length)
+    # The human answers are the same 1183 texts for every generation model, so embed
+    # them once per (embedder, truncation) and reuse within the sweep.
+    human_texts = human_df["response_text"].tolist()
+    hkey = (embed_slug, tuple(human_texts))
+    if hkey in _HUMAN_CACHE:
+        print(f"[{gen_model}] reusing cached human embeddings")
+        human_emb = _HUMAN_CACHE[hkey]
+    else:
+        print(f"[{gen_model}] embedding {len(human_df)} human responses ...")
+        human_emb = embed(human_texts, embed_model, batch_size, max_seq_length)
+        _HUMAN_CACHE.clear(); _HUMAN_CACHE[hkey] = human_emb
     elapsed = round(time.time() - t0, 1)
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -130,6 +165,9 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path,
         "max_seq_length": (int(_ST_CACHE[embed_model].max_seq_length)
                            if embed_model in _ST_CACHE else None),
         "prompt_name": ST_PROMPT_NAME.get(embed_model),
+        "truncate_chars": truncate_chars,
+        "samples_per_prompt": samples_per_prompt,
+        "fp16": ST_HALF,
         "elapsed_seconds": elapsed,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
     }
@@ -138,7 +176,8 @@ def _run_one(gen_model: str, df: pd.DataFrame, embed_model: str, out_dir: Path,
 
 
 def run(gen_parquet: Path, embed_model: str, out_dir: Path, model_filter: str | None = None,
-        batch_size: int | None = None, max_seq_length: int | None = None):
+        batch_size: int | None = None, max_seq_length: int | None = None,
+        truncate_chars: int | None = None, samples_per_prompt: int | None = None):
     df = (pd.read_parquet(gen_parquet)
           .sort_values(["prompt_id", "sample_idx"])
           .reset_index(drop=True))
@@ -150,7 +189,7 @@ def run(gen_parquet: Path, embed_model: str, out_dir: Path, model_filter: str | 
 
     for gen_model, model_df in df.groupby("model"):
         _run_one(gen_model, model_df.reset_index(drop=True), embed_model, out_dir,
-                 batch_size, max_seq_length)
+                 batch_size, max_seq_length, truncate_chars, samples_per_prompt)
 
 
 if __name__ == "__main__":
@@ -164,9 +203,19 @@ if __name__ == "__main__":
                     help="Encode batch size (default: 100 OpenAI, 32 sentence-transformers)")
     ap.add_argument("--max-seq-length", type=int, default=None,
                     help="Override the encoder's token limit; omit to use its native default")
+    ap.add_argument("--gen-parquet", type=Path, default=None,
+                    help="A single consolidated generations parquet (e.g. results/all_generations.parquet) "
+                         "to use instead of the per-model files in --raw-dir")
+    ap.add_argument("--truncate-chars", type=int, default=None,
+                    help="Cut every response to its first N characters before embedding (length control)")
+    ap.add_argument("--samples-per-prompt", type=int, default=None,
+                    help="Keep only sample_idx < N per prompt (deterministic subset; slug gets _sN)")
+    ap.add_argument("--fp16", action="store_true", help="Load sentence-transformers encoders in float16")
     args = ap.parse_args()
+    ST_HALF = args.fp16
 
-    parquets = sorted(args.raw_dir.glob("*.parquet"))
+    parquets = [args.gen_parquet] if args.gen_parquet else sorted(args.raw_dir.glob("*.parquet"))
     for p in parquets:
         run(p, args.embed_model, args.out_dir, model_filter=args.model or None,
-            batch_size=args.batch_size, max_seq_length=args.max_seq_length)
+            batch_size=args.batch_size, max_seq_length=args.max_seq_length,
+            truncate_chars=args.truncate_chars, samples_per_prompt=args.samples_per_prompt)

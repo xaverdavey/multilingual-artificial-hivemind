@@ -24,7 +24,8 @@ GEN_CUTOFF = "2026-05-27"   # generation finished before the embedding run of 20
 
 METRICS = [("text-embedding-3-small", "text-embedding-3-small"),
            ("char4gram", "char 4-gram Jaccard"),
-           ("char4gram_trunc500", "Jaccard, 500-char cap")]
+           ("char4gram_trunc500", "Jaccard, 500-char cap"),
+           ("BAAI_bge-m3_trunc500_s10", "BGE-M3, 500-char cap")]
 LEVELS = [("intra", "family", "Intra-model: per family"),
           ("intra", "model", "Intra-model: per model"),
           ("intra", "language", "Intra-model: per language"),
