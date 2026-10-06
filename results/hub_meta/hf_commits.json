@@ -1,0 +1,1926 @@
+{
+ "Qwen/Qwen3-0.6B": [
+  {
+   "sha": "c1899de289a04d12100db370d81485cdf75e47ca",
+   "date": "2025-07-26T03:46:27+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "e6de91484c29aa9480d55605af694f39b081c455",
+   "date": "2025-05-21T06:24:30+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "7e4ae267688d671ddfca3122e4528ee980cf3234",
+   "date": "2025-05-19T07:39:20+00:00",
+   "title": "update tokenizer_config.json"
+  },
+  {
+   "sha": "6130ef31402718485ca4d80a6234f70d9a4cf362",
+   "date": "2025-04-29T08:56:31+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a9c98e602b9d36d2a2f7ba1eb0f5f31e4e8e5143",
+   "date": "2025-04-28T19:11:51+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "f4863e37bee8eb683cd9261b13d9a87957ac7d88",
+   "date": "2025-04-28T18:58:51+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "75234702817ccb8dd24dcb274e71634fcaf36ca4",
+   "date": "2025-04-28T18:00:18+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "715e27a98247ec527ede6d19f625dc20eef740bb",
+   "date": "2025-04-28T17:29:17+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "16706fc57485378d4ffaf54139b29ccc66ae08fa",
+   "date": "2025-04-28T17:28:23+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "a819064c8d306516bf18ef0d2ff3746f5458e81e",
+   "date": "2025-04-28T17:27:15+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "e178a197683d44eb9f9037b1483c1e66b04716f5",
+   "date": "2025-04-28T17:25:44+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "271af0b2cae7bf641ff37011b6a0af0bc9d0ad5b",
+   "date": "2025-04-28T17:24:55+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "cfa73abb04ab09db43f255c9acf2c6d74c36e9b7",
+   "date": "2025-04-28T15:38:34+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ea7997de357ff2cd8acc87aae85d21467dbf65cd",
+   "date": "2025-04-28T15:35:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "5cdf60dec0389cdfcf33990474f65f682f236c3c",
+   "date": "2025-04-28T13:31:08+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6fad4ed78287aed0c84adb7f53df570363b697f4",
+   "date": "2025-04-28T13:05:58+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ec0dcdfc641f7a94f8e969d459caa772b9c01706",
+   "date": "2025-04-28T12:31:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a08cec3036ee1085a4863a0b730e5d3f1c2f8d04",
+   "date": "2025-04-28T08:27:55+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1c2706d36809b5cc95a4f8c12fa727520e8c174e",
+   "date": "2025-04-28T05:34:04+00:00",
+   "title": "Delete configuration.json"
+  },
+  {
+   "sha": "749a61e849b1b8e882efa25bfa5b0a5d7def8ae6",
+   "date": "2025-04-28T05:33:57+00:00",
+   "title": "Delete .mv"
+  },
+  {
+   "sha": "9adc26d8802f11bc21c431e74857666ba81021f2",
+   "date": "2025-04-28T05:33:39+00:00",
+   "title": "Delete .msc"
+  },
+  {
+   "sha": "66b95ce14c07166297fcbfb54aa20441af8f9d75",
+   "date": "2025-04-28T05:19:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "167b8104f88905a951069f5f95f9776908da5f68",
+   "date": "2025-04-28T05:19:05+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "e15642e70ccce3aa9502aa40dfa4a1d5f35e7b2c",
+   "date": "2025-04-27T03:40:08+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-1.7B": [
+  {
+   "sha": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+   "date": "2025-07-26T03:46:32+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "0060bc56d46589041c1048efd1a397421b1142b5",
+   "date": "2025-05-21T06:23:18+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "0ecc654158dd093daab47fd37c5f122925d93983",
+   "date": "2025-05-19T07:40:08+00:00",
+   "title": "update tokenizer_config.json"
+  },
+  {
+   "sha": "d3e258980a49b060055ea9038dad99d75923f7c4",
+   "date": "2025-04-29T08:55:53+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "bf6c947bcec6629e4c0d4b0e82d7a19e686c19a1",
+   "date": "2025-04-28T19:11:32+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "44c895567ee7eca2993a98be9664adf7245aa1ee",
+   "date": "2025-04-28T18:55:23+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "33c22367980803f9f97d0f81ecc446b64cc02dfc",
+   "date": "2025-04-28T17:58:40+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d725c74310cdd265b5bc7208124d0b0be61261bc",
+   "date": "2025-04-28T17:58:10+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b9352fbb8ce704292730cf54b3b1dceb2a808738",
+   "date": "2025-04-28T17:48:04+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "7794bc70d4bae176d4792c6cbce61a7fedd43c3e",
+   "date": "2025-04-28T17:47:52+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "9cbdf162e240a9d503f3f4168dad04a80e8e6c9e",
+   "date": "2025-04-28T17:47:31+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "026ef898ee93472ecf27df9ea89c651fba82ad6a",
+   "date": "2025-04-28T15:38:56+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "0fa42c2d7d84b04fafae145d7c0263b77225bbc8",
+   "date": "2025-04-28T15:35:14+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2fe16eaf483fcfb9a8364d357c1f80709a7962cd",
+   "date": "2025-04-28T13:05:46+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "442b4a6d6b660ceced0ebf94db6d058e9f5dbca9",
+   "date": "2025-04-28T12:32:19+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3f1b00af457d7003d437d3e65dbd0e2c0afb1415",
+   "date": "2025-04-28T08:24:08+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8d4744f9e13072f4920c326350fa81eedb74eae9",
+   "date": "2025-04-28T05:44:48+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "c52c071034e311bc8721ab37965e500f3f4b4ed0",
+   "date": "2025-04-27T03:41:05+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-4B-Instruct-2507": [
+  {
+   "sha": "cdbee75f17c01a7cc42f958dc650907174af0554",
+   "date": "2025-09-17T06:56:53+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "eb25fbe4f35f7147763bc24445679d1c00588d89",
+   "date": "2025-08-06T11:08:47+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1b4199c4f36b0cef378bfb12390c18780c18af4c",
+   "date": "2025-08-05T11:00:32+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "e7974da369bd887ad4f10a072ec4f933ac5391bf",
+   "date": "2025-08-05T10:58:03+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-8B": [
+  {
+   "sha": "b968826d9c46dd6066d109eabc6255188de91218",
+   "date": "2025-07-26T03:49:13+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "9c925d64d72725edaf899c6cb9c377fd0709d9c5",
+   "date": "2025-05-21T06:11:51+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "895c8d171bc03c30e113cd7a28c02494b5e068b7",
+   "date": "2025-05-19T07:46:12+00:00",
+   "title": "update tokenizer_config.json"
+  },
+  {
+   "sha": "2069b3fae1114555f3c020c81410e51fa0f656f2",
+   "date": "2025-04-29T08:54:04+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a80f5e57cce20e57b65145f4213844dec1a80834",
+   "date": "2025-04-28T19:10:43+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "952491a843edb216f04e22ed87a00d0a50f29771",
+   "date": "2025-04-28T18:56:35+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a0809d1efaf104a46bbc2acaecd69617e9696312",
+   "date": "2025-04-28T18:21:05+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e8bbd8252970581ea5b08b6a5b3e668adaf3161a",
+   "date": "2025-04-28T18:20:23+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "f4b2181bec1955d08e99fb58c6ac34fbea536301",
+   "date": "2025-04-28T18:20:09+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "e59adc076be4766c2c201adb61d350e5a07c3c95",
+   "date": "2025-04-28T18:03:32+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "90bb9b8a6d426ebaed1861fda9e5435d2f0984c0",
+   "date": "2025-04-28T17:57:07+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d117af2f304f02a8647f88fe05b61cfb405a1d9e",
+   "date": "2025-04-28T15:39:29+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "5844a1fe6ee30bfa1edd6ac8f289b3f672e0605d",
+   "date": "2025-04-28T15:36:32+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3176aa2f8208eef36b75cff032a15b0ef25fae1d",
+   "date": "2025-04-28T13:41:53+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "199bdb8afe34722924b42f2c4890b1d234a12344",
+   "date": "2025-04-28T13:06:28+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1808139acb3a01b52eb3a2cf54defbc8a163146e",
+   "date": "2025-04-28T08:18:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "47719a242beab8f9aecc40ce3928b034dd5dd559",
+   "date": "2025-04-28T06:31:52+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "6a51b0c82d5d49ce603b1cc844bd83de580b0f1d",
+   "date": "2025-04-27T03:42:21+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-14B": [
+  {
+   "sha": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+   "date": "2025-07-26T03:49:23+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "8268fe3026cb304910457689366670e803a6fd56",
+   "date": "2025-05-21T06:22:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ec3b5103878832857b9e0f6ab32eb37ee5e28e9a",
+   "date": "2025-05-19T07:41:02+00:00",
+   "title": "update tokenizer_config.json"
+  },
+  {
+   "sha": "231c69a380487f6c0e52d02dcf0d5456d1918201",
+   "date": "2025-04-29T08:53:19+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3cd050e7238ebb5dca9beaf84d5eed6775180e21",
+   "date": "2025-04-28T19:10:24+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c4ea67b6267795ac3ad6e6a3b6b8ea9bef401177",
+   "date": "2025-04-28T18:58:10+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d09ed4e283623fd976174a4a4ce16f1fd4c3db26",
+   "date": "2025-04-28T18:02:48+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ad3a9e3849a78233b499a29df000bf5cbd46e6d1",
+   "date": "2025-04-28T17:56:46+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1847c182e6a2076ee62b191ca778aea4b951334b",
+   "date": "2025-04-28T17:39:59+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "82958e5f417a2b0d583b8cdbf6c2297f662a2de0",
+   "date": "2025-04-28T17:39:34+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "8c0abbf31c3bb7ffdbc535e046dafc68ca29cb09",
+   "date": "2025-04-28T17:39:15+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d2bb60f543670a542437324bd0da68c6071b7b4e",
+   "date": "2025-04-28T15:39:43+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c51995bc3cfe4fea68904053b782e5f382722a8c",
+   "date": "2025-04-28T15:37:01+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c321b93f1a796e6c92322019caa857d961b089eb",
+   "date": "2025-04-28T13:33:11+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d17b97ca036704c156b50686b3f4551e224bbe03",
+   "date": "2025-04-28T13:06:49+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1ad250734e6f9d33dab640bd4d7af78370042f6a",
+   "date": "2025-04-28T08:25:45+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "bf314a70fa2e293ac1b7898cc07f348eea7e5f70",
+   "date": "2025-04-28T07:08:26+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a862f0314bcb4c84a35958b17c8377d4cd182b46",
+   "date": "2025-04-28T07:04:26+00:00",
+   "title": "Delete .mv"
+  },
+  {
+   "sha": "5ffe38cecc17d393b0ee6c6a7080bce1a51f6b98",
+   "date": "2025-04-28T07:04:17+00:00",
+   "title": "Delete .msc"
+  },
+  {
+   "sha": "95c99ffccec10b1228f526688895f80ac317bd12",
+   "date": "2025-04-28T07:04:09+00:00",
+   "title": "Delete configuration.json"
+  },
+  {
+   "sha": "f8c293defed9c6a8026291e8e7d780697e88d7af",
+   "date": "2025-04-28T06:57:06+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "90e3864e6b7041338cf5c928c38fc3f7bb94c5a9",
+   "date": "2025-04-27T03:42:45+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-32B": [
+  {
+   "sha": "9216db5781bf21249d130ec9da846c4624c16137",
+   "date": "2025-07-26T03:45:22+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "d47b0d4ae4b48fde975756bf360a63a9cca8d470",
+   "date": "2025-05-21T06:18:36+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a09d5ccb54a84a572fcde9e54da24ec6e5a4b4a2",
+   "date": "2025-05-19T07:43:51+00:00",
+   "title": "update tokenizer_config.json"
+  },
+  {
+   "sha": "30b8421510892303dc5ddd6cd0ac90ca2053478d",
+   "date": "2025-04-29T08:52:30+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ba1f828c09458ab0ae83d42eaacc2cf8720c7957",
+   "date": "2025-04-28T19:10:07+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c37ea5f01f7fe9759f621dc03022d2395f49f8b8",
+   "date": "2025-04-28T18:50:48+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c36b7534bc7164e32375e869644e3f5fee30218f",
+   "date": "2025-04-28T18:05:14+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "be2f1141516f604563b2d6e977e6c49fef3d53cb",
+   "date": "2025-04-28T18:03:46+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "e3a3f59b0423be17f9582d1755fd3d5449b31a1f",
+   "date": "2025-04-28T18:03:34+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "4d178d9d8010a8edbf0ad2ca4e176f78cf2653ab",
+   "date": "2025-04-28T17:56:20+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "395feeb458ce9f8cfa7ca0519adc9d4500688101",
+   "date": "2025-04-28T15:37:29+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b1f61437687238ecc9f8d31e8efccb481b7a39fb",
+   "date": "2025-04-28T13:38:38+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c141ee0d4e062b14f362f3a8774250e760979fe4",
+   "date": "2025-04-28T13:07:00+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "817577ec4edcf5edf303ad459b566514e9ce6339",
+   "date": "2025-04-28T10:36:26+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "940b12c09f7c9d6f3e7cf3046bc6b41564f568bf",
+   "date": "2025-04-28T09:30:15+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c6740cde69fed4893acae7deae8280ce459e827f",
+   "date": "2025-04-28T09:23:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "88f1f1f768125683838b79a2665fe96955f5984f",
+   "date": "2025-04-28T07:25:56+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1aecd22f7ae87d957e541aaf933345c33d8a3a26",
+   "date": "2025-04-28T07:23:26+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "4c0e0ce3a07d6be5c3e6a5e737306f324fabf710",
+   "date": "2025-04-27T03:52:59+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-30B-A3B-Instruct-2507": [
+  {
+   "sha": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+   "date": "2025-09-17T06:56:43+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "61082d4deaa4785f64943b443cbc2b5de7524fad",
+   "date": "2025-08-17T08:20:34+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3ffd1f50b179e643d839c86df9ffbbefcb0d5018",
+   "date": "2025-08-08T07:20:23+00:00",
+   "title": "Add 1M support (#12)"
+  },
+  {
+   "sha": "3d729a084f14c9502775d59d95c71385293f5518",
+   "date": "2025-07-30T16:04:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "01ee60ece4bb0c7a758003e9f45e4a9059b20594",
+   "date": "2025-07-29T13:24:58+00:00",
+   "title": "Update LICENSE"
+  },
+  {
+   "sha": "97f3f7d6f068582355b6fb44014a1b60e282636b",
+   "date": "2025-07-29T12:38:27+00:00",
+   "title": "Update generation_config.json"
+  },
+  {
+   "sha": "c950284c33dc1a4bfffbf8daf2c4e07ed9091cdc",
+   "date": "2025-07-29T12:34:10+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "fd5492ea24611e203da0b593be7916913e490362",
+   "date": "2025-07-29T12:11:03+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "bf8598538010d711f8ffa291159b0a4fae1182ef",
+   "date": "2025-07-29T12:09:31+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b01caadcff49193445cbedbf1c1cc56df0b297e9",
+   "date": "2025-07-29T12:06:36+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6af341f08d6225d84955cec2877fc5dff4f8e193",
+   "date": "2025-07-29T10:47:52+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "023ad300e0cf991b9e6aeacade6e7bc71185fe71",
+   "date": "2025-07-29T10:44:37+00:00",
+   "title": "Update generation_config.json"
+  },
+  {
+   "sha": "13b91ea9539e6cc1c464d15a6e053e40f3ca1845",
+   "date": "2025-07-29T09:51:28+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "014ba21af45252cbee7f327bda7d89743ec0e074",
+   "date": "2025-07-29T09:49:45+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "506b596cd795333e19fe42af1cc6ab558ec02a51",
+   "date": "2025-07-28T13:19:31+00:00",
+   "title": "Upload tokenizer.json"
+  },
+  {
+   "sha": "ee31d079a286d12eb477847d04b6e80e86153ef6",
+   "date": "2025-07-28T13:11:50+00:00",
+   "title": "Delete tokenizer.json"
+  },
+  {
+   "sha": "b92fe559a97985763a05d1965db70c2f7e353b78",
+   "date": "2025-07-28T13:11:12+00:00",
+   "title": "Create generation_config.json"
+  },
+  {
+   "sha": "97291689aa1d570fa5dfe204ddb77274a648fd77",
+   "date": "2025-07-28T13:03:36+00:00",
+   "title": "Create README.md"
+  },
+  {
+   "sha": "e67ac5d4218aa2fe8b3f095a2128e61f509f2511",
+   "date": "2025-07-28T12:57:43+00:00",
+   "title": "Update config.json"
+  },
+  {
+   "sha": "4457916f69bf6a9a24dfebd20608f00aeef2f349",
+   "date": "2025-07-28T07:42:35+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "c9051e5f23e735fd6549f86b616377617848a621",
+   "date": "2025-07-28T07:31:28+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-235B-A22B-Instruct-2507-FP8": [
+  {
+   "sha": "e156cb4efae43fbee1a1ab073f946a1377e6b969",
+   "date": "2025-09-17T06:53:28+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "c0eb82898e3da8fb6dd017e3e6698a5e37b3a3e6",
+   "date": "2025-07-30T15:51:00+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "7761019cd0f3d7094a245fcfcb124d7e5d498472",
+   "date": "2025-07-29T11:05:33+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ba82a1060073fa0ecdc70d7b1922ec071f60cf3e",
+   "date": "2025-07-21T15:52:52+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "23306b87f9cd2b141f7bf3391babcbfbab2f661d",
+   "date": "2025-07-21T13:56:08+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "5e4e621dc94b62460f92b9df324062a984c55e8c",
+   "date": "2025-07-21T12:45:10+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3b6a4f34d1e895bf4dcc6693269c8ea85d26577c",
+   "date": "2025-07-21T12:15:06+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "5d145b0ffbe0f2f07793bf0c228435b156a159a0",
+   "date": "2025-07-21T12:01:38+00:00",
+   "title": "Create LICENSE"
+  },
+  {
+   "sha": "652b9036a3d93443261dfe5ed47192ba859f14d3",
+   "date": "2025-07-21T11:58:32+00:00",
+   "title": "Update generation_config.json"
+  },
+  {
+   "sha": "c581b8ffb8fd4b5d527fbb87508b36d2a70fdcb1",
+   "date": "2025-07-21T11:57:34+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "0818ef1ddff88675cf28dcb5f526e6bfa4c60c19",
+   "date": "2025-07-21T11:56:28+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "e5baa61863bc70d835ed681b4131cb32920f11f6",
+   "date": "2025-07-21T11:55:04+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "b939f17ff56df5c734de72b3d06cb51164ac0489",
+   "date": "2025-07-21T11:54:29+00:00",
+   "title": "Update config.json"
+  },
+  {
+   "sha": "d29dc93a6c1520d3bd98304d16ae7834a1e1ef69",
+   "date": "2025-07-21T11:51:17+00:00",
+   "title": "Add files using upload-large-folder tool"
+  },
+  {
+   "sha": "eea830fd80bdc048c33b13391d7e3188fd468d4f",
+   "date": "2025-07-21T11:16:16+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "google/gemma-3-270m-it": [
+  {
+   "sha": "ac82b4e820549b854eebf28ce6dedaf9fdfa17b3",
+   "date": "2025-08-14T07:35:07+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "33b93ac2ef82d4029f965a88fd80ef0210e0a658",
+   "date": "2025-08-13T22:08:51+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b968cba48ecaef0684986919f3e8f6727c55a7de",
+   "date": "2025-08-13T22:06:51+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "779f228e7b4fa40a7b67c3772c6a649c7e543c8d",
+   "date": "2025-08-13T21:57:58+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "80a2b142ef04f089b5f3a1216f135c0ee9624632",
+   "date": "2025-08-12T22:14:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "84d8b4b40433df755c435c2a06001df6c39e68b5",
+   "date": "2025-08-11T08:36:56+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "9eb435253e3eb47d3f44fe39011f47d1d2576d44",
+   "date": "2025-08-06T05:46:19+00:00",
+   "title": "updating chat template for Gemma 3 270m IT"
+  },
+  {
+   "sha": "f21f1521c5300803138fc7522b59f6f444b83ae6",
+   "date": "2025-08-04T20:11:11+00:00",
+   "title": "Updating the weights for Gemma 3 270m"
+  },
+  {
+   "sha": "d9e83384fa5a4a68ef963944e3cf8132ba048953",
+   "date": "2025-07-30T18:30:12+00:00",
+   "title": "Gemma 3 270M"
+  },
+  {
+   "sha": "bb8bee3d3066c9c460e787d192af6898c9ecf056",
+   "date": "2025-07-30T18:06:27+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "google/gemma-3-1b-it": [
+  {
+   "sha": "dcc83ea841ab6100d6b47a070329e1ba4cf78752",
+   "date": "2025-04-04T13:12:40+00:00",
+   "title": "Update README.md (#13)"
+  },
+  {
+   "sha": "fa1e42a34b200b10a411be67f4d2c82cc2283c79",
+   "date": "2025-03-21T17:17:26+00:00",
+   "title": "Update README.md (#15)"
+  },
+  {
+   "sha": "417a7e01fafd60e69b3a8e8d868c26960467c11c",
+   "date": "2025-03-19T15:45:27+00:00",
+   "title": "Adding top_k and top_p to generation_config.json"
+  },
+  {
+   "sha": "9b99be88fdd7a2496bf644baade44348ad736c95",
+   "date": "2025-03-12T14:50:25+00:00",
+   "title": "Update EOS tokens (#5)"
+  },
+  {
+   "sha": "ed8bfca986c86de238c73647b039582c9c8fe564",
+   "date": "2025-03-12T08:29:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ca8476f4df74475f1809d85359c7e50010b6a886",
+   "date": "2025-03-12T06:31:03+00:00",
+   "title": "Update chat_template (#4)"
+  },
+  {
+   "sha": "6c0ce4ee3210e2b4d8f7b153b3111efa472c58b5",
+   "date": "2025-03-12T05:28:54+00:00",
+   "title": "Super-squash branch 'main' using huggingface_hub"
+  }
+ ],
+ "google/gemma-3-4b-it": [
+  {
+   "sha": "093f9f388b31de276ce2de164bdc2081324b9767",
+   "date": "2025-03-21T20:20:53+00:00",
+   "title": "Update README (#25)"
+  },
+  {
+   "sha": "31fa622bc2d63f14ab20aca8dfe5f9dab3eed4ea",
+   "date": "2025-03-21T17:16:52+00:00",
+   "title": "Update README.md (#24)"
+  },
+  {
+   "sha": "b11f99abc1c230b9980fe2ee0548366872bb85b4",
+   "date": "2025-03-19T15:47:24+00:00",
+   "title": "Adding top_k and top_p to generation_config.json"
+  },
+  {
+   "sha": "dbd91bbaf64a0e591f4340ce8b66fd1dba9ab6bd",
+   "date": "2025-03-12T08:30:08+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "34b1dc0e6539991d2740d576bcb3f61c2b0b5c9c",
+   "date": "2025-03-12T06:39:24+00:00",
+   "title": "Update chat_template (#6)"
+  },
+  {
+   "sha": "cf8f8525e9e9984d410dab2ea7f8a294ab58db8c",
+   "date": "2025-03-12T05:28:52+00:00",
+   "title": "Super-squash branch 'main' using huggingface_hub"
+  }
+ ],
+ "google/gemma-3-12b-it": [
+  {
+   "sha": "96b6f1eccf38110c56df3a15bffe176da04bfd80",
+   "date": "2025-03-21T20:28:56+00:00",
+   "title": "Update README.md (#15)"
+  },
+  {
+   "sha": "bf0e2fc26d49ac63634dfc5d4aa28a1f34cd0a18",
+   "date": "2025-03-21T17:17:41+00:00",
+   "title": "Update README.md (#14)"
+  },
+  {
+   "sha": "d82ecc1b79eba2aa13792d4ae3eadc2426565ee1",
+   "date": "2025-03-19T15:47:47+00:00",
+   "title": "Adding top_k and top_p to generation_config.json"
+  },
+  {
+   "sha": "7553b6f39c33dc229bfbfe3831f7bcdbb6b738c7",
+   "date": "2025-03-12T08:30:33+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6df4c7db8302b598354643ce6e2e26d731f57b21",
+   "date": "2025-03-12T06:39:30+00:00",
+   "title": "Update chat_template (#4)"
+  },
+  {
+   "sha": "3aa32c4736f797ef44063d373d5964b603f93be2",
+   "date": "2025-03-12T05:28:48+00:00",
+   "title": "Super-squash branch 'main' using huggingface_hub"
+  }
+ ],
+ "google/gemma-3-27b-it": [
+  {
+   "sha": "005ad3404e59d6023443cb575daa05336842228a",
+   "date": "2025-03-21T20:29:02+00:00",
+   "title": "Update README.md (#35)"
+  },
+  {
+   "sha": "d2a0c0320915aeddd467b48f52ab2b852f263372",
+   "date": "2025-03-21T17:18:21+00:00",
+   "title": "Update README.md (#34)"
+  },
+  {
+   "sha": "1ead709c7a8c9c35afd81a54c4250084a8bafbfa",
+   "date": "2025-03-19T15:50:07+00:00",
+   "title": "Adding top_k and top_p to generation_config.json"
+  },
+  {
+   "sha": "dfb98f29ff907e391ceed2be3834ca071ea260f1",
+   "date": "2025-03-12T08:30:59+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8ae719ae1a43126536815648486c07662eb0c08e",
+   "date": "2025-03-12T06:39:28+00:00",
+   "title": "Update chat_template (#3)"
+  },
+  {
+   "sha": "da8b0ba2016dcba78206e1191d7f07b6192f44d6",
+   "date": "2025-03-12T05:28:46+00:00",
+   "title": "Super-squash branch 'main' using huggingface_hub"
+  }
+ ],
+ "mistralai/Ministral-8B-Instruct-2410": [
+  {
+   "sha": "2f494a194c5b980dfb9772cb92d26cbb671fce5a",
+   "date": "2025-07-31T10:39:07+00:00",
+   "title": "Add layer types in HF config (#28)"
+  },
+  {
+   "sha": "603676c0e18d6d0b40bcb4ee61aa8b6319c5b202",
+   "date": "2025-07-28T17:22:18+00:00",
+   "title": "Update params.json"
+  },
+  {
+   "sha": "419f16802c74fa10c9b8b49ca55389dbd88785b3",
+   "date": "2025-07-24T16:49:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "36c2ff5b2075aae6d7b57f9a518bdad1d96e5a17",
+   "date": "2025-07-23T12:17:25+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "4847e87e5975a573a2a190399ca62cd266c899ad",
+   "date": "2024-12-06T19:34:03+00:00",
+   "title": "Ragged attention supported in vLLM (#18)"
+  },
+  {
+   "sha": "199e57c1d66379760f6413f79d27008d1d1dbd6e",
+   "date": "2024-11-15T18:53:33+00:00",
+   "title": "Update params.json"
+  },
+  {
+   "sha": "136841ef11149a59ef4a0e037e693b6f04527b14",
+   "date": "2024-11-15T18:53:11+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "05894f4c1a269ccce053c854da977fe06cad2d17",
+   "date": "2024-10-21T09:36:52+00:00",
+   "title": "Convert weights to HF format (#7)"
+  },
+  {
+   "sha": "df681271af0b0cb215ee6c6892ef19a1fb836748",
+   "date": "2024-10-18T08:23:20+00:00",
+   "title": "Delete passkey_example_2.json"
+  },
+  {
+   "sha": "225b9f108bb527e4ccba1c2c61d734e86735640a",
+   "date": "2024-10-18T08:23:09+00:00",
+   "title": "Create passkey_example.json"
+  },
+  {
+   "sha": "7a94c4f1f78b0f8aa0bc9426c23163bb39b9ccc8",
+   "date": "2024-10-18T08:22:45+00:00",
+   "title": "Rename passkey_example.json to passkey_example_2.json"
+  },
+  {
+   "sha": "8406c07ad3fc504d5e056922742ac221a6ce5742",
+   "date": "2024-10-16T15:09:04+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "7c405002390e94cc8900d8199aa87e020eb65c29",
+   "date": "2024-10-16T14:59:25+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2943a51744eae915acd68997374070ab51eed1cc",
+   "date": "2024-10-16T14:26:17+00:00",
+   "title": "Upload passkey_example.json with huggingface_hub"
+  },
+  {
+   "sha": "9e39cd4b1696762472cb81c7b51fe6913b3d5d7a",
+   "date": "2024-10-16T14:16:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "55fcc08d4124e8cdc7e40dafc26b666dd927d843",
+   "date": "2024-10-16T14:14:11+00:00",
+   "title": "Release 241016"
+  }
+ ],
+ "mistralai/Mistral-7B-Instruct-v0.3": [
+  {
+   "sha": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+   "date": "2025-12-03T12:13:48+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d537764226fbe39c85328238895914e5b6a98116",
+   "date": "2025-12-03T12:10:35+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "24777c054d5ea138c1e8cf8223c800e2d9ac98a6",
+   "date": "2025-12-03T12:09:52+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "0d4b76e1efeb5eb6f6b5e757c79870472e04bd3a",
+   "date": "2025-07-24T16:43:00+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e8076e29d36558c7fb37529100c6002f5ae12399",
+   "date": "2025-07-23T12:12:46+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e0bc86c23ce5aae1db576c8cca6f06f1f73af2db",
+   "date": "2024-08-21T12:18:25+00:00",
+   "title": "Create tokenizer.model"
+  },
+  {
+   "sha": "16be4d524ef2f7625d3f70c242afa895a0c8bf43",
+   "date": "2024-08-21T10:47:27+00:00",
+   "title": "Delete tokenizer.model"
+  },
+  {
+   "sha": "f67d0f47df7707eddf3fb61000e3e8713074f45c",
+   "date": "2024-08-20T16:49:38+00:00",
+   "title": "Clean up tool use snippet (#76)"
+  },
+  {
+   "sha": "469e42f1e0e95ce6a5c9cedd69f6cc7983bb9e80",
+   "date": "2024-08-19T13:16:59+00:00",
+   "title": "Add base_model metadata (#73)"
+  },
+  {
+   "sha": "b8ef225287903940a8fcc1f6e1016b29c5cc01f3",
+   "date": "2024-08-14T07:57:09+00:00",
+   "title": "Fix chat template when tool_calls is defined but None (#70)"
+  },
+  {
+   "sha": "3990259826cbb8da3eed2afa1d015b421906a750",
+   "date": "2024-08-05T09:08:49+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b0693ea4ce84f1a6a70ee5ac7c8efb0df82875f6",
+   "date": "2024-08-02T08:08:00+00:00",
+   "title": "Add tool calling support to chat template (#68)"
+  },
+  {
+   "sha": "0de8392dcdf23d03ad5239108107dea08ea935ca",
+   "date": "2024-07-30T13:47:45+00:00",
+   "title": "Update README.md (#65)"
+  },
+  {
+   "sha": "d79d1742f78eb0cc788c11e5b41a7539d7cb56ef",
+   "date": "2024-07-24T14:04:55+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "708a0609e640ac1edfb9020a7c934f51d34d6c79",
+   "date": "2024-07-17T17:21:28+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e8737b84b4470b28db3a0be719b362b1bd39a14d",
+   "date": "2024-07-17T17:21:02+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "43ee8f4afb6fc9e4304a8ed87aaa3a36a0e06939",
+   "date": "2024-07-17T17:20:47+00:00",
+   "title": "Align tokenizer with mistral-common (#51)"
+  },
+  {
+   "sha": "0417f4babd26db0b5ed07c1d0bc85658ab526ea3",
+   "date": "2024-06-24T08:30:57+00:00",
+   "title": "[AUTO] CVST Tokenizer Badger (#49)"
+  },
+  {
+   "sha": "b85b5dd49773d14b12c9d8666044cb83df4e4086",
+   "date": "2024-06-20T15:54:14+00:00",
+   "title": "Updating chat template, trying to make it match with `mistral_common` (#44)"
+  },
+  {
+   "sha": "83e9aa141f2e28c82232fea5325f54edf17c43de",
+   "date": "2024-05-22T16:34:42+00:00",
+   "title": "Add minor reference to transformers (#7)"
+  },
+  {
+   "sha": "adb7468dc0eb239b7df0ef6e57fc1ea2cfc499fa",
+   "date": "2024-05-22T15:54:46+00:00",
+   "title": "Update README.md (#4)"
+  },
+  {
+   "sha": "bb73aaeea236d1bbe51e1f0d8acd2b96bb7793b3",
+   "date": "2024-05-22T15:54:33+00:00",
+   "title": "Upload tokenizer (#6)"
+  },
+  {
+   "sha": "405950b9564feeced210f7c5d8089f76237b9861",
+   "date": "2024-05-22T15:54:22+00:00",
+   "title": "Update config.json (#3)"
+  },
+  {
+   "sha": "cac7ab316db559eda89b1d1f9a5410e1a6e1fc0a",
+   "date": "2024-05-22T15:52:09+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a3cd77bcd2b1ebb9f7423be7e5f15410e4e40507",
+   "date": "2024-05-22T15:17:17+00:00",
+   "title": "Upload tokenizer (#1)"
+  },
+  {
+   "sha": "73be8467cda0c529b0ebc0e21f7a669136aa6403",
+   "date": "2024-05-22T15:16:59+00:00",
+   "title": "Upload MistralForCausalLM (#2)"
+  },
+  {
+   "sha": "e6c44149ef086a8ec12b874217756773d3f63a6b",
+   "date": "2024-05-22T14:24:59+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "81241cb630ae87128934518d130147b74c8450d5",
+   "date": "2024-05-22T10:57:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8a35f9a609fbe9a54015c68942e2b25d5d32a759",
+   "date": "2024-05-22T10:34:47+00:00",
+   "title": "Merge branch 'main' of https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3"
+  },
+  {
+   "sha": "16a3e67b4df51bd3d15f3c6d1f13933db240db48",
+   "date": "2024-05-22T10:33:22+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "9a93e9095bd4a736fce752ea5cde0e620345250c",
+   "date": "2024-05-22T10:32:05+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "abbb488323393b26613ffbe7ba23528b1131e5c3",
+   "date": "2024-05-22T10:25:13+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "062d6296eacfb6b23f603635cbb5cfb0b05e85fb",
+   "date": "2024-05-22T10:16:08+00:00",
+   "title": "upload 7B instruct"
+  },
+  {
+   "sha": "fe4eac955443c0aa66d62b417a40fc7297a0905d",
+   "date": "2024-05-22T09:57:04+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "mistralai/Mistral-Nemo-Instruct-2407": [
+  {
+   "sha": "04d8a90549d23fc6bd7f642064003592df51e9b3",
+   "date": "2025-07-28T17:16:02+00:00",
+   "title": "Update params.json"
+  },
+  {
+   "sha": "1d3c1f6453d3b939b64934de7c7d78096c3c0a6a",
+   "date": "2025-07-24T16:47:22+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "f06107dd2948f59cb4bcb52010a8bb314ac66ef2",
+   "date": "2025-07-23T12:06:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8aedd450f2583e9c67fae1929f6936b8fc5aef9c",
+   "date": "2024-11-06T17:28:00+00:00",
+   "title": "fix position embeddings"
+  },
+  {
+   "sha": "e17a136e1dcba9c63ad771f2c85c1c312c563e6b",
+   "date": "2024-08-20T16:50:14+00:00",
+   "title": "Clean up tool use snippet (#75)"
+  },
+  {
+   "sha": "7d30db486de51251085ffad9a507bbc0efb9e34f",
+   "date": "2024-08-19T13:16:31+00:00",
+   "title": "Add base_model metadata (#73)"
+  },
+  {
+   "sha": "1e460658ee9d39dd535655a9bdc2f716f94db849",
+   "date": "2024-08-14T07:58:58+00:00",
+   "title": "Fix chat template when tool_calls is none and fix model input names (#67)"
+  },
+  {
+   "sha": "2036c14c32da982c71784315d4785195343fc639",
+   "date": "2024-08-02T08:07:26+00:00",
+   "title": "Add full tool calling support to chat template (#59)"
+  },
+  {
+   "sha": "16bd7875cfcddb94d3bd5af433110e9b892b76e4",
+   "date": "2024-07-31T09:43:48+00:00",
+   "title": "Fix chat template (#56)"
+  },
+  {
+   "sha": "71ede9cf9bc939e4e509bb520bd0552fedce849c",
+   "date": "2024-07-30T09:25:55+00:00",
+   "title": "Update README.md (#37)"
+  },
+  {
+   "sha": "fde0d593d7f08c09b42ff6483f9156579e71c5bf",
+   "date": "2024-07-26T21:31:28+00:00",
+   "title": "Fix typo in README (#39)"
+  },
+  {
+   "sha": "05b1e4f3e189ec1b5189fb3c973d4cf3369c27af",
+   "date": "2024-07-24T14:08:03+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "dac9c9e98f83322b32e32b48c118f079930772d6",
+   "date": "2024-07-19T11:01:20+00:00",
+   "title": "Set `clean_up_tokenization_spaces` to false (#13)"
+  },
+  {
+   "sha": "4f81d782477920634d0aad0dc620a7f1a3f5d471",
+   "date": "2024-07-18T22:42:41+00:00",
+   "title": "Do not add eos token by default (#8)"
+  },
+  {
+   "sha": "4d14c1db68fe20dbf80b8eca85d39b909c5fe1d5",
+   "date": "2024-07-18T15:36:03+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "114107b151ed5d0425a8b74a805d4a384be3fbbd",
+   "date": "2024-07-18T15:35:39+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d129069c7766e8979ee9978b0b014a6995507409",
+   "date": "2024-07-18T15:34:50+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "142d93b4a8f62887459d7e2cdd314c8aea80a802",
+   "date": "2024-07-18T14:49:40+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8b37f73f67327dc6058fd5d3254a6a1f702f8b8f",
+   "date": "2024-07-18T14:23:06+00:00",
+   "title": "Add note to install transformers from source (#3)"
+  },
+  {
+   "sha": "1470e75237848d78a635cab5c5cf9d48464a39c5",
+   "date": "2024-07-18T13:44:29+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b4468bd4c4c5cc3b6132bab0d241c32470ba0b2c",
+   "date": "2024-07-18T13:39:21+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "f0a090d44ad966dffda0270c4e63c381726894a0",
+   "date": "2024-07-18T13:38:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e869931e073731670202ac71628b2858d370eb6d",
+   "date": "2024-07-18T13:30:44+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "33d1173d3bb5042bb1226122bf7be2ad7858a190",
+   "date": "2024-07-18T13:18:02+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "4389e8c690d43e3b99cacfafcb875475012ae75e",
+   "date": "2024-07-18T13:09:47+00:00",
+   "title": "base model name fix"
+  },
+  {
+   "sha": "16a81abd6ec117cb898b6c4281bf4c7dbfd722be",
+   "date": "2024-07-18T13:01:01+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "9b2fd00bde3a4f9e44cc68cef418d4bcfae926d9",
+   "date": "2024-07-18T13:00:18+00:00",
+   "title": "Update README.md (#2)"
+  },
+  {
+   "sha": "6d7c072f4ee36bd7218e16ae93dc2d7f8d21a212",
+   "date": "2024-07-18T12:58:28+00:00",
+   "title": "Make HF-compatible (#1)"
+  },
+  {
+   "sha": "408886be59cecd1c7534194c6f583da0497f3c5a",
+   "date": "2024-07-18T10:31:11+00:00",
+   "title": "Create README.md"
+  },
+  {
+   "sha": "f5467e75c1d80d60383aeaa1bc035042d210e815",
+   "date": "2024-07-17T17:40:37+00:00",
+   "title": "Upload consolidated.safetensors with huggingface_hub"
+  },
+  {
+   "sha": "11a7e7763813527967fc372ac429c0ac7ad42d5e",
+   "date": "2024-07-17T17:30:31+00:00",
+   "title": "Upload tekken.json with huggingface_hub"
+  },
+  {
+   "sha": "ab060db71aede0260ecf3d458cac90a43d2c0940",
+   "date": "2024-07-17T17:29:10+00:00",
+   "title": "Upload params.json with huggingface_hub"
+  },
+  {
+   "sha": "4f639d5ffc5322f10fddee9cc6a34eaf34de3e38",
+   "date": "2024-07-17T17:26:49+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "mistralai/Mistral-Small-3.2-24B-Instruct-2506": [
+  {
+   "sha": "95a6d26c4bfb886c58daf9d3f7332c857cb27b43",
+   "date": "2025-12-22T10:16:55+00:00",
+   "title": "Fix generation config saving error (#38)"
+  },
+  {
+   "sha": "cca1c3a591946844a0374911255bb15b74e60bb7",
+   "date": "2025-12-19T22:20:35+00:00",
+   "title": "Update SYSTEM_PROMPT.txt"
+  },
+  {
+   "sha": "cb17b97769b0305ddc717ede4a4ef6fd54ef8371",
+   "date": "2025-08-21T17:46:51+00:00",
+   "title": "Update README.md (#31)"
+  },
+  {
+   "sha": "0c8c06c4d1373ed904341edb158ba21ec633a78c",
+   "date": "2025-07-28T17:28:32+00:00",
+   "title": "Update params.json"
+  },
+  {
+   "sha": "42b16bced5ca72dfd932d202e76107f370202a2e",
+   "date": "2025-07-24T16:54:43+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "db2ddba3b840c94cc892b5149ff28ee5c24a6ce0",
+   "date": "2025-07-23T12:28:16+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "46a27874d7f7a7b38344124d32a7a3c4589d3b53",
+   "date": "2025-07-07T16:28:29+00:00",
+   "title": "fix invalid json file (#18)"
+  },
+  {
+   "sha": "1483f238dc0527ce28022b0c5252515b2552334c",
+   "date": "2025-06-22T15:57:57+00:00",
+   "title": "SYSTEM_PROMPT.txt - missing `# `? (#4)"
+  },
+  {
+   "sha": "9151ac4804f11eac6d7cd3b963eaf9ea1bc56839",
+   "date": "2025-06-21T08:01:45+00:00",
+   "title": "Some minor readme fixes (#1)"
+  },
+  {
+   "sha": "a708d64a95670340389e6dd9cdaf1cf22189c841",
+   "date": "2025-06-20T15:54:57+00:00",
+   "title": "Super-squash branch 'main' using huggingface_hub"
+  }
+ ],
+ "allenai/OLMo-2-0425-1B-Instruct": [
+  {
+   "sha": "48d788eca847d4d7548f375ad03d3c9312f6139e",
+   "date": "2025-04-30T22:32:46+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ba85c59f980e4f18404f582522f64b910d4ad117",
+   "date": "2025-04-30T22:31:34+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c77a5dc709b9b0bc955241451d6258a7eb567365",
+   "date": "2025-04-30T21:55:36+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "00df07dd85b31433d5a0d42a4b8384879f68ad85",
+   "date": "2025-04-30T21:55:11+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "20e7f94ccce341120e75b3f459b573b1d0e39142",
+   "date": "2025-04-30T21:53:28+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "35df1dc829b7d614381d1d5a53e52b5f8fdc03ed",
+   "date": "2025-04-30T21:36:48+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d43394b26bde6f424f3a20cdb7213681d664ebc0",
+   "date": "2025-04-30T13:39:33+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6f15107d228bf397f1fd06e0655ce0dbdb49bb43",
+   "date": "2025-04-29T20:53:20+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2fdaeaf526d0414976b6f7146bd15fc7ccc75919",
+   "date": "2025-04-29T20:05:12+00:00",
+   "title": "Create README.md"
+  },
+  {
+   "sha": "d8d4a33182045fb825d53d8106db7898d94a9bc3",
+   "date": "2025-04-29T18:59:15+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "2b70dbeaeaa742ef496fa6e752483881f6a3de4b",
+   "date": "2025-04-29T18:57:17+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "allenai/OLMo-2-1124-7B-Instruct": [
+  {
+   "sha": "470b1fba1ae01581f270116362ee4aa1b97f4c84",
+   "date": "2025-01-06T01:02:35+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a75bcabbb79f6589c0d26a17e7133a070278092a",
+   "date": "2025-01-03T15:16:38+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "267ee5907471a33bc333ed4a5a928fb58dc41c0a",
+   "date": "2025-01-03T14:56:22+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "330b4b073b4ea08c09cb49b0b9521e675948b3f4",
+   "date": "2024-12-18T15:16:31+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "6f64b8df73a37a6e583878437bd9592254bed17f",
+   "date": "2024-12-18T15:15:15+00:00",
+   "title": "Create README.md"
+  },
+  {
+   "sha": "77a260950f991084f37ec8adcff362a18782d7a8",
+   "date": "2024-12-18T15:02:14+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "7682dd49583e5a5c7eab6777af88eb9b39eb94af",
+   "date": "2024-12-18T14:58:41+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "allenai/OLMo-2-1124-13B-Instruct": [
+  {
+   "sha": "3a5c85baefbb1896a54d56fe2e76c0395627ddf4",
+   "date": "2025-01-06T01:02:18+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c669df4ef9c4b70b36f2b7d576f9bf4f58eac5d7",
+   "date": "2025-01-03T15:24:01+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "84d8c7cbfc0afb79bbbdca78ff8bf47f488f4ac6",
+   "date": "2025-01-03T15:16:12+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "65689743cc0344e2ef836d6e47689792da9dc3e9",
+   "date": "2025-01-03T14:57:10+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "99e436dfd6aa32ac7a58bcceea91c84c08865396",
+   "date": "2025-01-03T14:51:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "cf9376161ca0e26f1ef0e5806849c78f3c0159cd",
+   "date": "2024-12-19T16:28:36+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "de2d4e3ea6fd8ede825a8e59edc6d0bb03925cdf",
+   "date": "2024-12-19T16:26:36+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "bf9471a39b68421f4fb01ec7502e3266786d1e8a",
+   "date": "2024-12-18T15:16:16+00:00",
+   "title": "Create README.md"
+  },
+  {
+   "sha": "63f7e0b8d4060d40bea05871335f8ff95d898d2a",
+   "date": "2024-12-18T15:00:22+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "6b846fb69e268d3ffb708c9acc242e022cdbdf1a",
+   "date": "2024-12-18T14:59:27+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "allenai/OLMo-2-0325-32B-Instruct": [
+  {
+   "sha": "b96024342a77a69aa0dda815c3454a671f477463",
+   "date": "2025-03-14T22:45:15+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b11c777cd18b269c1d28d0b8211fea0a075e4303",
+   "date": "2025-03-14T22:42:39+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "e97307eb722f5c08f7c177c6edf201e9a610c2d3",
+   "date": "2025-03-14T22:41:46+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "5942a2f5e0bc38c2a5f5200cec2ea236d5984547",
+   "date": "2025-03-13T23:14:09+00:00",
+   "title": "Add library tag! (#1)"
+  },
+  {
+   "sha": "550290e9de354722b84621e07b2540c432f72b2c",
+   "date": "2025-03-13T17:31:12+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1e89dcd2ed2a6f9dc56787592f4804a8da41ad12",
+   "date": "2025-03-13T17:08:32+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "72443ebe150d6ec4ddad5c0867999dd37e238d08",
+   "date": "2025-03-13T17:07:11+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "509665e1ec955ede9ca016cb1469896b70aee812",
+   "date": "2025-03-13T17:03:41+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "18c5c1a7c0ec3f5255e816c133aedab9c203ac60",
+   "date": "2025-03-13T17:02:08+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2d2c7fff9a2fd7eb1f36c622e746703179f86778",
+   "date": "2025-03-13T16:57:24+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b266600fe1073866011d83a0bb435ba53bd6caad",
+   "date": "2025-03-13T16:56:45+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c0b79609b6b06e9c8bc871cfb363651795f95223",
+   "date": "2025-03-13T16:47:26+00:00",
+   "title": "Upload 4 files"
+  },
+  {
+   "sha": "ae55204efd58cdded5a239b8d80b093e1b0233b9",
+   "date": "2025-03-13T01:35:39+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "9bad0145626736fca68c681260e31822aee0a6cd",
+   "date": "2025-03-13T00:53:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "791c1a7b2f0461c8457532bedb260d4eeca7b2d2",
+   "date": "2025-03-13T00:48:09+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "106d0dcc8d24ce25976f3fa4522e0e242e48c75a",
+   "date": "2025-03-12T20:42:04+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d3bdbac0d273a78d71dd12d8e144193f7acdccb6",
+   "date": "2025-03-12T20:35:02+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a247236c3ec53cbad9a72750adba0442e162b541",
+   "date": "2025-03-12T20:34:43+00:00",
+   "title": "Create README.md"
+  },
+  {
+   "sha": "96b546593b6aa80f264e31bd794e815359b068de",
+   "date": "2025-03-12T20:30:50+00:00",
+   "title": "Add files using upload-large-folder tool"
+  },
+  {
+   "sha": "97a4c7147d711f596e4915e0a5cb6df6b98dbd9b",
+   "date": "2025-03-12T20:28:55+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "CohereLabs/aya-expanse-8b": {
+  "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ac3644a-0324297f083224ea54b60206;e60b222f-58d0-4fda-ae15-9365cef6f89e)\n\nCannot ac"
+ },
+ "CohereLabs/aya-expanse-32b": {
+  "error": "GatedRepoError: 403 Client Error. (Request ID: Root=1-6ac3644a-45cfef027bb5e8095ccf5d45;deff4c3f-c151-4ab7-b4ab-710e021d2093)\n\nCannot ac"
+ },
+ "BAAI/bge-m3": [
+  {
+   "sha": "5617a9f61b028005a4858fdac845db406aefb181",
+   "date": "2024-07-03T14:50:10+00:00",
+   "title": "Update MIRACL evaluation results of BGE-M3 (#67)"
+  },
+  {
+   "sha": "e1f456861c4ba62db1cf7fc31093d04e66b5040f",
+   "date": "2024-07-02T15:13:57+00:00",
+   "title": "Update MIRACL evaluation results (#68)"
+  },
+  {
+   "sha": "babcf60cae0a1f438d7ade582983d4ba462303c2",
+   "date": "2024-04-13T13:01:41+00:00",
+   "title": "Adding ONNX file of this model (#44)"
+  },
+  {
+   "sha": "c400e3d69da76ed1965ea6ed67c83af69c3ff3a4",
+   "date": "2024-04-02T14:01:45+00:00",
+   "title": "Delete model.safetensors"
+  },
+  {
+   "sha": "7b44caba5c06fd6f1ef1d2786261e636c38e4295",
+   "date": "2024-04-02T13:03:35+00:00",
+   "title": "Delete bge-m3-with-deocder"
+  },
+  {
+   "sha": "80087bf0b7876bc948d3b5677706633f6c795fa2",
+   "date": "2024-04-02T12:53:42+00:00",
+   "title": "Upload bge-m3-with-deocder/pytorch_model.bin with huggingface_hub"
+  },
+  {
+   "sha": "50f9396f75618b3389c1fd1068a1ff58dc7b5b26",
+   "date": "2024-03-26T02:54:48+00:00",
+   "title": "Update tokenizer_config.json"
+  },
+  {
+   "sha": "5a212480c9a75bb651bcb894978ed409e4c47b82",
+   "date": "2024-03-20T14:21:50+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "cab5a405d24c03c7e140520debf57df150573c42",
+   "date": "2024-03-19T13:32:16+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ecbfce391cde1c114da10d440f63acb77a67460b",
+   "date": "2024-03-08T04:46:52+00:00",
+   "title": "Upload others.webp"
+  },
+  {
+   "sha": "2ab44ec5c6ffa948890dcd605b723be45690d220",
+   "date": "2024-03-08T04:45:37+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3641912a2b1366e8ee92fbdad6aa2abd45234114",
+   "date": "2024-03-02T12:28:04+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3ab7155aa9b89ac532b2f2efcc3f136766b91025",
+   "date": "2024-02-11T12:33:00+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "f2dfce09deeca40c22a077011d79c58bfe65c4fd",
+   "date": "2024-02-11T12:27:51+00:00",
+   "title": "Upload bm25.jpg"
+  },
+  {
+   "sha": "cfdb103bd8e9d993a97dfde2433292368b7b8c73",
+   "date": "2024-02-11T12:26:49+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "aa47896ffac4b6b12462ed5996026099bfcea267",
+   "date": "2024-02-08T18:05:31+00:00",
+   "title": "Upload 5 files"
+  },
+  {
+   "sha": "6d44202115bda4a708c603c4ffc7bbb7c103cf93",
+   "date": "2024-02-08T18:04:27+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "2d5552fc4cb25342edfb99af16493658a858a12a",
+   "date": "2024-02-07T18:19:54+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3c54f5a41ea5ec7b438a0e7db3a48325494d8694",
+   "date": "2024-02-06T08:49:03+00:00",
+   "title": "Upload long.jpg"
+  },
+  {
+   "sha": "96e9e917014f87e9a196924c6b6bb16121faa285",
+   "date": "2024-02-06T08:48:13+00:00",
+   "title": "Upload long.jpg"
+  },
+  {
+   "sha": "5cedd825962c56713204cc8fa678da1d9e99539f",
+   "date": "2024-02-06T08:47:26+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "f11a3f18ef0f9740f5268d633d025d11b33e1e82",
+   "date": "2024-02-06T08:18:30+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "8017dbb41d5ac92745a116bad86a16274e4f3ea7",
+   "date": "2024-02-05T06:26:15+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d5ab3da48ec596cd78a50b27e52c7211b49d870f",
+   "date": "2024-02-05T06:25:31+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "4277867103fc67328e2033176de4387b85e9960f",
+   "date": "2024-02-01T16:39:36+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "1f5d3ac2e10569f089a92959f4dd7a051c73dba2",
+   "date": "2024-02-01T15:06:56+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "a12bcd780a35568b0f3dc7c16da902622fe6af0f",
+   "date": "2024-02-01T09:09:40+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "053722828b8a25df8a825be6938d58ab19f2c2f7",
+   "date": "2024-02-01T03:00:04+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "3806044eb869c8756693584f7eb5dd04ab2bdd95",
+   "date": "2024-01-31T17:31:43+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "84790c1a606f60d06c6932e4ecdd174b466d84ac",
+   "date": "2024-01-31T17:30:17+00:00",
+   "title": "Upload nqa.jpg"
+  },
+  {
+   "sha": "73a15ad29ab604f3bdc31601849a9defe86d563f",
+   "date": "2024-01-31T01:59:23+00:00",
+   "title": "Add model seq_len and dimensions to the README.md (#1)"
+  },
+  {
+   "sha": "ede10a3053daddbbaf9feaa8e1cc14185e7a9f6b",
+   "date": "2024-01-29T17:54:30+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "ecf34d3096437e53f2c163f370b4135980d2e024",
+   "date": "2024-01-29T12:34:13+00:00",
+   "title": "Upload 3 files"
+  },
+  {
+   "sha": "3c06a359c08b8c49f1cab07e3eac8f846eb3a038",
+   "date": "2024-01-29T12:33:18+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "694b61558aea4ae2512ed8d0e189d5cf8adc2259",
+   "date": "2024-01-28T11:09:39+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "b28ce2a6fcc9c75ef1c0619575d0ec19af760082",
+   "date": "2024-01-28T11:04:11+00:00",
+   "title": "Update config.json"
+  },
+  {
+   "sha": "3069def033ce91d907258f9a830e442610dbfe0b",
+   "date": "2024-01-28T10:38:09+00:00",
+   "title": "Upload tokenizer.json"
+  },
+  {
+   "sha": "29fbe26ba08e5b2a5f06bac3632195bc85d3d690",
+   "date": "2024-01-28T10:36:42+00:00",
+   "title": "upload"
+  },
+  {
+   "sha": "41cc50fc831ed29ad4124d153dc3a132abf26101",
+   "date": "2024-01-27T17:07:29+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "Qwen/Qwen3-Embedding-0.6B": [
+  {
+   "sha": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
+   "date": "2026-04-20T02:45:58+00:00",
+   "title": "Update README.md (#55)"
+  },
+  {
+   "sha": "c54f2e6e80b2d7b7de06f51cec4959f6b3e03418",
+   "date": "2025-06-20T09:31:05+00:00",
+   "title": "Update README.md with TEI support (#26)"
+  },
+  {
+   "sha": "744169034862c8eec56628663995004342e4e449",
+   "date": "2025-06-07T01:27:52+00:00",
+   "title": "add use case for vllm & modify Citation (#5)"
+  },
+  {
+   "sha": "b22da495047858cce924d27d76261e96be6febc0",
+   "date": "2025-06-06T05:43:53+00:00",
+   "title": "Automatically add EOS via Tokenizer, integrate Sentence Transformers (#2)"
+  },
+  {
+   "sha": "a579a21d7aff542145eebef8d60ed73ec281a0b4",
+   "date": "2025-06-05T15:56:30+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "52f1abe2b494611c16e59c97455ca7e8fd64b60f",
+   "date": "2025-06-05T14:12:00+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "d38d10ee5c14d5acca018f9d505f5c05745daafc",
+   "date": "2025-06-05T12:45:30+00:00",
+   "title": "Delete special_tokens_map.json"
+  },
+  {
+   "sha": "d43997c8a1046d1734f8d519effbb424a832a0a2",
+   "date": "2025-06-05T12:45:22+00:00",
+   "title": "Delete added_tokens.json"
+  },
+  {
+   "sha": "e692b5a16e45607c7e85d81c53e944ac90e6260a",
+   "date": "2025-06-05T12:42:55+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "68f00aaed0de836d5c7fb9c802a262dced1d61fd",
+   "date": "2025-06-05T11:57:46+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "c935f2d3fce3e2337b4a66ac3130faa6dada3218",
+   "date": "2025-06-05T09:46:45+00:00",
+   "title": "Update README.md"
+  },
+  {
+   "sha": "99cabfa1346cbf4ac8b0e73079bb2e286cff3a1f",
+   "date": "2025-06-03T14:30:44+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "1c68a8439911c7a3d16e68f03bec384ee4bf3b81",
+   "date": "2025-06-03T14:27:55+00:00",
+   "title": "Upload folder using huggingface_hub"
+  },
+  {
+   "sha": "f2c7d11ea1edcd7bd00b454fe4791e4b1528e78b",
+   "date": "2025-06-03T14:25:32+00:00",
+   "title": "initial commit"
+  }
+ ],
+ "cis-lmu/glotlid": [
+  {
+   "sha": "85cd6716494360367b75f642b5bc78667605d0b4",
+   "date": "2024-04-18T11:18:42+00:00",
+   "title": "update list of languages and License"
+  },
+  {
+   "sha": "6877193cee5553f71b13ad0f74ccfe1912637dbe",
+   "date": "2024-01-16T21:39:56+00:00",
+   "title": "add v3."
+  },
+  {
+   "sha": "95fbcf9da8214ff5ff5c5885f05b87bd87468db7",
+   "date": "2023-10-20T18:33:56+00:00",
+   "title": "add v2 and v3."
+  },
+  {
+   "sha": "04e93aa280bbf7908981aca8afecad2d164f3be4",
+   "date": "2023-10-19T23:46:58+00:00",
+   "title": "initial commit"
+  }
+ ]
+}

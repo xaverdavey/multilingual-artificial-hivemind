@@ -1,0 +1,24 @@
+model,hf_id,revision,precision,gpus,mean_chars,trunc_pct,think,n_empty,dangling_think
+Qwen3 0.6B,Qwen/Qwen3-0.6B,c1899de2,bf16,"1$\times$ A40 48\,GB",2320,1.1,yes,0,151
+Qwen3 1.7B,Qwen/Qwen3-1.7B,70d244cc,bf16,"1$\times$ A40 48\,GB",4442,14.8,yes,0,671
+Qwen3 4B,Qwen/Qwen3-4B-Instruct-2507,cdbee75f,bf16,"1$\times$ A40 48\,GB",2546,7.2,no,0,0
+Qwen3 8B,Qwen/Qwen3-8B,b968826d,bf16,"1$\times$ A40 48\,GB",4635,18.5,yes,0,603
+Qwen3 14B,Qwen/Qwen3-14B,40c06982,bf16,"1$\times$ A40 48\,GB",4175,12.4,yes,0,295
+Qwen3 32B,Qwen/Qwen3-32B,9216db57,bf16,"2$\times$ A100 80\,GB",4547,17.2,yes,0,413
+Qwen3 30B,Qwen/Qwen3-30B-A3B-Instruct-2507,0d7cf239,bf16,"1$\times$ A100 80\,GB",2360,5.2,no,0,0
+Qwen3 235B,Qwen/Qwen3-235B-A22B-Instruct-2507-FP8,e156cb4e,FP8,"4$\times$ A100 80\,GB",2188,3.4,no,0,0
+Gemma-3 270M,google/gemma-3-270m-it,ac82b4e8,bf16,"1$\times$ A40 48\,GB",1522,3.9,no,66,66
+Gemma-3 1B,google/gemma-3-1b-it,dcc83ea8,bf16,"1$\times$ A40 48\,GB",2332,0.8,no,0,0
+Gemma-3 4B,google/gemma-3-4b-it,093f9f38,bf16,"1$\times$ A40 48\,GB",2460,0.5,no,0,0
+Gemma-3 12B,google/gemma-3-12b-it,96b6f1ec,bf16,"1$\times$ A40 48\,GB",2584,0.5,no,0,0
+Gemma-3 27B,google/gemma-3-27b-it,005ad340,bf16,"1$\times$ A100 80\,GB",2494,0.3,no,0,0
+Ministral 8B,mistralai/Ministral-8B-Instruct-2410,2f494a19,bf16,"1$\times$ A40 48\,GB",1368,1.0,no,0,0
+Mistral 7B v0.3,mistralai/Mistral-7B-Instruct-v0.3,c170c708,bf16,"1$\times$ A40 48\,GB",1141,0.7,no,0,0
+Mistral Nemo 12B,mistralai/Mistral-Nemo-Instruct-2407,04d8a905,bf16,"1$\times$ A40 48\,GB",1049,0.7,no,0,0
+Mistral Small 3.2 24B,mistralai/Mistral-Small-3.2-24B-Instruct-2506,95a6d26c,bf16,"1$\times$ A100 80\,GB",1638,0.2,no,0,0
+OLMo-2 1B,allenai/OLMo-2-0425-1B-Instruct,48d788ec,bf16,"1$\times$ A40 48\,GB",1543,0.0,no,13,13
+OLMo-2 7B,allenai/OLMo-2-1124-7B-Instruct,470b1fba,bf16,"1$\times$ A40 48\,GB",1620,0.1,no,0,0
+OLMo-2 13B,allenai/OLMo-2-1124-13B-Instruct,3a5c85ba,bf16,"1$\times$ A40 48\,GB",1629,0.0,no,0,0
+OLMo-2 32B,allenai/OLMo-2-0325-32B-Instruct,b9602434,bf16,"2$\times$ A100 80\,GB",1563,0.0,no,0,0
+Aya Expanse 8B,CohereLabs/aya-expanse-8b,5062468b,fp16,"1$\times$ A40 48\,GB",1851,0.0,no,0,0
+Aya Expanse 32B,CohereLabs/aya-expanse-32b,b306ea27,fp16,"2$\times$ A100 80\,GB",1750,0.0,no,0,0

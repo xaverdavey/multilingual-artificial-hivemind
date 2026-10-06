@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Similarity metric} & \textbf{Gap} & \textbf{Langs.} & \textbf{$\rho$} \\
+\midrule
+BGE-M3 & $+0.143$ & 13/13 & 0.92 \\
+Qwen3-Embedding-0.6B & $+0.200$ & 13/13 & 0.93 \\
+text-embedding-3-small & $+0.200$ & 13/13 & --- \\
+char 4-gram Jaccard & $+0.141$ & 13/13 & 0.71 \\
+char 4-gram Jaccard, 500-char cap & $+0.138$ & 13/13 & 0.72 \\
+\bottomrule
+\end{tabular}
+\caption{The homogenization gap under three embedding spaces and an embedder-free lexical metric. \textbf{Gap} is the mean LLM minus human intra-similarity over all 299 (model, language) cells; \textbf{Langs.} counts languages with a positive gap; $\rho$ is the Spearman correlation of the per-cell gap against the primary metric. The effect is present in every language under every metric.}
+\label{tab:robustness}
+\end{table}

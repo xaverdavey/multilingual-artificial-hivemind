@@ -21,12 +21,24 @@ venv/
 .vscode/
 .idea/
 
-# Experiment artifacts (regenerate via experiments/select_*.py and run_generation.py)
+# Experiment artifacts. Large inputs stay out of git (raw generations, embeddings,
+# per-response fluency table, interactive plots); the derived metrics the paper
+# is built from are tracked so every table and test can be re-run without GPUs.
 experiments/*.parquet
 results/*
-!results/raw/
-results/raw/*
-!results/raw/*.meta.json
+!results/metrics/
+!results/prompt_tests/
+!results/linguistic/
+results/linguistic/flores/
+!results/linguistic_bge/
+!results/linguistic_qwen/
+!results/lexical/
+!results/robustness/
+!results/tables/
+!results/hub_meta/
+!results/fluency/
+results/fluency/*
+!results/fluency/fluency_summary__glotlid.parquet
 logs/
 
 # Local working notes (submission logistics; not project state)
