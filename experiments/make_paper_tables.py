@@ -79,7 +79,8 @@ def robustness_summary(path: Path) -> str:
                  "which the same-model value exceeds the human value; $\\rho$ is the Spearman correlation of "
                  "the per-cell same-model-minus-human gap against the primary metric. The ordering holds in "
                  "every embedding space; under the lexical metric the different-models rung falls to the "
-                 "human level.",
+                 "human level. The BGE-M3 500-char row re-embeds every response cut to its first 500 "
+                 "characters, on 10 of the 50 samples per prompt.",
                  "tab:robustness", colsep_pt=4)
 
 
