@@ -30,7 +30,9 @@ LEVELS = [("intra", "family", "Intra-model: per family"),
           ("intra", "language", "Intra-model: per language"),
           ("intra", "model_language", "Intra-model: per (model, language)"),
           ("cross", "language", "Inter-model: per language"),
+          ("cross", "model", "Inter-model: per model"),
           ("cross", "family_pair", "Inter-model: per family pair"),
+          ("cross", "family_pair_language", "Inter-model: per (family pair, language)"),
           ("ladder", "language", "Same vs.\\ different models: per language")]
 
 

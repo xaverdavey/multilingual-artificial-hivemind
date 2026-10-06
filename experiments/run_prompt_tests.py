@@ -19,7 +19,10 @@ analysis:
   * sign-flip permutation test on mean(gap_p) (two-sided, Monte Carlo);
   * Holm and Benjamini-Hochberg adjustment of the permutation p-values across
     every group tested at the same level (23 models, 13 languages, 299 cells,
-    15 family pairs).
+    15 family pairs, 195 family-pair x language cells, ...).
+
+The per-group means and standard errors over prompts of both sides are stored
+too, so plot_paired_figures can redraw the paper's figures from this analysis.
 
 Three comparisons, the first two mirroring run_metrics:
   intra   one LLM resampled vs. the humans who answered the same prompt
@@ -96,6 +99,17 @@ def _paired_tests(d: np.ndarray, rng: np.random.Generator) -> dict:
             "frac_prompts_positive": float((d > 0).mean())}
 
 
+def _side_stats(pf: pd.DataFrame) -> dict:
+    """Means and standard errors over prompts of the two sides, for the figures."""
+    ok = pf[["llm", "human"]].dropna()
+    n = len(ok)
+    if n < 2:
+        return {}
+    return {"mean_llm": float(ok["llm"].mean()), "mean_human": float(ok["human"].mean()),
+            "se_llm": float(ok["llm"].std(ddof=1) / np.sqrt(n)),
+            "se_human": float(ok["human"].std(ddof=1) / np.sqrt(n))}
+
+
 def _cluster_bootstrap(df: pd.DataFrame, rng: np.random.Generator) -> tuple[float, float]:
     """Two-level bootstrap of the pooled mean gap: languages, then prompts within."""
     df = df.dropna(subset=["gap"])
@@ -167,8 +181,13 @@ def cross_frames(inter: pd.DataFrame, human: pd.DataFrame, families: dict[str, s
     yield "general", "all", None, paired(inter)
     for lang, sub in inter.groupby("language"):
         yield "language", lang, lang, paired(sub)
+    for model in sorted(set(inter["model_a"]) | set(inter["model_b"])):
+        sub = inter[(inter["model_a"] == model) | (inter["model_b"] == model)]
+        yield "model", model, None, paired(sub)
     for pair, sub in inter.groupby("family_pair"):
         yield "family_pair", pair, None, paired(sub)
+    for (pair, lang), sub in inter.groupby(["family_pair", "language"]):
+        yield "family_pair_language", pair, lang, paired(sub)
 
 
 def ladder_frames(intra: pd.DataFrame, inter: pd.DataFrame):
@@ -202,6 +221,7 @@ def run(intra: pd.DataFrame, inter: pd.DataFrame | None, human: pd.DataFrame,
     for comparison, frames in sources:
         for level, group, lang, pf in frames:
             r = {"comparison": comparison, "level": level, "group": group, "language": lang}
+            r.update(_side_stats(pf))
             r.update(_paired_tests(pf["gap"].to_numpy(), rng))
             if level == "general":
                 r["cluster_ci_lo"], r["cluster_ci_hi"] = _cluster_bootstrap(pf, rng)
@@ -241,7 +261,7 @@ def run(intra: pd.DataFrame, inter: pd.DataFrame | None, human: pd.DataFrame,
                 f"{r.group}" + (f"/{r.language}" if r.language else "") + f" ({r.mean_gap:+.3f})"
                 for r in neg.itertuples()))
         ns = sub[(sub["mean_gap"] > 0) & (sub["p_perm_holm"] >= 0.05)]
-        if len(ns) and level != "model_language":
+        if len(ns) and level not in ("model_language", "family_pair_language"):
             lines.append("  positive but not Holm-significant: " + ", ".join(
                 f"{r.group}" + (f"/{r.language}" if r.language else "") +
                 f" ({r.mean_gap:+.3f}, p_holm={r.p_perm_holm:.3f})" for r in ns.itertuples()))
