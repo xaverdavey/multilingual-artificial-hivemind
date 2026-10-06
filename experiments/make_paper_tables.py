@@ -36,7 +36,8 @@ def _wrap(body: str, header: str, colspec: str, caption: str, label: str,
 # Full metric names overrun \textwidth as column headings.
 METRIC_SHORT = {"text-embedding-3-small": "OpenAI", "BGE-M3": "BGE-M3",
                 "Qwen3-Embedding-0.6B": "Qwen3-Emb",
-                "char 4-gram Jaccard": "Jaccard", "char 4-gram Jaccard, 500-char cap": "Jacc.\\,500c"}
+                "char 4-gram Jaccard": "Jaccard", "char 4-gram Jaccard, 500-char cap": "Jacc.\\,500c",
+                "BGE-M3, 500-char cap (10 samples/prompt)": "BGE\\,500c"}
 
 
 # slug -> per-(model pair, prompt) inter-similarity parquet, for the "different models" rung
@@ -46,6 +47,7 @@ INTER_PATHS = {
     "Qwen_Qwen3-Embedding-0.6B": Path("results/metrics/inter__Qwen_Qwen3-Embedding-0.6B.parquet"),
     "char4gram": Path("results/lexical/inter__char4gram.parquet"),
     "char4gram_trunc500": Path("results/lexical/inter__char4gram_trunc500.parquet"),
+    "BAAI_bge-m3_trunc500_s10": Path("results/metrics/inter__BAAI_bge-m3_trunc500_s10.parquet"),
 }
 PRIMARY_SLUG = "text-embedding-3-small"
 

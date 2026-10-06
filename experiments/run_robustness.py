@@ -34,6 +34,7 @@ LABELS = {
     "Qwen_Qwen3-Embedding-0.6B": "Qwen3-Embedding-0.6B (1024d)",
     "char4gram": "char 4-gram Jaccard (no embedder)",
     "char4gram_trunc500": "char 4-gram Jaccard, 500-char cap",
+    "BAAI_bge-m3_trunc500_s10": "BGE-M3, 500-char cap (10 samples/prompt)",
 }
 PRIMARY = "text-embedding-3-small"
 
