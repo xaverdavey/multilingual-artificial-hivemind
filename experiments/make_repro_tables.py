@@ -100,9 +100,7 @@ def models_table(models_yaml: Path, commits: dict, dtypes: dict, gen: Path, flue
         else:
             rev = "gated"
         d = dtypes.get(rid, {})
-        prec = ("FP8" if d.get("quant") == "fp8" else {"bfloat16": "bf16", "float16": "fp16"}.get(d.get("dtype"), "bf16"))
-        if "error" in d:
-            prec = "bf16"   # Aya Expanse checkpoints are released in bf16 but the repo is gated here
+        prec = ("FP8" if d.get("quant") == "fp8" else {"bfloat16": "bf16", "float16": "fp16"}.get(d.get("dtype"), "---"))
         gpus = e.get("gpus", "")
         kind, _, n = gpus.partition(":")
         gpu = {"A40": "A40 48\\,GB", "A100fat": "A100 80\\,GB"}.get(kind, kind)
@@ -120,8 +118,8 @@ def models_table(models_yaml: Path, commits: dict, dtypes: dict, gen: Path, flue
     tex = "\n".join([
         r"\begin{table*}[t]",
         r"\caption{\textbf{The 23 open-weight model variants and how each was run.} Revision is the Hugging Face commit "
-        r"that was the repository head when generation ran (the two Aya Expanse repositories are gated and could not be "
-        r"queried). Precision is the checkpoint's native dtype as served by vLLM. Chars is the mean response length in "
+        r"that was the repository head when generation ran. Precision is the dtype declared in the checkpoint's config, "
+        r"which vLLM serves by default. Chars is the mean response length in "
         r"characters, reasoning block included where present; Trunc.\ is the share of responses cut off by the 2048-token "
         r"limit; Think marks checkpoints whose responses carry a \texttt{<think>} reasoning block.}",
         r"\centering", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}",

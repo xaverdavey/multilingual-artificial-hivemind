@@ -108,10 +108,9 @@ def fertility_table(path: Path) -> str:
             "---" if pd.isna(v) else f"{v:.2f}" for v in piv.loc[fam]) + r" \\"
         for fam in piv.index)
     return _wrap(body, header, "l" + "c" * len(piv.columns),
-                 "Tokenization fertility on FLORES-200 devtest: subword tokens each family's "
+                 "Tokenization fertility on FLORES-200 devtest. We report subword tokens each family's "
                  "tokenizer spends per parallel sentence, relative to its own English count. "
-                 "Aya Expanse is absent because its tokenizer repository is gated. Basque and "
-                 "Polish cost the most; Chinese the least.",
+                 "Basque and Polish cost the most; Chinese the least.",
                  "tab:fertility", star=True, colsep_pt=4)
 
 
@@ -154,14 +153,14 @@ def regression_table(tables: dict[str, Path]) -> str:
     return _wrap("\n".join(rows), header, "ll" + "c" * len(order),
                  "Standardised coefficients from the crossed-effects model of the "
                  "homogenization gap, fitted in each embedding space. Spec A uses all four "
-                 "predictors (21 models, since tokenization fertility is unavailable for the two Aya "
-                 "Expanse models, and 11 languages, since morphology is undefined for \\texttt{zh}/"
-                 "\\texttt{ja}); B drops morphology to recover all 13; C repeats B on the "
-                 "cells with a GlotLID match rate $\\geq 0.80$, confirming the effect is not "
-                 "driven by degenerate generation. Target-language fidelity (the competence proxy) is significant in every "
-                 "specification and all three embedding spaces; resource level is significant "
-                 "only under \\texttt{text-embedding-3-small}, and is therefore a property of "
-                 "that embedding geometry rather than a robust finding. "
+                 "predictors on the 11 languages for which morphology is defined (253 cells; the "
+                 "type-token ratio is undefined for \\texttt{zh}/\\texttt{ja}); B drops morphology "
+                 "to recover all 13 languages (299 cells); C repeats B on the 277 cells with a "
+                 "GlotLID match rate $\\geq 0.80$, confirming the effect is not driven by degenerate "
+                 "generation. Target-language fidelity (the competence proxy) is significant in every "
+                 "specification and all three embedding spaces. Resource level reaches $p<0.05$ only "
+                 "under \\texttt{text-embedding-3-small}, and tokenization fertility only in "
+                 "specification C under two embedders; neither is a robust finding. "
                  "$^{*}p<0.05$, $^{***}p<0.001$.",
                  "tab:regression", star=True, colsep_pt=3.5)
 
