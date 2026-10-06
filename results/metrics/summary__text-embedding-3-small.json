@@ -1,0 +1,2589 @@
+{
+  "embed_model": "text-embedding-3-small",
+  "intra_sim": {
+    "Qwen3 0.6B": {
+      "mean": 0.846844,
+      "std": 0.075896
+    },
+    "Qwen3 1.7B": {
+      "mean": 0.889601,
+      "std": 0.062388
+    },
+    "Qwen3 4B": {
+      "mean": 0.90123,
+      "std": 0.059973
+    },
+    "Qwen3 8B": {
+      "mean": 0.909485,
+      "std": 0.04428
+    },
+    "Qwen3 14B": {
+      "mean": 0.913229,
+      "std": 0.038316
+    },
+    "Qwen3 32B": {
+      "mean": 0.903032,
+      "std": 0.04445
+    },
+    "Qwen3 30B": {
+      "mean": 0.905148,
+      "std": 0.058593
+    },
+    "Qwen3 235B": {
+      "mean": 0.906517,
+      "std": 0.063682
+    },
+    "Gemma-3 270M": {
+      "mean": 0.772254,
+      "std": 0.112662
+    },
+    "Gemma-3 1B": {
+      "mean": 0.865437,
+      "std": 0.095104
+    },
+    "Gemma-3 4B": {
+      "mean": 0.895867,
+      "std": 0.070116
+    },
+    "Gemma-3 12B": {
+      "mean": 0.906844,
+      "std": 0.060218
+    },
+    "Gemma-3 27B": {
+      "mean": 0.914129,
+      "std": 0.053916
+    },
+    "Ministral 8B": {
+      "mean": 0.784822,
+      "std": 0.152135
+    },
+    "Mistral 7B v0.3": {
+      "mean": 0.775738,
+      "std": 0.123051
+    },
+    "Mistral Nemo 12B": {
+      "mean": 0.765711,
+      "std": 0.15474
+    },
+    "Mistral Small 3.2 24B": {
+      "mean": 0.868463,
+      "std": 0.077572
+    },
+    "OLMo-2 1B": {
+      "mean": 0.731404,
+      "std": 0.132521
+    },
+    "OLMo-2 7B": {
+      "mean": 0.79102,
+      "std": 0.120903
+    },
+    "OLMo-2 13B": {
+      "mean": 0.813377,
+      "std": 0.116062
+    },
+    "OLMo-2 32B": {
+      "mean": 0.831573,
+      "std": 0.111281
+    },
+    "Aya Expanse 8B": {
+      "mean": 0.900768,
+      "std": 0.060451
+    },
+    "Aya Expanse 32B": {
+      "mean": 0.910108,
+      "std": 0.058909
+    }
+  },
+  "inter_sim": {
+    "Qwen3 0.6B||Qwen3 1.7B": {
+      "mean": 0.814257,
+      "std": 0.096569
+    },
+    "Qwen3 0.6B||Qwen3 4B": {
+      "mean": 0.723927,
+      "std": 0.112736
+    },
+    "Qwen3 0.6B||Qwen3 8B": {
+      "mean": 0.79964,
+      "std": 0.101488
+    },
+    "Qwen3 0.6B||Qwen3 14B": {
+      "mean": 0.797817,
+      "std": 0.102454
+    },
+    "Qwen3 0.6B||Qwen3 32B": {
+      "mean": 0.785975,
+      "std": 0.106197
+    },
+    "Qwen3 0.6B||Qwen3 30B": {
+      "mean": 0.70508,
+      "std": 0.127938
+    },
+    "Qwen3 0.6B||Qwen3 235B": {
+      "mean": 0.703109,
+      "std": 0.129042
+    },
+    "Qwen3 0.6B||Gemma-3 270M": {
+      "mean": 0.652761,
+      "std": 0.124464
+    },
+    "Qwen3 0.6B||Gemma-3 1B": {
+      "mean": 0.707739,
+      "std": 0.131506
+    },
+    "Qwen3 0.6B||Gemma-3 4B": {
+      "mean": 0.70539,
+      "std": 0.135031
+    },
+    "Qwen3 0.6B||Gemma-3 12B": {
+      "mean": 0.701498,
+      "std": 0.136781
+    },
+    "Qwen3 0.6B||Gemma-3 27B": {
+      "mean": 0.701074,
+      "std": 0.138131
+    },
+    "Qwen3 0.6B||Ministral 8B": {
+      "mean": 0.672894,
+      "std": 0.140529
+    },
+    "Qwen3 0.6B||Mistral 7B v0.3": {
+      "mean": 0.667407,
+      "std": 0.113545
+    },
+    "Qwen3 0.6B||Mistral Nemo 12B": {
+      "mean": 0.645464,
+      "std": 0.142727
+    },
+    "Qwen3 0.6B||Mistral Small 3.2 24B": {
+      "mean": 0.709488,
+      "std": 0.122607
+    },
+    "Qwen3 0.6B||OLMo-2 1B": {
+      "mean": 0.663934,
+      "std": 0.132388
+    },
+    "Qwen3 0.6B||OLMo-2 7B": {
+      "mean": 0.67796,
+      "std": 0.13739
+    },
+    "Qwen3 0.6B||OLMo-2 13B": {
+      "mean": 0.6805,
+      "std": 0.140495
+    },
+    "Qwen3 0.6B||OLMo-2 32B": {
+      "mean": 0.685899,
+      "std": 0.136894
+    },
+    "Qwen3 0.6B||Aya Expanse 8B": {
+      "mean": 0.706879,
+      "std": 0.121386
+    },
+    "Qwen3 0.6B||Aya Expanse 32B": {
+      "mean": 0.701862,
+      "std": 0.125856
+    },
+    "Qwen3 1.7B||Qwen3 4B": {
+      "mean": 0.779374,
+      "std": 0.109527
+    },
+    "Qwen3 1.7B||Qwen3 8B": {
+      "mean": 0.865513,
+      "std": 0.077668
+    },
+    "Qwen3 1.7B||Qwen3 14B": {
+      "mean": 0.861115,
+      "std": 0.078914
+    },
+    "Qwen3 1.7B||Qwen3 32B": {
+      "mean": 0.85101,
+      "std": 0.08216
+    },
+    "Qwen3 1.7B||Qwen3 30B": {
+      "mean": 0.765929,
+      "std": 0.12071
+    },
+    "Qwen3 1.7B||Qwen3 235B": {
+      "mean": 0.762,
+      "std": 0.122098
+    },
+    "Qwen3 1.7B||Gemma-3 270M": {
+      "mean": 0.655342,
+      "std": 0.12916
+    },
+    "Qwen3 1.7B||Gemma-3 1B": {
+      "mean": 0.740908,
+      "std": 0.131936
+    },
+    "Qwen3 1.7B||Gemma-3 4B": {
+      "mean": 0.752658,
+      "std": 0.129004
+    },
+    "Qwen3 1.7B||Gemma-3 12B": {
+      "mean": 0.751863,
+      "std": 0.129118
+    },
+    "Qwen3 1.7B||Gemma-3 27B": {
+      "mean": 0.751511,
+      "std": 0.129352
+    },
+    "Qwen3 1.7B||Ministral 8B": {
+      "mean": 0.703524,
+      "std": 0.132491
+    },
+    "Qwen3 1.7B||Mistral 7B v0.3": {
+      "mean": 0.692729,
+      "std": 0.107354
+    },
+    "Qwen3 1.7B||Mistral Nemo 12B": {
+      "mean": 0.673725,
+      "std": 0.130144
+    },
+    "Qwen3 1.7B||Mistral Small 3.2 24B": {
+      "mean": 0.765154,
+      "std": 0.109415
+    },
+    "Qwen3 1.7B||OLMo-2 1B": {
+      "mean": 0.673936,
+      "std": 0.125843
+    },
+    "Qwen3 1.7B||OLMo-2 7B": {
+      "mean": 0.706462,
+      "std": 0.127286
+    },
+    "Qwen3 1.7B||OLMo-2 13B": {
+      "mean": 0.713112,
+      "std": 0.129689
+    },
+    "Qwen3 1.7B||OLMo-2 32B": {
+      "mean": 0.723935,
+      "std": 0.126051
+    },
+    "Qwen3 1.7B||Aya Expanse 8B": {
+      "mean": 0.750287,
+      "std": 0.106327
+    },
+    "Qwen3 1.7B||Aya Expanse 32B": {
+      "mean": 0.746072,
+      "std": 0.107981
+    },
+    "Qwen3 4B||Qwen3 8B": {
+      "mean": 0.800017,
+      "std": 0.101712
+    },
+    "Qwen3 4B||Qwen3 14B": {
+      "mean": 0.802526,
+      "std": 0.102286
+    },
+    "Qwen3 4B||Qwen3 32B": {
+      "mean": 0.794365,
+      "std": 0.103706
+    },
+    "Qwen3 4B||Qwen3 30B": {
+      "mean": 0.861855,
+      "std": 0.086115
+    },
+    "Qwen3 4B||Qwen3 235B": {
+      "mean": 0.849544,
+      "std": 0.090129
+    },
+    "Qwen3 4B||Gemma-3 270M": {
+      "mean": 0.685713,
+      "std": 0.116652
+    },
+    "Qwen3 4B||Gemma-3 1B": {
+      "mean": 0.776336,
+      "std": 0.111233
+    },
+    "Qwen3 4B||Gemma-3 4B": {
+      "mean": 0.795848,
+      "std": 0.104954
+    },
+    "Qwen3 4B||Gemma-3 12B": {
+      "mean": 0.798776,
+      "std": 0.101895
+    },
+    "Qwen3 4B||Gemma-3 27B": {
+      "mean": 0.797467,
+      "std": 0.10323
+    },
+    "Qwen3 4B||Ministral 8B": {
+      "mean": 0.741375,
+      "std": 0.121174
+    },
+    "Qwen3 4B||Mistral 7B v0.3": {
+      "mean": 0.712321,
+      "std": 0.112414
+    },
+    "Qwen3 4B||Mistral Nemo 12B": {
+      "mean": 0.703752,
+      "std": 0.126865
+    },
+    "Qwen3 4B||Mistral Small 3.2 24B": {
+      "mean": 0.813367,
+      "std": 0.095292
+    },
+    "Qwen3 4B||OLMo-2 1B": {
+      "mean": 0.694401,
+      "std": 0.114972
+    },
+    "Qwen3 4B||OLMo-2 7B": {
+      "mean": 0.738673,
+      "std": 0.110698
+    },
+    "Qwen3 4B||OLMo-2 13B": {
+      "mean": 0.745207,
+      "std": 0.118052
+    },
+    "Qwen3 4B||OLMo-2 32B": {
+      "mean": 0.761,
+      "std": 0.107181
+    },
+    "Qwen3 4B||Aya Expanse 8B": {
+      "mean": 0.785719,
+      "std": 0.09367
+    },
+    "Qwen3 4B||Aya Expanse 32B": {
+      "mean": 0.785709,
+      "std": 0.093177
+    },
+    "Qwen3 8B||Qwen3 14B": {
+      "mean": 0.898023,
+      "std": 0.050193
+    },
+    "Qwen3 8B||Qwen3 32B": {
+      "mean": 0.890099,
+      "std": 0.053648
+    },
+    "Qwen3 8B||Qwen3 30B": {
+      "mean": 0.798052,
+      "std": 0.109291
+    },
+    "Qwen3 8B||Qwen3 235B": {
+      "mean": 0.795766,
+      "std": 0.110962
+    },
+    "Qwen3 8B||Gemma-3 270M": {
+      "mean": 0.652173,
+      "std": 0.12885
+    },
+    "Qwen3 8B||Gemma-3 1B": {
+      "mean": 0.747996,
+      "std": 0.131471
+    },
+    "Qwen3 8B||Gemma-3 4B": {
+      "mean": 0.774215,
+      "std": 0.117481
+    },
+    "Qwen3 8B||Gemma-3 12B": {
+      "mean": 0.779004,
+      "std": 0.11834
+    },
+    "Qwen3 8B||Gemma-3 27B": {
+      "mean": 0.779549,
+      "std": 0.117737
+    },
+    "Qwen3 8B||Ministral 8B": {
+      "mean": 0.71742,
+      "std": 0.126346
+    },
+    "Qwen3 8B||Mistral 7B v0.3": {
+      "mean": 0.701044,
+      "std": 0.106869
+    },
+    "Qwen3 8B||Mistral Nemo 12B": {
+      "mean": 0.689403,
+      "std": 0.121691
+    },
+    "Qwen3 8B||Mistral Small 3.2 24B": {
+      "mean": 0.793334,
+      "std": 0.099203
+    },
+    "Qwen3 8B||OLMo-2 1B": {
+      "mean": 0.674774,
+      "std": 0.123698
+    },
+    "Qwen3 8B||OLMo-2 7B": {
+      "mean": 0.715259,
+      "std": 0.120587
+    },
+    "Qwen3 8B||OLMo-2 13B": {
+      "mean": 0.724859,
+      "std": 0.125728
+    },
+    "Qwen3 8B||OLMo-2 32B": {
+      "mean": 0.741373,
+      "std": 0.118643
+    },
+    "Qwen3 8B||Aya Expanse 8B": {
+      "mean": 0.765967,
+      "std": 0.099293
+    },
+    "Qwen3 8B||Aya Expanse 32B": {
+      "mean": 0.768173,
+      "std": 0.096593
+    },
+    "Qwen3 14B||Qwen3 32B": {
+      "mean": 0.896428,
+      "std": 0.048405
+    },
+    "Qwen3 14B||Qwen3 30B": {
+      "mean": 0.805246,
+      "std": 0.109284
+    },
+    "Qwen3 14B||Qwen3 235B": {
+      "mean": 0.804941,
+      "std": 0.109839
+    },
+    "Qwen3 14B||Gemma-3 270M": {
+      "mean": 0.654106,
+      "std": 0.127695
+    },
+    "Qwen3 14B||Gemma-3 1B": {
+      "mean": 0.750564,
+      "std": 0.129899
+    },
+    "Qwen3 14B||Gemma-3 4B": {
+      "mean": 0.779859,
+      "std": 0.116723
+    },
+    "Qwen3 14B||Gemma-3 12B": {
+      "mean": 0.786836,
+      "std": 0.116145
+    },
+    "Qwen3 14B||Gemma-3 27B": {
+      "mean": 0.788177,
+      "std": 0.116523
+    },
+    "Qwen3 14B||Ministral 8B": {
+      "mean": 0.722173,
+      "std": 0.127084
+    },
+    "Qwen3 14B||Mistral 7B v0.3": {
+      "mean": 0.705429,
+      "std": 0.108726
+    },
+    "Qwen3 14B||Mistral Nemo 12B": {
+      "mean": 0.695108,
+      "std": 0.123557
+    },
+    "Qwen3 14B||Mistral Small 3.2 24B": {
+      "mean": 0.801322,
+      "std": 0.099126
+    },
+    "Qwen3 14B||OLMo-2 1B": {
+      "mean": 0.677516,
+      "std": 0.123849
+    },
+    "Qwen3 14B||OLMo-2 7B": {
+      "mean": 0.719397,
+      "std": 0.120733
+    },
+    "Qwen3 14B||OLMo-2 13B": {
+      "mean": 0.729365,
+      "std": 0.126874
+    },
+    "Qwen3 14B||OLMo-2 32B": {
+      "mean": 0.747013,
+      "std": 0.120192
+    },
+    "Qwen3 14B||Aya Expanse 8B": {
+      "mean": 0.771417,
+      "std": 0.099258
+    },
+    "Qwen3 14B||Aya Expanse 32B": {
+      "mean": 0.775474,
+      "std": 0.095528
+    },
+    "Qwen3 32B||Qwen3 30B": {
+      "mean": 0.801391,
+      "std": 0.108605
+    },
+    "Qwen3 32B||Qwen3 235B": {
+      "mean": 0.803138,
+      "std": 0.108856
+    },
+    "Qwen3 32B||Gemma-3 270M": {
+      "mean": 0.645568,
+      "std": 0.127673
+    },
+    "Qwen3 32B||Gemma-3 1B": {
+      "mean": 0.74264,
+      "std": 0.13207
+    },
+    "Qwen3 32B||Gemma-3 4B": {
+      "mean": 0.773698,
+      "std": 0.11731
+    },
+    "Qwen3 32B||Gemma-3 12B": {
+      "mean": 0.782388,
+      "std": 0.116213
+    },
+    "Qwen3 32B||Gemma-3 27B": {
+      "mean": 0.785057,
+      "std": 0.115314
+    },
+    "Qwen3 32B||Ministral 8B": {
+      "mean": 0.714835,
+      "std": 0.125959
+    },
+    "Qwen3 32B||Mistral 7B v0.3": {
+      "mean": 0.697947,
+      "std": 0.108284
+    },
+    "Qwen3 32B||Mistral Nemo 12B": {
+      "mean": 0.688065,
+      "std": 0.119934
+    },
+    "Qwen3 32B||Mistral Small 3.2 24B": {
+      "mean": 0.798757,
+      "std": 0.097573
+    },
+    "Qwen3 32B||OLMo-2 1B": {
+      "mean": 0.671961,
+      "std": 0.123217
+    },
+    "Qwen3 32B||OLMo-2 7B": {
+      "mean": 0.712534,
+      "std": 0.120563
+    },
+    "Qwen3 32B||OLMo-2 13B": {
+      "mean": 0.723016,
+      "std": 0.125589
+    },
+    "Qwen3 32B||OLMo-2 32B": {
+      "mean": 0.740908,
+      "std": 0.118514
+    },
+    "Qwen3 32B||Aya Expanse 8B": {
+      "mean": 0.763199,
+      "std": 0.098201
+    },
+    "Qwen3 32B||Aya Expanse 32B": {
+      "mean": 0.769147,
+      "std": 0.093556
+    },
+    "Qwen3 30B||Qwen3 235B": {
+      "mean": 0.873485,
+      "std": 0.080366
+    },
+    "Qwen3 30B||Gemma-3 270M": {
+      "mean": 0.67666,
+      "std": 0.124721
+    },
+    "Qwen3 30B||Gemma-3 1B": {
+      "mean": 0.772936,
+      "std": 0.117792
+    },
+    "Qwen3 30B||Gemma-3 4B": {
+      "mean": 0.805371,
+      "std": 0.099702
+    },
+    "Qwen3 30B||Gemma-3 12B": {
+      "mean": 0.817362,
+      "std": 0.093396
+    },
+    "Qwen3 30B||Gemma-3 27B": {
+      "mean": 0.818137,
+      "std": 0.094568
+    },
+    "Qwen3 30B||Ministral 8B": {
+      "mean": 0.747627,
+      "std": 0.122385
+    },
+    "Qwen3 30B||Mistral 7B v0.3": {
+      "mean": 0.712284,
+      "std": 0.121068
+    },
+    "Qwen3 30B||Mistral Nemo 12B": {
+      "mean": 0.714646,
+      "std": 0.125327
+    },
+    "Qwen3 30B||Mistral Small 3.2 24B": {
+      "mean": 0.830436,
+      "std": 0.093255
+    },
+    "Qwen3 30B||OLMo-2 1B": {
+      "mean": 0.689495,
+      "std": 0.11973
+    },
+    "Qwen3 30B||OLMo-2 7B": {
+      "mean": 0.740133,
+      "std": 0.11442
+    },
+    "Qwen3 30B||OLMo-2 13B": {
+      "mean": 0.75103,
+      "std": 0.12024
+    },
+    "Qwen3 30B||OLMo-2 32B": {
+      "mean": 0.767654,
+      "std": 0.107527
+    },
+    "Qwen3 30B||Aya Expanse 8B": {
+      "mean": 0.792241,
+      "std": 0.099906
+    },
+    "Qwen3 30B||Aya Expanse 32B": {
+      "mean": 0.796683,
+      "std": 0.09726
+    },
+    "Qwen3 235B||Gemma-3 270M": {
+      "mean": 0.676634,
+      "std": 0.126979
+    },
+    "Qwen3 235B||Gemma-3 1B": {
+      "mean": 0.768328,
+      "std": 0.121456
+    },
+    "Qwen3 235B||Gemma-3 4B": {
+      "mean": 0.805159,
+      "std": 0.10153
+    },
+    "Qwen3 235B||Gemma-3 12B": {
+      "mean": 0.821053,
+      "std": 0.098652
+    },
+    "Qwen3 235B||Gemma-3 27B": {
+      "mean": 0.824974,
+      "std": 0.096961
+    },
+    "Qwen3 235B||Ministral 8B": {
+      "mean": 0.752088,
+      "std": 0.125104
+    },
+    "Qwen3 235B||Mistral 7B v0.3": {
+      "mean": 0.716463,
+      "std": 0.122908
+    },
+    "Qwen3 235B||Mistral Nemo 12B": {
+      "mean": 0.720391,
+      "std": 0.128454
+    },
+    "Qwen3 235B||Mistral Small 3.2 24B": {
+      "mean": 0.835575,
+      "std": 0.093625
+    },
+    "Qwen3 235B||OLMo-2 1B": {
+      "mean": 0.692537,
+      "std": 0.122107
+    },
+    "Qwen3 235B||OLMo-2 7B": {
+      "mean": 0.743681,
+      "std": 0.11545
+    },
+    "Qwen3 235B||OLMo-2 13B": {
+      "mean": 0.754127,
+      "std": 0.121552
+    },
+    "Qwen3 235B||OLMo-2 32B": {
+      "mean": 0.77352,
+      "std": 0.111221
+    },
+    "Qwen3 235B||Aya Expanse 8B": {
+      "mean": 0.795405,
+      "std": 0.099678
+    },
+    "Qwen3 235B||Aya Expanse 32B": {
+      "mean": 0.806633,
+      "std": 0.094457
+    },
+    "Gemma-3 270M||Gemma-3 1B": {
+      "mean": 0.709839,
+      "std": 0.131607
+    },
+    "Gemma-3 270M||Gemma-3 4B": {
+      "mean": 0.702079,
+      "std": 0.130881
+    },
+    "Gemma-3 270M||Gemma-3 12B": {
+      "mean": 0.702656,
+      "std": 0.132321
+    },
+    "Gemma-3 270M||Gemma-3 27B": {
+      "mean": 0.699962,
+      "std": 0.133868
+    },
+    "Gemma-3 270M||Ministral 8B": {
+      "mean": 0.66858,
+      "std": 0.143973
+    },
+    "Gemma-3 270M||Mistral 7B v0.3": {
+      "mean": 0.647653,
+      "std": 0.134338
+    },
+    "Gemma-3 270M||Mistral Nemo 12B": {
+      "mean": 0.641355,
+      "std": 0.150895
+    },
+    "Gemma-3 270M||Mistral Small 3.2 24B": {
+      "mean": 0.680064,
+      "std": 0.126952
+    },
+    "Gemma-3 270M||OLMo-2 1B": {
+      "mean": 0.657621,
+      "std": 0.13535
+    },
+    "Gemma-3 270M||OLMo-2 7B": {
+      "mean": 0.672214,
+      "std": 0.139316
+    },
+    "Gemma-3 270M||OLMo-2 13B": {
+      "mean": 0.67214,
+      "std": 0.143893
+    },
+    "Gemma-3 270M||OLMo-2 32B": {
+      "mean": 0.674977,
+      "std": 0.141453
+    },
+    "Gemma-3 270M||Aya Expanse 8B": {
+      "mean": 0.693858,
+      "std": 0.135204
+    },
+    "Gemma-3 270M||Aya Expanse 32B": {
+      "mean": 0.689716,
+      "std": 0.134682
+    },
+    "Gemma-3 1B||Gemma-3 4B": {
+      "mean": 0.820984,
+      "std": 0.131777
+    },
+    "Gemma-3 1B||Gemma-3 12B": {
+      "mean": 0.811516,
+      "std": 0.130567
+    },
+    "Gemma-3 1B||Gemma-3 27B": {
+      "mean": 0.805509,
+      "std": 0.131177
+    },
+    "Gemma-3 1B||Ministral 8B": {
+      "mean": 0.733027,
+      "std": 0.136711
+    },
+    "Gemma-3 1B||Mistral 7B v0.3": {
+      "mean": 0.702397,
+      "std": 0.129345
+    },
+    "Gemma-3 1B||Mistral Nemo 12B": {
+      "mean": 0.696962,
+      "std": 0.144144
+    },
+    "Gemma-3 1B||Mistral Small 3.2 24B": {
+      "mean": 0.771269,
+      "std": 0.120443
+    },
+    "Gemma-3 1B||OLMo-2 1B": {
+      "mean": 0.694737,
+      "std": 0.131774
+    },
+    "Gemma-3 1B||OLMo-2 7B": {
+      "mean": 0.733532,
+      "std": 0.13164
+    },
+    "Gemma-3 1B||OLMo-2 13B": {
+      "mean": 0.737324,
+      "std": 0.13964
+    },
+    "Gemma-3 1B||OLMo-2 32B": {
+      "mean": 0.746323,
+      "std": 0.131115
+    },
+    "Gemma-3 1B||Aya Expanse 8B": {
+      "mean": 0.774806,
+      "std": 0.11795
+    },
+    "Gemma-3 1B||Aya Expanse 32B": {
+      "mean": 0.771502,
+      "std": 0.119674
+    },
+    "Gemma-3 4B||Gemma-3 12B": {
+      "mean": 0.860071,
+      "std": 0.099079
+    },
+    "Gemma-3 4B||Gemma-3 27B": {
+      "mean": 0.857375,
+      "std": 0.096607
+    },
+    "Gemma-3 4B||Ministral 8B": {
+      "mean": 0.750692,
+      "std": 0.130153
+    },
+    "Gemma-3 4B||Mistral 7B v0.3": {
+      "mean": 0.717652,
+      "std": 0.131202
+    },
+    "Gemma-3 4B||Mistral Nemo 12B": {
+      "mean": 0.724009,
+      "std": 0.133844
+    },
+    "Gemma-3 4B||Mistral Small 3.2 24B": {
+      "mean": 0.805676,
+      "std": 0.106871
+    },
+    "Gemma-3 4B||OLMo-2 1B": {
+      "mean": 0.69642,
+      "std": 0.129535
+    },
+    "Gemma-3 4B||OLMo-2 7B": {
+      "mean": 0.74797,
+      "std": 0.125041
+    },
+    "Gemma-3 4B||OLMo-2 13B": {
+      "mean": 0.756576,
+      "std": 0.131325
+    },
+    "Gemma-3 4B||OLMo-2 32B": {
+      "mean": 0.773854,
+      "std": 0.120161
+    },
+    "Gemma-3 4B||Aya Expanse 8B": {
+      "mean": 0.799426,
+      "std": 0.111704
+    },
+    "Gemma-3 4B||Aya Expanse 32B": {
+      "mean": 0.804043,
+      "std": 0.108758
+    },
+    "Gemma-3 12B||Gemma-3 27B": {
+      "mean": 0.882863,
+      "std": 0.075058
+    },
+    "Gemma-3 12B||Ministral 8B": {
+      "mean": 0.756698,
+      "std": 0.132679
+    },
+    "Gemma-3 12B||Mistral 7B v0.3": {
+      "mean": 0.723658,
+      "std": 0.131437
+    },
+    "Gemma-3 12B||Mistral Nemo 12B": {
+      "mean": 0.733133,
+      "std": 0.134806
+    },
+    "Gemma-3 12B||Mistral Small 3.2 24B": {
+      "mean": 0.818574,
+      "std": 0.102161
+    },
+    "Gemma-3 12B||OLMo-2 1B": {
+      "mean": 0.69983,
+      "std": 0.128115
+    },
+    "Gemma-3 12B||OLMo-2 7B": {
+      "mean": 0.754122,
+      "std": 0.120583
+    },
+    "Gemma-3 12B||OLMo-2 13B": {
+      "mean": 0.763384,
+      "std": 0.129373
+    },
+    "Gemma-3 12B||OLMo-2 32B": {
+      "mean": 0.784651,
+      "std": 0.117484
+    },
+    "Gemma-3 12B||Aya Expanse 8B": {
+      "mean": 0.807141,
+      "std": 0.113154
+    },
+    "Gemma-3 12B||Aya Expanse 32B": {
+      "mean": 0.818274,
+      "std": 0.103859
+    },
+    "Gemma-3 27B||Ministral 8B": {
+      "mean": 0.756891,
+      "std": 0.135382
+    },
+    "Gemma-3 27B||Mistral 7B v0.3": {
+      "mean": 0.723937,
+      "std": 0.132061
+    },
+    "Gemma-3 27B||Mistral Nemo 12B": {
+      "mean": 0.733982,
+      "std": 0.135721
+    },
+    "Gemma-3 27B||Mistral Small 3.2 24B": {
+      "mean": 0.82085,
+      "std": 0.101336
+    },
+    "Gemma-3 27B||OLMo-2 1B": {
+      "mean": 0.698938,
+      "std": 0.128663
+    },
+    "Gemma-3 27B||OLMo-2 7B": {
+      "mean": 0.753739,
+      "std": 0.121173
+    },
+    "Gemma-3 27B||OLMo-2 13B": {
+      "mean": 0.763523,
+      "std": 0.129157
+    },
+    "Gemma-3 27B||OLMo-2 32B": {
+      "mean": 0.785956,
+      "std": 0.117909
+    },
+    "Gemma-3 27B||Aya Expanse 8B": {
+      "mean": 0.807637,
+      "std": 0.111839
+    },
+    "Gemma-3 27B||Aya Expanse 32B": {
+      "mean": 0.820777,
+      "std": 0.102186
+    },
+    "Ministral 8B||Mistral 7B v0.3": {
+      "mean": 0.7177,
+      "std": 0.150866
+    },
+    "Ministral 8B||Mistral Nemo 12B": {
+      "mean": 0.727958,
+      "std": 0.161765
+    },
+    "Ministral 8B||Mistral Small 3.2 24B": {
+      "mean": 0.764994,
+      "std": 0.12464
+    },
+    "Ministral 8B||OLMo-2 1B": {
+      "mean": 0.686995,
+      "std": 0.148837
+    },
+    "Ministral 8B||OLMo-2 7B": {
+      "mean": 0.738088,
+      "std": 0.150809
+    },
+    "Ministral 8B||OLMo-2 13B": {
+      "mean": 0.745324,
+      "std": 0.156796
+    },
+    "Ministral 8B||OLMo-2 32B": {
+      "mean": 0.758148,
+      "std": 0.146624
+    },
+    "Ministral 8B||Aya Expanse 8B": {
+      "mean": 0.778374,
+      "std": 0.138567
+    },
+    "Ministral 8B||Aya Expanse 32B": {
+      "mean": 0.780263,
+      "std": 0.137832
+    },
+    "Mistral 7B v0.3||Mistral Nemo 12B": {
+      "mean": 0.710854,
+      "std": 0.159736
+    },
+    "Mistral 7B v0.3||Mistral Small 3.2 24B": {
+      "mean": 0.730346,
+      "std": 0.121014
+    },
+    "Mistral 7B v0.3||OLMo-2 1B": {
+      "mean": 0.673838,
+      "std": 0.135204
+    },
+    "Mistral 7B v0.3||OLMo-2 7B": {
+      "mean": 0.720017,
+      "std": 0.139406
+    },
+    "Mistral 7B v0.3||OLMo-2 13B": {
+      "mean": 0.727785,
+      "std": 0.143969
+    },
+    "Mistral 7B v0.3||OLMo-2 32B": {
+      "mean": 0.741115,
+      "std": 0.137982
+    },
+    "Mistral 7B v0.3||Aya Expanse 8B": {
+      "mean": 0.756306,
+      "std": 0.124538
+    },
+    "Mistral 7B v0.3||Aya Expanse 32B": {
+      "mean": 0.754992,
+      "std": 0.129013
+    },
+    "Mistral Nemo 12B||Mistral Small 3.2 24B": {
+      "mean": 0.732781,
+      "std": 0.129512
+    },
+    "Mistral Nemo 12B||OLMo-2 1B": {
+      "mean": 0.659537,
+      "std": 0.155647
+    },
+    "Mistral Nemo 12B||OLMo-2 7B": {
+      "mean": 0.711934,
+      "std": 0.156108
+    },
+    "Mistral Nemo 12B||OLMo-2 13B": {
+      "mean": 0.72149,
+      "std": 0.161337
+    },
+    "Mistral Nemo 12B||OLMo-2 32B": {
+      "mean": 0.740077,
+      "std": 0.151113
+    },
+    "Mistral Nemo 12B||Aya Expanse 8B": {
+      "mean": 0.751321,
+      "std": 0.146522
+    },
+    "Mistral Nemo 12B||Aya Expanse 32B": {
+      "mean": 0.757422,
+      "std": 0.14538
+    },
+    "Mistral Small 3.2 24B||OLMo-2 1B": {
+      "mean": 0.701797,
+      "std": 0.122727
+    },
+    "Mistral Small 3.2 24B||OLMo-2 7B": {
+      "mean": 0.753388,
+      "std": 0.115557
+    },
+    "Mistral Small 3.2 24B||OLMo-2 13B": {
+      "mean": 0.764887,
+      "std": 0.120246
+    },
+    "Mistral Small 3.2 24B||OLMo-2 32B": {
+      "mean": 0.783203,
+      "std": 0.112278
+    },
+    "Mistral Small 3.2 24B||Aya Expanse 8B": {
+      "mean": 0.809954,
+      "std": 0.092155
+    },
+    "Mistral Small 3.2 24B||Aya Expanse 32B": {
+      "mean": 0.818684,
+      "std": 0.087132
+    },
+    "OLMo-2 1B||OLMo-2 7B": {
+      "mean": 0.71566,
+      "std": 0.136068
+    },
+    "OLMo-2 1B||OLMo-2 13B": {
+      "mean": 0.7148,
+      "std": 0.140354
+    },
+    "OLMo-2 1B||OLMo-2 32B": {
+      "mean": 0.711706,
+      "std": 0.136649
+    },
+    "OLMo-2 1B||Aya Expanse 8B": {
+      "mean": 0.720037,
+      "std": 0.128389
+    },
+    "OLMo-2 1B||Aya Expanse 32B": {
+      "mean": 0.717091,
+      "std": 0.129643
+    },
+    "OLMo-2 7B||OLMo-2 13B": {
+      "mean": 0.774542,
+      "std": 0.129701
+    },
+    "OLMo-2 7B||OLMo-2 32B": {
+      "mean": 0.77225,
+      "std": 0.130241
+    },
+    "OLMo-2 7B||Aya Expanse 8B": {
+      "mean": 0.780173,
+      "std": 0.121348
+    },
+    "OLMo-2 7B||Aya Expanse 32B": {
+      "mean": 0.780702,
+      "std": 0.119267
+    },
+    "OLMo-2 13B||OLMo-2 32B": {
+      "mean": 0.78755,
+      "std": 0.131425
+    },
+    "OLMo-2 13B||Aya Expanse 8B": {
+      "mean": 0.792669,
+      "std": 0.125738
+    },
+    "OLMo-2 13B||Aya Expanse 32B": {
+      "mean": 0.791949,
+      "std": 0.125833
+    },
+    "OLMo-2 32B||Aya Expanse 8B": {
+      "mean": 0.806497,
+      "std": 0.117397
+    },
+    "OLMo-2 32B||Aya Expanse 32B": {
+      "mean": 0.80948,
+      "std": 0.116155
+    },
+    "Aya Expanse 8B||Aya Expanse 32B": {
+      "mean": 0.865957,
+      "std": 0.087138
+    }
+  },
+  "f_tests": {
+    "general": [
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "general",
+        "group": "all",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.856622,
+        "mean_b": 0.656856,
+        "std_a": 0.067385,
+        "std_b": 0.158754,
+        "F_means": 523.259065,
+        "p_means": 0.0,
+        "F_var": 5.550468,
+        "p_var": 0.0
+      }
+    ],
+    "family": [
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "family",
+        "group": "Aya Expanse",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.905438,
+        "mean_b": 0.656856,
+        "std_a": 0.056064,
+        "std_b": 0.158754,
+        "F_means": 850.180974,
+        "p_means": 0.0,
+        "F_var": 8.018351,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "family",
+        "group": "Gemma-3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.870877,
+        "mean_b": 0.656856,
+        "std_a": 0.060562,
+        "std_b": 0.158754,
+        "F_means": 618.761364,
+        "p_means": 0.0,
+        "F_var": 6.871523,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "family",
+        "group": "Mistral",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.798683,
+        "mean_b": 0.656856,
+        "std_a": 0.115532,
+        "std_b": 0.158754,
+        "F_means": 203.495397,
+        "p_means": 0.0,
+        "F_var": 1.888187,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "family",
+        "group": "OLMo-2",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.791843,
+        "mean_b": 0.656856,
+        "std_a": 0.111846,
+        "std_b": 0.158754,
+        "F_means": 188.437564,
+        "p_means": 0.0,
+        "F_var": 2.014707,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "family",
+        "group": "Qwen3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.896886,
+        "mean_b": 0.656856,
+        "std_a": 0.046348,
+        "std_b": 0.158754,
+        "F_means": 821.52633,
+        "p_means": 0.0,
+        "F_var": 11.732454,
+        "p_var": 0.0
+      }
+    ],
+    "language": [
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "ca",
+        "language": "ca",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.872443,
+        "mean_b": 0.651812,
+        "std_a": 0.044789,
+        "std_b": 0.119799,
+        "F_means": 89.273902,
+        "p_means": 0.0,
+        "F_var": 7.154317,
+        "p_var": 1e-06
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "de",
+        "language": "de",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.877645,
+        "mean_b": 0.698289,
+        "std_a": 0.065782,
+        "std_b": 0.132548,
+        "F_means": 44.073678,
+        "p_means": 0.0,
+        "F_var": 4.06003,
+        "p_var": 0.000314
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "en",
+        "language": "en",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.891938,
+        "mean_b": 0.641372,
+        "std_a": 0.04614,
+        "std_b": 0.191796,
+        "F_means": 48.400915,
+        "p_means": 0.0,
+        "F_var": 17.278788,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "es",
+        "language": "es",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.901175,
+        "mean_b": 0.676596,
+        "std_a": 0.037749,
+        "std_b": 0.137947,
+        "F_means": 73.97299,
+        "p_means": 0.0,
+        "F_var": 13.354274,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "eu",
+        "language": "eu",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.731413,
+        "mean_b": 0.655435,
+        "std_a": 0.044103,
+        "std_b": 0.157361,
+        "F_means": 6.48432,
+        "p_means": 0.01356,
+        "F_var": 12.730932,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "fr",
+        "language": "fr",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.889528,
+        "mean_b": 0.658198,
+        "std_a": 0.047204,
+        "std_b": 0.200476,
+        "F_means": 37.846658,
+        "p_means": 0.0,
+        "F_var": 18.036715,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "it",
+        "language": "it",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.874247,
+        "mean_b": 0.686751,
+        "std_a": 0.051519,
+        "std_b": 0.14489,
+        "F_means": 44.598699,
+        "p_means": 0.0,
+        "F_var": 7.909375,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "ja",
+        "language": "ja",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.802753,
+        "mean_b": 0.585372,
+        "std_a": 0.055896,
+        "std_b": 0.151383,
+        "F_means": 54.438179,
+        "p_means": 0.0,
+        "F_var": 7.334783,
+        "p_var": 1e-06
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "pl",
+        "language": "pl",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.830912,
+        "mean_b": 0.617729,
+        "std_a": 0.069073,
+        "std_b": 0.150797,
+        "F_means": 49.559061,
+        "p_means": 0.0,
+        "F_var": 4.766234,
+        "p_var": 6.8e-05
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "pt-BR",
+        "language": "pt-BR",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.910037,
+        "mean_b": 0.763166,
+        "std_a": 0.026478,
+        "std_b": 0.112531,
+        "F_means": 48.422279,
+        "p_means": 0.0,
+        "F_var": 18.062606,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "ru",
+        "language": "ru",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.843063,
+        "mean_b": 0.572651,
+        "std_a": 0.040806,
+        "std_b": 0.177021,
+        "F_means": 66.471922,
+        "p_means": 0.0,
+        "F_var": 18.818823,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "vi",
+        "language": "vi",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.838521,
+        "mean_b": 0.668818,
+        "std_a": 0.050407,
+        "std_b": 0.136532,
+        "F_means": 40.788476,
+        "p_means": 0.0,
+        "F_var": 7.336347,
+        "p_var": 1e-06
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "language",
+        "group": "zh",
+        "language": "zh",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 30,
+        "n_b": 30,
+        "mean_a": 0.872417,
+        "mean_b": 0.662938,
+        "std_a": 0.0474,
+        "std_b": 0.163165,
+        "F_means": 45.599614,
+        "p_means": 0.0,
+        "F_var": 11.849425,
+        "p_var": 0.0
+      }
+    ],
+    "model": [
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Aya Expanse 32B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.910108,
+        "mean_b": 0.656856,
+        "std_a": 0.058909,
+        "std_b": 0.158754,
+        "F_means": 872.361843,
+        "p_means": 0.0,
+        "F_var": 7.262631,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Aya Expanse 8B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.900768,
+        "mean_b": 0.656856,
+        "std_a": 0.060451,
+        "std_b": 0.158754,
+        "F_means": 804.033704,
+        "p_means": 0.0,
+        "F_var": 6.896618,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Gemma-3 12B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.906844,
+        "mean_b": 0.656856,
+        "std_a": 0.060218,
+        "std_b": 0.158754,
+        "F_means": 845.421987,
+        "p_means": 0.0,
+        "F_var": 6.950205,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Gemma-3 1B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.865437,
+        "mean_b": 0.656856,
+        "std_a": 0.095104,
+        "std_b": 0.158754,
+        "F_means": 495.434391,
+        "p_means": 0.0,
+        "F_var": 2.78648,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Gemma-3 270M",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 389,
+        "n_b": 390,
+        "mean_a": 0.772254,
+        "mean_b": 0.656856,
+        "std_a": 0.112662,
+        "std_b": 0.158754,
+        "F_means": 136.812656,
+        "p_means": 0.0,
+        "F_var": 1.985602,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Gemma-3 27B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.914129,
+        "mean_b": 0.656856,
+        "std_a": 0.053916,
+        "std_b": 0.158754,
+        "F_means": 918.319398,
+        "p_means": 0.0,
+        "F_var": 8.669792,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Gemma-3 4B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.895867,
+        "mean_b": 0.656856,
+        "std_a": 0.070116,
+        "std_b": 0.158754,
+        "F_means": 739.701236,
+        "p_means": 0.0,
+        "F_var": 5.126403,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Ministral 8B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.784822,
+        "mean_b": 0.656856,
+        "std_a": 0.152135,
+        "std_b": 0.158754,
+        "F_means": 132.091052,
+        "p_means": 0.0,
+        "F_var": 1.088908,
+        "p_var": 0.401304
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Mistral 7B v0.3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.775738,
+        "mean_b": 0.656856,
+        "std_a": 0.123051,
+        "std_b": 0.158754,
+        "F_means": 136.618829,
+        "p_means": 0.0,
+        "F_var": 1.664489,
+        "p_var": 1e-06
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Mistral Nemo 12B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.765711,
+        "mean_b": 0.656856,
+        "std_a": 0.15474,
+        "std_b": 0.158754,
+        "F_means": 94.0295,
+        "p_means": 0.0,
+        "F_var": 1.052553,
+        "p_var": 0.613737
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Mistral Small 3.2 24B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.868463,
+        "mean_b": 0.656856,
+        "std_a": 0.077572,
+        "std_b": 0.158754,
+        "F_means": 559.356782,
+        "p_means": 0.0,
+        "F_var": 4.188374,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "OLMo-2 13B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.813377,
+        "mean_b": 0.656856,
+        "std_a": 0.116062,
+        "std_b": 0.158754,
+        "F_means": 247.05828,
+        "p_means": 0.0,
+        "F_var": 1.870993,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "OLMo-2 1B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.731404,
+        "mean_b": 0.656856,
+        "std_a": 0.132521,
+        "std_b": 0.158754,
+        "F_means": 50.681598,
+        "p_means": 0.0,
+        "F_var": 1.435089,
+        "p_var": 0.000385
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "OLMo-2 32B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.831573,
+        "mean_b": 0.656856,
+        "std_a": 0.111281,
+        "std_b": 0.158754,
+        "F_means": 316.74077,
+        "p_means": 0.0,
+        "F_var": 2.03522,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "OLMo-2 7B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.79102,
+        "mean_b": 0.656856,
+        "std_a": 0.120903,
+        "std_b": 0.158754,
+        "F_means": 176.291189,
+        "p_means": 0.0,
+        "F_var": 1.724156,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 0.6B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.846844,
+        "mean_b": 0.656856,
+        "std_a": 0.075896,
+        "std_b": 0.158754,
+        "F_means": 454.645229,
+        "p_means": 0.0,
+        "F_var": 4.375379,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 1.7B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.889601,
+        "mean_b": 0.656856,
+        "std_a": 0.062388,
+        "std_b": 0.158754,
+        "F_means": 726.112041,
+        "p_means": 0.0,
+        "F_var": 6.475064,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 14B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.913229,
+        "mean_b": 0.656856,
+        "std_a": 0.038316,
+        "std_b": 0.158754,
+        "F_means": 961.102353,
+        "p_means": 0.0,
+        "F_var": 17.166439,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 235B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.906517,
+        "mean_b": 0.656856,
+        "std_a": 0.063682,
+        "std_b": 0.158754,
+        "F_means": 830.840611,
+        "p_means": 0.0,
+        "F_var": 6.214565,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 30B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.905148,
+        "mean_b": 0.656856,
+        "std_a": 0.058593,
+        "std_b": 0.158754,
+        "F_means": 839.610239,
+        "p_means": 0.0,
+        "F_var": 7.341026,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 32B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.903032,
+        "mean_b": 0.656856,
+        "std_a": 0.04445,
+        "std_b": 0.158754,
+        "F_means": 869.615574,
+        "p_means": 0.0,
+        "F_var": 12.755728,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 4B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.90123,
+        "mean_b": 0.656856,
+        "std_a": 0.059973,
+        "std_b": 0.158754,
+        "F_means": 808.700865,
+        "p_means": 0.0,
+        "F_var": 7.00714,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_intra vs Human_intra",
+        "level": "model",
+        "group": "Qwen3 8B",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.909485,
+        "mean_b": 0.656856,
+        "std_a": 0.04428,
+        "std_b": 0.158754,
+        "F_means": 916.313863,
+        "p_means": 0.0,
+        "F_var": 12.853935,
+        "p_var": 0.0
+      }
+    ]
+  },
+  "f_tests_cross_model": {
+    "general": [
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "general",
+        "group": "all",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 98648,
+        "n_b": 390,
+        "mean_a": 0.749978,
+        "mean_b": 0.656856,
+        "std_a": 0.132291,
+        "std_b": 0.158754,
+        "F_means": 192.152221,
+        "p_means": 0.0,
+        "F_var": 1.440091,
+        "p_var": 0.0
+      }
+    ],
+    "language": [
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "ca",
+        "language": "ca",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.778248,
+        "mean_b": 0.651812,
+        "std_a": 0.109382,
+        "std_b": 0.119799,
+        "F_means": 39.895788,
+        "p_means": 0.0,
+        "F_var": 1.199553,
+        "p_var": 0.424435
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "de",
+        "language": "de",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7568,
+        "n_b": 30,
+        "mean_a": 0.771853,
+        "mean_b": 0.698289,
+        "std_a": 0.13201,
+        "std_b": 0.132548,
+        "F_means": 9.279077,
+        "p_means": 0.002326,
+        "F_var": 1.008171,
+        "p_var": 0.905999
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "en",
+        "language": "en",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.792229,
+        "mean_b": 0.641372,
+        "std_a": 0.09223,
+        "std_b": 0.191796,
+        "F_means": 78.946016,
+        "p_means": 0.0,
+        "F_var": 4.324447,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "es",
+        "language": "es",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.815403,
+        "mean_b": 0.676596,
+        "std_a": 0.083855,
+        "std_b": 0.137947,
+        "F_means": 81.350672,
+        "p_means": 0.0,
+        "F_var": 2.706231,
+        "p_var": 4e-06
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "eu",
+        "language": "eu",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.578319,
+        "mean_b": 0.655435,
+        "std_a": 0.133649,
+        "std_b": 0.157361,
+        "F_means": 9.934011,
+        "p_means": 0.001629,
+        "F_var": 1.386321,
+        "p_var": 0.16244
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "fr",
+        "language": "fr",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.788732,
+        "mean_b": 0.658198,
+        "std_a": 0.10111,
+        "std_b": 0.200476,
+        "F_means": 49.254516,
+        "p_means": 0.0,
+        "F_var": 3.931258,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "it",
+        "language": "it",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.773868,
+        "mean_b": 0.686751,
+        "std_a": 0.116514,
+        "std_b": 0.14489,
+        "F_means": 16.670499,
+        "p_means": 4.5e-05,
+        "F_var": 1.546389,
+        "p_var": 0.061633
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "ja",
+        "language": "ja",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.649759,
+        "mean_b": 0.585372,
+        "std_a": 0.150116,
+        "std_b": 0.151383,
+        "F_means": 5.497038,
+        "p_means": 0.019074,
+        "F_var": 1.016958,
+        "p_var": 0.879864
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "pl",
+        "language": "pl",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.725677,
+        "mean_b": 0.617729,
+        "std_a": 0.134781,
+        "std_b": 0.150797,
+        "F_means": 19.149812,
+        "p_means": 1.2e-05,
+        "F_var": 1.25179,
+        "p_var": 0.331114
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "pt-BR",
+        "language": "pt-BR",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.826647,
+        "mean_b": 0.763166,
+        "std_a": 0.083804,
+        "std_b": 0.112531,
+        "F_means": 17.094474,
+        "p_means": 3.6e-05,
+        "F_var": 1.803103,
+        "p_var": 0.010347
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "ru",
+        "language": "ru",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.74609,
+        "mean_b": 0.572651,
+        "std_a": 0.102949,
+        "std_b": 0.177021,
+        "F_means": 84.18571,
+        "p_means": 0.0,
+        "F_var": 2.956706,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "vi",
+        "language": "vi",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.733279,
+        "mean_b": 0.668818,
+        "std_a": 0.117377,
+        "std_b": 0.136532,
+        "F_means": 9.0003,
+        "p_means": 0.002708,
+        "F_var": 1.353011,
+        "p_var": 0.195569
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "language",
+        "group": "zh",
+        "language": "zh",
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7590,
+        "n_b": 30,
+        "mean_a": 0.769671,
+        "mean_b": 0.662938,
+        "std_a": 0.112991,
+        "std_b": 0.163165,
+        "F_means": 26.553915,
+        "p_means": 0.0,
+        "F_var": 2.085298,
+        "p_var": 0.00112
+      }
+    ],
+    "family_pair": [
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Aya Expanse || Aya Expanse",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 390,
+        "n_b": 390,
+        "mean_a": 0.865957,
+        "mean_b": 0.656856,
+        "std_a": 0.087138,
+        "std_b": 0.158754,
+        "F_means": 519.945305,
+        "p_means": 0.0,
+        "F_var": 3.319245,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Aya Expanse || Gemma-3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 3898,
+        "n_b": 390,
+        "mean_a": 0.778763,
+        "mean_b": 0.656856,
+        "std_a": 0.125051,
+        "std_b": 0.158754,
+        "F_means": 319.201926,
+        "p_means": 0.0,
+        "F_var": 1.611661,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Aya Expanse || Mistral",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 3120,
+        "n_b": 390,
+        "mean_a": 0.775914,
+        "mean_b": 0.656856,
+        "std_a": 0.129197,
+        "std_b": 0.158754,
+        "F_means": 278.638546,
+        "p_means": 0.0,
+        "F_var": 1.509888,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Aya Expanse || OLMo-2",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 3120,
+        "n_b": 390,
+        "mean_a": 0.774825,
+        "mean_b": 0.656856,
+        "std_a": 0.127526,
+        "std_b": 0.158754,
+        "F_means": 279.607406,
+        "p_means": 0.0,
+        "F_var": 1.549708,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Aya Expanse || Qwen3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 6240,
+        "n_b": 390,
+        "mean_a": 0.767554,
+        "mean_b": 0.656856,
+        "std_a": 0.105694,
+        "std_b": 0.158754,
+        "F_means": 374.995914,
+        "p_means": 0.0,
+        "F_var": 2.256059,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Gemma-3 || Gemma-3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 3896,
+        "n_b": 390,
+        "mean_a": 0.785369,
+        "mean_b": 0.656856,
+        "std_a": 0.139756,
+        "std_b": 0.158754,
+        "F_means": 292.069286,
+        "p_means": 0.0,
+        "F_var": 1.290363,
+        "p_var": 0.000415
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Gemma-3 || Mistral",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7796,
+        "n_b": 390,
+        "mean_a": 0.730389,
+        "mean_b": 0.656856,
+        "std_a": 0.139172,
+        "std_b": 0.158754,
+        "F_means": 102.225594,
+        "p_means": 0.0,
+        "F_var": 1.301217,
+        "p_var": 0.000175
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Gemma-3 || OLMo-2",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 7796,
+        "n_b": 390,
+        "mean_a": 0.728422,
+        "mean_b": 0.656856,
+        "std_a": 0.135704,
+        "std_b": 0.158754,
+        "F_means": 101.520548,
+        "p_means": 0.0,
+        "F_var": 1.368573,
+        "p_var": 7e-06
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Gemma-3 || Qwen3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 15592,
+        "n_b": 390,
+        "mean_a": 0.749628,
+        "mean_b": 0.656856,
+        "std_a": 0.130887,
+        "std_b": 0.158754,
+        "F_means": 188.984156,
+        "p_means": 0.0,
+        "F_var": 1.471157,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Mistral || Mistral",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 2340,
+        "n_b": 390,
+        "mean_a": 0.730772,
+        "mean_b": 0.656856,
+        "std_a": 0.143114,
+        "std_b": 0.158754,
+        "F_means": 86.335455,
+        "p_means": 0.0,
+        "F_var": 1.230518,
+        "p_var": 0.005726
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Mistral || OLMo-2",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 6240,
+        "n_b": 390,
+        "mean_a": 0.726726,
+        "mean_b": 0.656856,
+        "std_a": 0.145267,
+        "std_b": 0.158754,
+        "F_means": 83.958589,
+        "p_means": 0.0,
+        "F_var": 1.19431,
+        "p_var": 0.012847
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Mistral || Qwen3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 12480,
+        "n_b": 390,
+        "mean_a": 0.726736,
+        "mean_b": 0.656856,
+        "std_a": 0.127143,
+        "std_b": 0.158754,
+        "F_means": 112.342411,
+        "p_means": 0.0,
+        "F_var": 1.559076,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "OLMo-2 || OLMo-2",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 2340,
+        "n_b": 390,
+        "mean_a": 0.746085,
+        "mean_b": 0.656856,
+        "std_a": 0.13785,
+        "std_b": 0.158754,
+        "F_means": 133.832771,
+        "p_means": 0.0,
+        "F_var": 1.326279,
+        "p_var": 0.000152
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "OLMo-2 || Qwen3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 12480,
+        "n_b": 390,
+        "mean_a": 0.717349,
+        "mean_b": 0.656856,
+        "std_a": 0.126105,
+        "std_b": 0.158754,
+        "F_means": 85.514096,
+        "p_means": 0.0,
+        "F_var": 1.58484,
+        "p_var": 0.0
+      },
+      {
+        "comparison": "LLM_cross_model vs Human_cross_respondent",
+        "level": "family_pair",
+        "group": "Qwen3 || Qwen3",
+        "language": NaN,
+        "label_a": "llm",
+        "label_b": "human",
+        "n_a": 10920,
+        "n_b": 390,
+        "mean_a": 0.810344,
+        "mean_b": 0.656856,
+        "std_a": 0.112475,
+        "std_b": 0.158754,
+        "F_means": 678.080871,
+        "p_means": 0.0,
+        "F_var": 1.992216,
+        "p_var": 0.0
+      }
+    ]
+  },
+  "f_tests_family_pairwise": [
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Aya Expanse || Gemma-3",
+      "language": null,
+      "label_a": "Aya Expanse",
+      "label_b": "Gemma-3",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.905438,
+      "mean_b": 0.870877,
+      "std_a": 0.056064,
+      "std_b": 0.060562,
+      "F_means": 68.394448,
+      "p_means": 0.0,
+      "F_var": 1.166896,
+      "p_var": 0.128418
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Aya Expanse || Mistral",
+      "language": null,
+      "label_a": "Aya Expanse",
+      "label_b": "Mistral",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.905438,
+      "mean_b": 0.798683,
+      "std_a": 0.056064,
+      "std_b": 0.115532,
+      "F_means": 269.522269,
+      "p_means": 0.0,
+      "F_var": 4.246588,
+      "p_var": 0.0
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Aya Expanse || OLMo-2",
+      "language": null,
+      "label_a": "Aya Expanse",
+      "label_b": "OLMo-2",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.905438,
+      "mean_b": 0.791843,
+      "std_a": 0.056064,
+      "std_b": 0.111846,
+      "F_means": 321.5089,
+      "p_means": 0.0,
+      "F_var": 3.979909,
+      "p_var": 0.0
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Aya Expanse || Qwen3",
+      "language": null,
+      "label_a": "Aya Expanse",
+      "label_b": "Qwen3",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.905438,
+      "mean_b": 0.896886,
+      "std_a": 0.056064,
+      "std_b": 0.046348,
+      "F_means": 5.390759,
+      "p_means": 0.020501,
+      "F_var": 1.4632,
+      "p_var": 0.000184
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Gemma-3 || Mistral",
+      "language": null,
+      "label_a": "Gemma-3",
+      "label_b": "Mistral",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.870877,
+      "mean_b": 0.798683,
+      "std_a": 0.060562,
+      "std_b": 0.115532,
+      "F_means": 119.460629,
+      "p_means": 0.0,
+      "F_var": 3.639218,
+      "p_var": 0.0
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Gemma-3 || OLMo-2",
+      "language": null,
+      "label_a": "Gemma-3",
+      "label_b": "OLMo-2",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.870877,
+      "mean_b": 0.791843,
+      "std_a": 0.060562,
+      "std_b": 0.111846,
+      "F_means": 150.588024,
+      "p_means": 0.0,
+      "F_var": 3.410681,
+      "p_var": 0.0
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Gemma-3 || Qwen3",
+      "language": null,
+      "label_a": "Gemma-3",
+      "label_b": "Qwen3",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.870877,
+      "mean_b": 0.896886,
+      "std_a": 0.060562,
+      "std_b": 0.046348,
+      "F_means": 45.360374,
+      "p_means": 0.0,
+      "F_var": 1.707402,
+      "p_var": 0.0
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Mistral || OLMo-2",
+      "language": null,
+      "label_a": "Mistral",
+      "label_b": "OLMo-2",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.798683,
+      "mean_b": 0.791843,
+      "std_a": 0.115532,
+      "std_b": 0.111846,
+      "F_means": 0.705676,
+      "p_means": 0.401141,
+      "F_var": 1.067006,
+      "p_var": 0.522743
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "Mistral || Qwen3",
+      "language": null,
+      "label_a": "Mistral",
+      "label_b": "Qwen3",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.798683,
+      "mean_b": 0.896886,
+      "std_a": 0.115532,
+      "std_b": 0.046348,
+      "F_means": 242.713838,
+      "p_means": 0.0,
+      "F_var": 6.213609,
+      "p_var": 0.0
+    },
+    {
+      "comparison": "Family_intra vs Family_intra",
+      "level": "family_pair",
+      "group": "OLMo-2 || Qwen3",
+      "language": null,
+      "label_a": "OLMo-2",
+      "label_b": "Qwen3",
+      "n_a": 390,
+      "n_b": 390,
+      "mean_a": 0.791843,
+      "mean_b": 0.896886,
+      "std_a": 0.111846,
+      "std_b": 0.046348,
+      "F_means": 293.583552,
+      "p_means": 0.0,
+      "F_var": 5.823404,
+      "p_var": 0.0
+    }
+  ]
+}

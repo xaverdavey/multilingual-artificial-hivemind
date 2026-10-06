@@ -1,0 +1,18 @@
+\begin{table*}[t]
+\centering
+\caption{\textbf{Tokenization fertility on FLORES-200 devtest.} We report subword tokens each family's tokenizer spends per parallel sentence, relative to its own English count. Basque and Polish cost the most; Chinese the least.}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccccccccccc}
+\toprule
+\textbf{Family} & \texttt{en} & \texttt{de} & \texttt{fr} & \texttt{es} & \texttt{it} & \texttt{pt-BR} & \texttt{ca} & \texttt{pl} & \texttt{ru} & \texttt{vi} & \texttt{zh} & \texttt{ja} & \texttt{eu} \\
+\midrule
+Aya Expanse & 1.00 & 1.32 & 1.35 & 1.26 & 1.32 & 1.16 & 1.58 & 1.34 & 1.27 & 1.33 & 1.04 & 1.22 & 1.76 \\
+Gemma-3 & 1.00 & 1.33 & 1.41 & 1.30 & 1.38 & 1.26 & 1.54 & 1.51 & 1.37 & 1.37 & 1.08 & 1.21 & 1.68 \\
+Mistral & 1.00 & 1.40 & 1.42 & 1.41 & 1.45 & 1.37 & 1.47 & 1.65 & 1.24 & 1.84 & 1.12 & 1.33 & 1.58 \\
+OLMo-2 & 1.00 & 1.58 & 1.63 & 1.54 & 1.64 & 1.48 & 1.72 & 1.91 & 2.45 & 2.43 & 1.86 & 2.25 & 1.88 \\
+Qwen3 & 1.00 & 1.56 & 1.58 & 1.52 & 1.63 & 1.45 & 1.69 & 1.76 & 1.75 & 1.44 & 1.00 & 1.40 & 1.87 \\
+\bottomrule
+\end{tabular}
+\label{tab:fertility}
+\end{table*}

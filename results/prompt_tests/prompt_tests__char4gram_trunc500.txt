@@ -1,0 +1,66 @@
+=== Prompt-level paired tests: char4gram_trunc500 ===
+bootstrap B=10000, permutation B=20000, seed=0
+
+[intra / general]  groups=1
+  mean gap +0.1370  prompt-bootstrap 95% CI [+0.1262, +0.1476]  language-cluster CI [+0.1079, +0.1584]
+  p_perm 5.00e-05  p_wilcoxon 4.13e-55  p_paired_t 4.60e-82  prompts with gap>0: 94.3% of n=388
+[intra / family]  groups=5
+  gap>0: 5/5   CI excludes 0 (positive): 5/5
+  perm p<0.05: 5/5   Holm<0.05: 5/5   BH<0.05: 5/5
+  wilcoxon p<0.05: 5/5   Holm<0.05: 5/5   BH<0.05: 5/5
+
+[intra / model]  groups=23
+  gap>0: 22/23   CI excludes 0 (positive): 22/23
+  perm p<0.05: 22/23   Holm<0.05: 22/23   BH<0.05: 22/23
+  wilcoxon p<0.05: 22/23   Holm<0.05: 22/23   BH<0.05: 22/23
+  non-positive groups: OLMo-2 1B/nan (-0.012)
+
+[intra / language]  groups=13
+  gap>0: 13/13   CI excludes 0 (positive): 12/13
+  perm p<0.05: 12/13   Holm<0.05: 12/13   BH<0.05: 12/13
+  wilcoxon p<0.05: 12/13   Holm<0.05: 12/13   BH<0.05: 12/13
+  positive but not Holm-significant: eu/eu (+0.004, p_holm=0.898)
+
+[intra / model_language]  groups=299
+  gap>0: 276/299   CI excludes 0 (positive): 261/299
+  perm p<0.05: 266/299   Holm<0.05: 219/299   BH<0.05: 264/299
+  wilcoxon p<0.05: 269/299   Holm<0.05: 241/299   BH<0.05: 268/299
+  non-positive groups: Aya Expanse 32B/eu (-0.022), Aya Expanse 8B/eu (-0.026), Gemma-3 1B/eu (-0.031), Ministral 8B/eu (-0.130), Ministral 8B/pl (-0.016), Ministral 8B/vi (-0.024), Mistral 7B v0.3/eu (-0.097), Mistral 7B v0.3/ja (-0.002), Mistral Nemo 12B/eu (-0.097), Mistral Small 3.2 24B/eu (-0.065), OLMo-2 13B/eu (-0.086), OLMo-2 1B/ca (-0.007), OLMo-2 1B/de (-0.016), OLMo-2 1B/eu (-0.117), OLMo-2 1B/fr (-0.015), OLMo-2 1B/it (-0.006), OLMo-2 1B/ja (-0.020), OLMo-2 1B/pl (-0.011), OLMo-2 1B/pt-BR (-0.047), OLMo-2 1B/vi (-0.025), OLMo-2 32B/eu (-0.058), OLMo-2 7B/eu (-0.061), Qwen3 4B/eu (-0.018)
+
+[cross / general]  groups=1
+  mean gap -0.0241  prompt-bootstrap 95% CI [-0.0348, -0.0144]  language-cluster CI [-0.0467, -0.0058]
+  p_perm 5.00e-05  p_wilcoxon 5.26e-03  p_paired_t 6.23e-06  prompts with gap>0: 46.4% of n=388
+[cross / language]  groups=13
+  gap>0: 2/13   CI excludes 0 (positive): 0/13
+  perm p<0.05: 3/13   Holm<0.05: 2/13   BH<0.05: 3/13
+  wilcoxon p<0.05: 4/13   Holm<0.05: 2/13   BH<0.05: 3/13
+  non-positive groups: ca/ca (-0.021), de/de (-0.013), es/es (-0.010), eu/eu (-0.121), fr/fr (-0.038), it/it (-0.020), ja/ja (-0.004), pl/pl (-0.015), pt-BR/pt-BR (-0.058), vi/vi (-0.037), zh/zh (-0.003)
+  positive but not Holm-significant: en/en (+0.010, p_holm=1.000), ru/ru (+0.017, p_holm=1.000)
+
+[cross / model]  groups=23
+  gap>0: 1/23   CI excludes 0 (positive): 0/23
+  perm p<0.05: 16/23   Holm<0.05: 16/23   BH<0.05: 16/23
+  wilcoxon p<0.05: 14/23   Holm<0.05: 11/23   BH<0.05: 13/23
+  non-positive groups: Aya Expanse 8B/nan (-0.001), Gemma-3 12B/nan (-0.003), Gemma-3 1B/nan (-0.017), Gemma-3 270M/nan (-0.039), Gemma-3 27B/nan (-0.004), Gemma-3 4B/nan (-0.006), Ministral 8B/nan (-0.015), Mistral 7B v0.3/nan (-0.030), Mistral Nemo 12B/nan (-0.022), Mistral Small 3.2 24B/nan (-0.017), OLMo-2 13B/nan (-0.021), OLMo-2 1B/nan (-0.044), OLMo-2 32B/nan (-0.016), OLMo-2 7B/nan (-0.025), Qwen3 0.6B/nan (-0.061), Qwen3 1.7B/nan (-0.052), Qwen3 14B/nan (-0.049), Qwen3 235B/nan (-0.009), Qwen3 30B/nan (-0.010), Qwen3 32B/nan (-0.050), Qwen3 4B/nan (-0.016), Qwen3 8B/nan (-0.048)
+  positive but not Holm-significant: Aya Expanse 32B/nan (+0.001, p_holm=1.000)
+
+[cross / family_pair]  groups=15
+  gap>0: 7/15   CI excludes 0 (positive): 5/15
+  perm p<0.05: 10/15   Holm<0.05: 9/15   BH<0.05: 9/15
+  wilcoxon p<0.05: 12/15   Holm<0.05: 11/15   BH<0.05: 12/15
+  non-positive groups: Aya Expanse || Qwen3/nan (-0.045), Gemma-3 || Mistral/nan (-0.009), Gemma-3 || OLMo-2/nan (-0.016), Gemma-3 || Qwen3/nan (-0.057), Mistral || OLMo-2/nan (-0.008), Mistral || Qwen3/nan (-0.055), OLMo-2 || OLMo-2/nan (-0.000), OLMo-2 || Qwen3/nan (-0.062)
+  positive but not Holm-significant: Aya Expanse || OLMo-2/nan (+0.012, p_holm=0.266), Mistral || Mistral/nan (+0.002, p_holm=1.000), Qwen3 || Qwen3/nan (+0.004, p_holm=1.000)
+
+[cross / family_pair_language]  groups=195
+  gap>0: 103/195   CI excludes 0 (positive): 48/195
+  perm p<0.05: 101/195   Holm<0.05: 48/195   BH<0.05: 92/195
+  wilcoxon p<0.05: 118/195   Holm<0.05: 54/195   BH<0.05: 112/195
+  non-positive groups: Aya Expanse || Aya Expanse/eu (-0.079), Aya Expanse || Gemma-3/eu (-0.101), Aya Expanse || Mistral/eu (-0.117), Aya Expanse || Mistral/ja (-0.001), Aya Expanse || OLMo-2/eu (-0.111), Aya Expanse || OLMo-2/ja (-0.005), Aya Expanse || OLMo-2/pt-BR (-0.005), Aya Expanse || Qwen3/ca (-0.047), Aya Expanse || Qwen3/de (-0.050), Aya Expanse || Qwen3/es (-0.041), Aya Expanse || Qwen3/eu (-0.134), Aya Expanse || Qwen3/fr (-0.067), Aya Expanse || Qwen3/it (-0.047), Aya Expanse || Qwen3/ja (-0.027), Aya Expanse || Qwen3/pl (-0.031), Aya Expanse || Qwen3/pt-BR (-0.096), Aya Expanse || Qwen3/vi (-0.058), Aya Expanse || Qwen3/zh (-0.015), Gemma-3 || Gemma-3/eu (-0.071), Gemma-3 || Mistral/en (-0.010), Gemma-3 || Mistral/eu (-0.117), Gemma-3 || Mistral/fr (-0.004), Gemma-3 || Mistral/ja (-0.003), Gemma-3 || Mistral/pl (-0.007), Gemma-3 || Mistral/pt-BR (-0.023), Gemma-3 || Mistral/vi (-0.016), Gemma-3 || Mistral/zh (-0.002), Gemma-3 || OLMo-2/ca (-0.012), Gemma-3 || OLMo-2/en (-0.016), Gemma-3 || OLMo-2/eu (-0.104), Gemma-3 || OLMo-2/fr (-0.027), Gemma-3 || OLMo-2/it (-0.013), Gemma-3 || OLMo-2/pl (-0.001), Gemma-3 || OLMo-2/pt-BR (-0.035), Gemma-3 || OLMo-2/vi (-0.030), Gemma-3 || Qwen3/ca (-0.056), Gemma-3 || Qwen3/de (-0.061), Gemma-3 || Qwen3/en (-0.024), Gemma-3 || Qwen3/es (-0.062), Gemma-3 || Qwen3/eu (-0.131), Gemma-3 || Qwen3/fr (-0.085), Gemma-3 || Qwen3/it (-0.064), Gemma-3 || Qwen3/ja (-0.026), Gemma-3 || Qwen3/pl (-0.040), Gemma-3 || Qwen3/pt-BR (-0.104), Gemma-3 || Qwen3/vi (-0.073), Gemma-3 || Qwen3/zh (-0.021), Mistral || Mistral/eu (-0.133), Mistral || Mistral/ja (-0.022), Mistral || Mistral/pl (-0.013), Mistral || Mistral/pt-BR (-0.012), Mistral || Mistral/vi (-0.021), Mistral || OLMo-2/eu (-0.129), Mistral || OLMo-2/fr (-0.002), Mistral || OLMo-2/ja (-0.021), Mistral || OLMo-2/pl (-0.019), Mistral || OLMo-2/pt-BR (-0.026), Mistral || OLMo-2/vi (-0.026), Mistral || Qwen3/ca (-0.053), Mistral || Qwen3/de (-0.058), Mistral || Qwen3/es (-0.055), Mistral || Qwen3/eu (-0.142), Mistral || Qwen3/fr (-0.076), Mistral || Qwen3/it (-0.055), Mistral || Qwen3/ja (-0.032), Mistral || Qwen3/pl (-0.045), Mistral || Qwen3/pt-BR (-0.105), Mistral || Qwen3/vi (-0.076), Mistral || Qwen3/zh (-0.018), OLMo-2 || OLMo-2/eu (-0.106), OLMo-2 || OLMo-2/fr (-0.013), OLMo-2 || OLMo-2/ja (-0.010), OLMo-2 || OLMo-2/pl (-0.003), OLMo-2 || OLMo-2/pt-BR (-0.027), OLMo-2 || OLMo-2/vi (-0.009), OLMo-2 || Qwen3/ca (-0.061), OLMo-2 || Qwen3/de (-0.067), OLMo-2 || Qwen3/en (-0.003), OLMo-2 || Qwen3/es (-0.061), OLMo-2 || Qwen3/eu (-0.145), OLMo-2 || Qwen3/fr (-0.089), OLMo-2 || Qwen3/it (-0.060), OLMo-2 || Qwen3/ja (-0.038), OLMo-2 || Qwen3/pl (-0.051), OLMo-2 || Qwen3/pt-BR (-0.114), OLMo-2 || Qwen3/ru (-0.006), OLMo-2 || Qwen3/vi (-0.086), OLMo-2 || Qwen3/zh (-0.023), Qwen3 || Qwen3/eu (-0.090), Qwen3 || Qwen3/fr (-0.022), Qwen3 || Qwen3/pt-BR (-0.037), Qwen3 || Qwen3/vi (-0.008)
+
+[ladder / general]  groups=1
+  mean gap +0.1620  prompt-bootstrap 95% CI [+0.1564, +0.1679]  language-cluster CI [+0.1465, +0.1758]
+  p_perm 5.00e-05  p_wilcoxon 1.18e-65  p_paired_t 2.09e-184  prompts with gap>0: 100.0% of n=390
+[ladder / language]  groups=13
+  gap>0: 13/13   CI excludes 0 (positive): 13/13
+  perm p<0.05: 13/13   Holm<0.05: 13/13   BH<0.05: 13/13
+  wilcoxon p<0.05: 13/13   Holm<0.05: 13/13   BH<0.05: 13/13

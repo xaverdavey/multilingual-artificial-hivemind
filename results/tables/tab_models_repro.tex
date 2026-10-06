@@ -1,0 +1,37 @@
+\begin{table*}[t]
+\caption{\textbf{The 23 open-weight model variants and how each was run.} Revision is the Hugging Face commit that was the repository head when generation ran. Precision is the dtype declared in the checkpoint's config, which vLLM serves by default. Chars is the mean response length in characters, reasoning block included where present; Trunc.\ is the share of responses cut off by the 2048-token limit; Think marks checkpoints whose responses carry a \texttt{<think>} reasoning block.}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llllrrrl}
+\toprule
+\textbf{Model} & \textbf{Checkpoint} & \textbf{Rev.} & \textbf{Prec.} & \textbf{GPUs} & \textbf{Chars} & \textbf{Trunc.\ \%} & \textbf{Think} \\
+\midrule
+Qwen3 0.6B & \texttt{Qwen/Qwen3-0.6B} & \texttt{c1899de2} & bf16 & 1$\times$ A40 48\,GB & 2,320 & 1.1 & yes \\
+Qwen3 1.7B & \texttt{Qwen/Qwen3-1.7B} & \texttt{70d244cc} & bf16 & 1$\times$ A40 48\,GB & 4,442 & 14.8 & yes \\
+Qwen3 4B & \texttt{Qwen/Qwen3-4B-Instruct-2507} & \texttt{cdbee75f} & bf16 & 1$\times$ A40 48\,GB & 2,546 & 7.2 & no \\
+Qwen3 8B & \texttt{Qwen/Qwen3-8B} & \texttt{b968826d} & bf16 & 1$\times$ A40 48\,GB & 4,635 & 18.5 & yes \\
+Qwen3 14B & \texttt{Qwen/Qwen3-14B} & \texttt{40c06982} & bf16 & 1$\times$ A40 48\,GB & 4,175 & 12.4 & yes \\
+Qwen3 32B & \texttt{Qwen/Qwen3-32B} & \texttt{9216db57} & bf16 & 2$\times$ A100 80\,GB & 4,547 & 17.2 & yes \\
+Qwen3 30B & \texttt{Qwen/Qwen3-30B-A3B-Instruct-2507} & \texttt{0d7cf239} & bf16 & 1$\times$ A100 80\,GB & 2,360 & 5.2 & no \\
+Qwen3 235B & \texttt{Qwen/Qwen3-235B-A22B-Instruct-2507-FP8} & \texttt{e156cb4e} & FP8 & 4$\times$ A100 80\,GB & 2,188 & 3.4 & no \\
+Gemma-3 270M & \texttt{google/gemma-3-270m-it} & \texttt{ac82b4e8} & bf16 & 1$\times$ A40 48\,GB & 1,522 & 3.9 & no \\
+Gemma-3 1B & \texttt{google/gemma-3-1b-it} & \texttt{dcc83ea8} & bf16 & 1$\times$ A40 48\,GB & 2,332 & 0.8 & no \\
+Gemma-3 4B & \texttt{google/gemma-3-4b-it} & \texttt{093f9f38} & bf16 & 1$\times$ A40 48\,GB & 2,460 & 0.5 & no \\
+Gemma-3 12B & \texttt{google/gemma-3-12b-it} & \texttt{96b6f1ec} & bf16 & 1$\times$ A40 48\,GB & 2,584 & 0.5 & no \\
+Gemma-3 27B & \texttt{google/gemma-3-27b-it} & \texttt{005ad340} & bf16 & 1$\times$ A100 80\,GB & 2,494 & 0.3 & no \\
+Ministral 8B & \texttt{mistralai/Ministral-8B-Instruct-2410} & \texttt{2f494a19} & bf16 & 1$\times$ A40 48\,GB & 1,368 & 1.0 & no \\
+Mistral 7B v0.3 & \texttt{mistralai/Mistral-7B-Instruct-v0.3} & \texttt{c170c708} & bf16 & 1$\times$ A40 48\,GB & 1,141 & 0.7 & no \\
+Mistral Nemo 12B & \texttt{mistralai/Mistral-Nemo-Instruct-2407} & \texttt{04d8a905} & bf16 & 1$\times$ A40 48\,GB & 1,049 & 0.7 & no \\
+Mistral Small 3.2 24B & \texttt{mistralai/Mistral-Small-3.2-24B-Instruct-2506} & \texttt{95a6d26c} & bf16 & 1$\times$ A100 80\,GB & 1,638 & 0.2 & no \\
+OLMo-2 1B & \texttt{allenai/OLMo-2-0425-1B-Instruct} & \texttt{48d788ec} & bf16 & 1$\times$ A40 48\,GB & 1,543 & 0.0 & no \\
+OLMo-2 7B & \texttt{allenai/OLMo-2-1124-7B-Instruct} & \texttt{470b1fba} & bf16 & 1$\times$ A40 48\,GB & 1,620 & 0.1 & no \\
+OLMo-2 13B & \texttt{allenai/OLMo-2-1124-13B-Instruct} & \texttt{3a5c85ba} & bf16 & 1$\times$ A40 48\,GB & 1,629 & 0.0 & no \\
+OLMo-2 32B & \texttt{allenai/OLMo-2-0325-32B-Instruct} & \texttt{b9602434} & bf16 & 2$\times$ A100 80\,GB & 1,563 & 0.0 & no \\
+Aya Expanse 8B & \texttt{CohereLabs/aya-expanse-8b} & \texttt{5062468b} & fp16 & 1$\times$ A40 48\,GB & 1,851 & 0.0 & no \\
+Aya Expanse 32B & \texttt{CohereLabs/aya-expanse-32b} & \texttt{b306ea27} & fp16 & 2$\times$ A100 80\,GB & 1,750 & 0.0 & no \\
+\bottomrule
+\end{tabular}}
+\label{tab:model-families}
+\end{table*}

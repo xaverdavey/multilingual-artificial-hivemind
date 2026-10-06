@@ -5,8 +5,11 @@ Code and analysis for **"The Multilingual Artificial Hivemind: Do All LLMs Think
 Does the Artificial Hivemind effect (Jiang et al. 2025) generalize multilingually? See [`PLAN.md`](PLAN.md) for the full plan, hypotheses, and metric definitions.
 
 Released with the code: the prompt set is rebuilt deterministically by `select_oasst2_prompts.py` (seed 42);
-per-model generation metadata (`results/raw/*.meta.json`: vLLM/PyTorch versions, dtype, GPUs, timestamps)
-and the Hugging Face revision snapshot (`experiments/hub_meta/`) document exactly what was run. Licensed under MIT.
+the Hugging Face revision and dtype snapshot of every checkpoint (`experiments/hub_meta/`); and every derived
+result the paper is built from (`results/`: per-prompt similarities in three embedding spaces and under the
+lexical metric, F-tests, paired prompt-level tests, tokenization fertility, regression inputs and outputs, and
+the LaTeX tables). The raw generations (448,500 responses, 500 MB) and the embeddings are too large for git
+and are available from the authors. Licensed under MIT.
 
 ## Layout
 
@@ -73,7 +76,7 @@ python -m experiments.run_generation --model Qwen/Qwen2.5-7B-Instruct
 python -m experiments.sweep_models --models Qwen/Qwen2.5-7B-Instruct microsoft/Phi-3.5-mini-instruct
 ```
 
-Dependencies pinned in [`requirements.txt`](requirements.txt): `pip install -r requirements.txt`.
+Dependencies are listed in [`requirements.txt`](requirements.txt): `pip install -r requirements.txt`.
 
 ## Running the sweep on a SLURM cluster
 
