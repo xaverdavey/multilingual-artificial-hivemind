@@ -1,18 +1,18 @@
 \begin{table}[t]
 \centering
-\caption{\textbf{The similarity ladder under three embedding spaces and an embedder-free lexical metric.} Mean similarity between two answers to the same prompt when they come from the same model resampled, from two different models, and from two different humans, averaged over all prompts, models and model pairs. \textbf{Langs.} counts languages in which the same-model value exceeds the human value; $\rho$ is the Spearman correlation of the per-cell same-model-minus-human gap against the primary metric. The ordering holds in every embedding space; under the lexical metric the different-models rung falls to the human level.}
+\caption{\textbf{The homogenization gap under three embedding spaces and an embedder-free lexical metric.} Mean similarity between two answers to the same prompt when they come from the same model resampled and from two different humans, averaged over all prompts and models, and the difference between them (the homogenization gap). \textbf{Langs.} counts languages with a positive gap; $\rho$ is the Spearman correlation of the per-cell gap against the primary metric. The effect is present in every language under every metric. The BGE-M3 500-char row re-embeds every response cut to its first 500 characters, on 10 of the 50 samples per prompt.}
 \small
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-\textbf{Similarity metric} & \textbf{Same model} & \textbf{Diff.\ models} & \textbf{Diff.\ humans} & \textbf{Langs.} & \textbf{$\rho$} \\
+\textbf{Similarity metric} & \textbf{Same model} & \textbf{Diff.\ humans} & \textbf{Gap} & \textbf{Langs.} & \textbf{$\rho$} \\
 \midrule
-text-embedding-3-small & 0.857 & 0.750 & 0.657 & 13/13 & --- \\
-BGE-M3 & 0.870 & 0.785 & 0.727 & 13/13 & 0.92 \\
-BGE-M3, 500-char cap & 0.857 & 0.762 & 0.723 & 13/13 & 0.91 \\
-Qwen3-Embedding-0.6B & 0.866 & 0.766 & 0.666 & 13/13 & 0.93 \\
-char 4-gram Jaccard & 0.275 & 0.143 & 0.133 & 13/13 & 0.71 \\
-char 4-gram Jaccard, 500-char cap & 0.268 & 0.106 & 0.130 & 13/13 & 0.72 \\
+text-embedding-3-small & 0.857 & 0.657 & +0.200 & 13/13 & --- \\
+BGE-M3 & 0.870 & 0.727 & +0.143 & 13/13 & 0.92 \\
+BGE-M3, 500-char cap & 0.857 & 0.723 & +0.134 & 13/13 & 0.91 \\
+Qwen3-Embedding-0.6B & 0.866 & 0.666 & +0.200 & 13/13 & 0.93 \\
+char 4-gram Jaccard & 0.275 & 0.133 & +0.141 & 13/13 & 0.71 \\
+char 4-gram Jaccard, 500-char cap & 0.268 & 0.130 & +0.138 & 13/13 & 0.72 \\
 \bottomrule
 \end{tabular}
 \label{tab:robustness}
