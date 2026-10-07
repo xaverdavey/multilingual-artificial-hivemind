@@ -1,5 +1,5 @@
 \begin{table*}[t]
-\caption{\textbf{Paired prompt-level tests of the homogenization gap, with multiple-comparison correction.} Each group is tested on one LLM-minus-human difference per prompt ($n = 390$ prompts for per-model and per-family-pair groups, $30$ otherwise). Columns count the groups at that level ($k$) whose mean gap is positive, whose 95\% prompt-bootstrap interval lies above zero, and that are positive and significant at $0.05$ after Holm correction of the sign-flip permutation and Wilcoxon signed-rank $p$-values, and after Benjamini--Hochberg correction of the permutation $p$-values, each corrected across the $k$ groups of its row (a group that is significant in the reverse direction, such as Basque in the inter-model comparison, is not counted). The last row of each block tests the top rung of the ladder in Table~\ref{tab:robustness}, one model resampled against two different models, which needs no human baseline. Section~\ref{sec:embedding_robustness} discusses the lexical inter-model rows, where character overlap between two different models is no higher than between two different humans.}
+\caption{\textbf{Paired prompt-level tests of the homogenization gap, with multiple-comparison correction.} Each group is tested on one LLM-minus-human difference per prompt ($n = 390$ prompts for per-model and per-family-pair groups, $30$ otherwise). Columns count the groups at that level ($k$) whose mean gap is positive, whose 95\% prompt-bootstrap interval lies above zero, and that are positive and significant at $0.05$ after Holm correction of the sign-flip permutation and Wilcoxon signed-rank $p$-values, and after Benjamini--Hochberg correction of the permutation $p$-values, each corrected across the $k$ groups of its row (a group that is significant in the reverse direction, such as Basque in the inter-model comparison, is not counted). The last row of the first block tests the top rung of the ladder in Section~\ref{sec:clustering}, one model resampled against two different models, which needs no human baseline. The alternative metrics are reported for the intra-model comparison.}
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -21,31 +21,16 @@ char 4-gram Jaccard & Intra-model: per family & 5 & 5 & 5 & 5 & 5 & 5 \\
  & Intra-model: per model & 23 & 23 & 23 & 23 & 23 & 23 \\
  & Intra-model: per language & 13 & 13 & 12 & 12 & 12 & 12 \\
  & Intra-model: per (model, language) & 299 & 283 & 267 & 232 & 254 & 265 \\
- & Inter-model: per language & 13 & 11 & 4 & 0 & 3 & 2 \\
- & Inter-model: per model & 23 & 17 & 11 & 8 & 17 & 11 \\
- & Inter-model: per family pair & 15 & 12 & 7 & 7 & 12 & 7 \\
- & Inter-model: per (family pair, language) & 195 & 140 & 84 & 36 & 48 & 77 \\
- & Same vs.\ different models: per language & 13 & 13 & 13 & 13 & 13 & 13 \\
 \midrule
 Jaccard, 500-char cap & Intra-model: per family & 5 & 5 & 5 & 5 & 5 & 5 \\
  & Intra-model: per model & 23 & 22 & 22 & 22 & 22 & 22 \\
  & Intra-model: per language & 13 & 13 & 12 & 12 & 12 & 12 \\
  & Intra-model: per (model, language) & 299 & 276 & 261 & 217 & 240 & 258 \\
- & Inter-model: per language & 13 & 2 & 0 & 0 & 0 & 0 \\
- & Inter-model: per model & 23 & 1 & 0 & 0 & 1 & 0 \\
- & Inter-model: per family pair & 15 & 7 & 5 & 4 & 7 & 4 \\
- & Inter-model: per (family pair, language) & 195 & 103 & 48 & 19 & 26 & 43 \\
- & Same vs.\ different models: per language & 13 & 13 & 13 & 13 & 13 & 13 \\
 \midrule
 BGE-M3, 500-char cap & Intra-model: per family & 5 & 5 & 5 & 5 & 5 & 5 \\
  & Intra-model: per model & 23 & 22 & 22 & 22 & 22 & 22 \\
  & Intra-model: per language & 13 & 13 & 13 & 12 & 12 & 12 \\
  & Intra-model: per (model, language) & 299 & 281 & 272 & 244 & 243 & 272 \\
- & Inter-model: per language & 13 & 11 & 9 & 4 & 2 & 9 \\
- & Inter-model: per model & 23 & 21 & 20 & 20 & 20 & 20 \\
- & Inter-model: per family pair & 15 & 15 & 14 & 14 & 14 & 14 \\
- & Inter-model: per (family pair, language) & 195 & 164 & 122 & 60 & 58 & 116 \\
- & Same vs.\ different models: per language & 13 & 13 & 13 & 13 & 13 & 13 \\
 \bottomrule
 \end{tabular}
 \label{tab:prompt_tests}

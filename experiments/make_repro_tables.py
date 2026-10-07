@@ -35,6 +35,9 @@ LEVELS = [("intra", "family", "Intra-model: per family"),
           ("cross", "family_pair", "Inter-model: per family pair"),
           ("cross", "family_pair_language", "Inter-model: per (family pair, language)"),
           ("ladder", "language", "Same vs.\\ different models: per language")]
+# The inter-model and ladder levels are tested under every metric, but the paper reports
+# the inter-model comparison in the primary embedding space only; set True to list them all.
+INTER_ROBUSTNESS = False
 
 
 def prompt_tests_table(pt_dir: Path) -> str:
@@ -43,6 +46,8 @@ def prompt_tests_table(pt_dir: Path) -> str:
         df = pd.read_parquet(pt_dir / f"prompt_tests__{slug}.parquet")
         first = True
         for comp, level, name in LEVELS:
+            if not INTER_ROBUSTNESS and slug != METRICS[0][0] and comp != "intra":
+                continue
             sub = df[(df.comparison == comp) & (df.level == level)]
             k = len(sub)
             rows.append((label if first else "", name, k,
@@ -70,10 +75,13 @@ def prompt_tests_table(pt_dir: Path) -> str:
         r"correction of the sign-flip permutation and Wilcoxon signed-rank $p$-values, and after Benjamini--Hochberg "
         r"correction of the permutation $p$-values, each corrected across the $k$ groups of its row (a group that is "
         r"significant in the reverse direction, such as Basque in the inter-model comparison, is not counted). "
-        r"The last row of each block tests the top rung of the ladder in Table~\ref{tab:robustness}, one model "
-        r"resampled against two different models, which needs no human baseline. Section~\ref{sec:embedding_robustness} "
-        r"discusses the lexical inter-model rows, where character overlap between two different models is no "
-        r"higher than between two different humans.}",
+        + (r"The last row of each block tests the top rung of the ladder in Section~\ref{sec:clustering}, one model "
+           r"resampled against two different models, which needs no human baseline. Section~\ref{sec:embedding_robustness} "
+           r"discusses the lexical inter-model rows, where character overlap between two different models is no "
+           r"higher than between two different humans.}" if INTER_ROBUSTNESS else
+           r"The last row of the first block tests the top rung of the ladder in Section~\ref{sec:clustering}, one model "
+           r"resampled against two different models, which needs no human baseline. The alternative metrics are "
+           r"reported for the intra-model comparison.}"),
         r"\centering", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}",
         r"\begin{tabular}{llrrrrrr}", r"\toprule",
         r"\textbf{Metric} & \textbf{Comparison / level} & $k$ & \textbf{gap}$>0$ & \textbf{CI}$>0$ & "

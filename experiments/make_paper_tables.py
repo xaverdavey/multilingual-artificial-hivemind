@@ -50,38 +50,47 @@ INTER_PATHS = {
     "BAAI_bge-m3_trunc500_s10": Path("results/metrics/inter__BAAI_bge-m3_trunc500_s10.parquet"),
 }
 PRIMARY_SLUG = "text-embedding-3-small"
+# The "different models" rung is computed for every metric (INTER_PATHS), but the paper
+# reports the inter-model comparison in the primary embedding space only; set True to add it.
+INCLUDE_INTER_RUNG = False
 
 
 def robustness_summary(path: Path) -> str:
-    """The similarity ladder (same model / different models / different humans) per metric.
+    """Same-model and different-humans similarity, and their gap, per metric.
 
-    Same-model and different-humans values come from run_robustness' summary CSV;
-    the different-models rung is the mean inter-similarity over every (model pair,
-    prompt) row, which is what the cross-model F-test in run_metrics pools too.
+    Values come from run_robustness' summary CSV. With INCLUDE_INTER_RUNG the
+    "different models" rung (mean inter-similarity over every (model pair, prompt)
+    row) is added as a middle column, turning the table into the full ladder.
     """
     df = pd.read_csv(path)
-    df["inter"] = df["slug"].map(
-        lambda sl: float(pd.read_parquet(INTER_PATHS[sl], columns=["inter_sim"])["inter_sim"].mean()))
     df = pd.concat([df[df["slug"] == PRIMARY_SLUG], df[df["slug"] != PRIMARY_SLUG]])
-    body = "\n".join(
-        f"{r['metric'].split(' (')[0]} & {r['llm_intra']:.3f} & {r['inter']:.3f} & {r['human_intra']:.3f} & "
-        f"{r['langs_positive']}/{r['n_langs']} & "
-        + ("---" if pd.isna(r.get("spearman_vs_primary")) else f"{r['spearman_vs_primary']:.2f}")
-        + r" \\" for _, r in df.iterrows())
-    return _wrap(body,
-                 r"\textbf{Similarity metric} & \textbf{Same model} & \textbf{Diff.\ models} & "
-                 r"\textbf{Diff.\ humans} & \textbf{Langs.} & \textbf{$\rho$} \\",
-                 "@{}lccccc@{}",
-                 "\\textbf{The similarity ladder under three embedding spaces and an embedder-free "
-                 "lexical metric.} Mean similarity between two answers to the same prompt when they come "
-                 "from the same model resampled, from two different models, and from two different humans, "
-                 "averaged over all prompts, models and model pairs. \\textbf{Langs.} counts languages in "
-                 "which the same-model value exceeds the human value; $\\rho$ is the Spearman correlation of "
-                 "the per-cell same-model-minus-human gap against the primary metric. The ordering holds in "
-                 "every embedding space; under the lexical metric the different-models rung falls to the "
-                 "human level. The BGE-M3 500-char row re-embeds every response cut to its first 500 "
-                 "characters, on 10 of the 50 samples per prompt.",
-                 "tab:robustness", colsep_pt=4)
+    if INCLUDE_INTER_RUNG:
+        df["inter"] = df["slug"].map(
+            lambda sl: float(pd.read_parquet(INTER_PATHS[sl], columns=["inter_sim"])["inter_sim"].mean()))
+
+    def row(r) -> str:
+        rho = "---" if pd.isna(r.get("spearman_vs_primary")) else f"{r['spearman_vs_primary']:.2f}"
+        mid = f"{r['inter']:.3f} & " if INCLUDE_INTER_RUNG else ""
+        return (f"{r['metric'].split(' (')[0]} & {r['llm_intra']:.3f} & {mid}{r['human_intra']:.3f} & "
+                f"{r['llm_intra'] - r['human_intra']:+.3f} & {r['langs_positive']}/{r['n_langs']} & {rho} \\\\")
+
+    body = "\n".join(row(r) for _, r in df.iterrows())
+    mid_head = r"\textbf{Diff.\ models} & " if INCLUDE_INTER_RUNG else ""
+    header = (r"\textbf{Similarity metric} & \textbf{Same model} & " + mid_head
+              + r"\textbf{Diff.\ humans} & \textbf{Gap} & \textbf{Langs.} & \textbf{$\rho$} \\")
+    colspec = "@{}lcccccc@{}" if INCLUDE_INTER_RUNG else "@{}lccccc@{}"
+    sources = ("from the same model resampled, from two different models, and from two different humans, "
+               "averaged over all prompts, models and model pairs, and the same-model-minus-human gap"
+               if INCLUDE_INTER_RUNG else
+               "from the same model resampled and from two different humans, averaged over all prompts "
+               "and models, and the difference between them (the homogenization gap)")
+    caption = ("\\textbf{The homogenization gap under three embedding spaces and an embedder-free "
+               "lexical metric.} Mean similarity between two answers to the same prompt when they come "
+               + sources + ". \\textbf{Langs.} counts languages with a positive gap; $\\rho$ is the "
+               "Spearman correlation of the per-cell gap against the primary metric. The effect is present "
+               "in every language under every metric. The BGE-M3 500-char row re-embeds every response cut "
+               "to its first 500 characters, on 10 of the 50 samples per prompt.")
+    return _wrap(body, header, colspec, caption, "tab:robustness", colsep_pt=4)
 
 
 def robustness_by_language(path: Path) -> str:
