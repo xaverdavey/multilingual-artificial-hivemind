@@ -75,11 +75,11 @@ def prompt_tests_table(pt_dir: Path) -> str:
         r"correction of the sign-flip permutation and Wilcoxon signed-rank $p$-values, and after Benjamini--Hochberg "
         r"correction of the permutation $p$-values, each corrected across the $k$ groups of its row (a group that is "
         r"significant in the reverse direction, such as Basque in the inter-model comparison, is not counted). "
-        + (r"The last row of each block tests the top rung of the ladder in Section~\ref{sec:clustering}, one model "
+        + (r"The last row of each block tests the same-model versus different-model comparison of Section~\ref{sec:clustering}, one model "
            r"resampled against two different models, which needs no human baseline. Section~\ref{sec:embedding_robustness} "
            r"discusses the lexical inter-model rows, where character overlap between two different models is no "
            r"higher than between two different humans.}" if INTER_ROBUSTNESS else
-           r"The last row of the first block tests the top rung of the ladder in Section~\ref{sec:clustering}, one model "
+           r"The last row of the first block tests the same-model versus different-model comparison of Section~\ref{sec:clustering}, one model "
            r"resampled against two different models, which needs no human baseline. The alternative metrics are "
            r"reported for the intra-model comparison.}"),
         r"\centering", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}",
