@@ -2,7 +2,7 @@
 
 Two stacked panels, drawn at one-column width so no LaTeX downscaling is needed:
 
-  (a) cell-level scatter of the homogenization gap against model competence,
+  (a) cell-level scatter of the homogenization gap against target-language fidelity,
       one point per (model, language) -- the level the effect actually lives
       at. Plotted per language it would vanish: the language-level Spearman is
       non-significant, because competence varies far more across models within
@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 
 PRETTY = {
-    "lid_match_rate": "Model competence\n(GlotLID match rate)",
+    "lid_match_rate": "Target-language fidelity\n(GlotLID match rate)",
     "log_wiki": "Resource level\n(log$_{10}$ Wikipedia articles)",
     "fertility_vs_en": "Tokenization fertility\n(vs. English, FLORES-200)",
     "ttr": "Morphological complexity\n(type-token ratio)",
