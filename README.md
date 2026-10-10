@@ -6,8 +6,9 @@ Does the Artificial Hivemind effect (Jiang et al. 2025) generalize multilinguall
 
 Released with the code: the prompt set is rebuilt deterministically by `select_oasst2_prompts.py` (seed 42);
 the Hugging Face revision and dtype snapshot of every checkpoint (`experiments/hub_meta/`); and every derived
-result the paper is built from (`results/`: per-prompt similarities in three embedding spaces and under the
-lexical metric, F-tests, paired prompt-level tests, tokenization fertility, regression inputs and outputs, and
+result the paper is built from (`results/`: per-prompt LLM similarities in three embedding spaces and under the
+lexical metric, the per-prompt human baseline for the primary space, the capped BGE-M3 space and the lexical
+metric (`human_intra__*.parquet`; the other spaces carry group means only), F-tests, paired prompt-level tests, tokenization fertility, regression inputs and outputs, and
 the LaTeX tables). The raw generations (448,500 responses, 500 MB) and the embeddings are too large for git
 and are available from the authors. Licensed under MIT.
 
@@ -33,12 +34,13 @@ and are available from the authors. Licensed under MIT.
 | `experiments/plot_cross_bars.py` | Cross-respondent F-test bars (per model, per family pair) with the human baseline as a dashed line |
 | `experiments/make_paper_tables.py` | Emit the appendix LaTeX tables from the analysis outputs |
 | `experiments/run_prompt_tests.py` | Paired prompt-level tests of the gap (bootstrap CIs, Wilcoxon, permutation, Holm/BH) → `results/prompt_tests/` |
+| `experiments/export_human_intra.py` | Save the per-prompt human baseline of each embedding space on disk → `results/metrics/human_intra__*.parquet` |
 | `experiments/fetch_hub_meta.py` | Snapshot HF commit histories and checkpoint dtypes → `experiments/hub_meta/` |
 | `experiments/make_repro_tables.py` | Emit the camera-ready appendix tables: prompt-level tests and per-model reproducibility details |
 | `analysis.ipynb` | Scratch notebook (PCA visualizations of generations; not load-bearing) |
 | `artificial-hivemind/` | Cloned reference repo for the original Jiang et al. paper (read-only, gitignored) |
 
-`results/` (gitignored) is where generations and downstream metrics land.
+`results/` is where generations and downstream metrics land. The raw generations and the embeddings are gitignored; the derived metrics listed above are tracked.
 
 ## Pipeline
 
