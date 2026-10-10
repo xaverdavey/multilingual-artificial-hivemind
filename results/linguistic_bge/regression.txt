@@ -1,144 +1,183 @@
+Competence predictor: belebele_acc (held-out benchmark; not computed from the generations)
+
+=== Competence diagnostics: ceiling, floor, within-model spread ===
+measure = belebele_acc: 273 cells, 21 models, 13 languages
+within-model share of competence variance: 0.202
+cells at ceiling (acc >= 0.95): 1
+cells near chance (acc <= 0.35; chance = 0.25): 37
+cells with letter mass < 0.5 (format not followed; acc understates comprehension): 207
+
+per-model spread across languages:
+                         min    max    std
+model                                     
+Gemma-3 270M           0.222  0.256  0.008
+Gemma-3 27B            0.868  0.942  0.017
+Gemma-3 12B            0.866  0.937  0.019
+Gemma-3 1B             0.314  0.470  0.038
+OLMo-2 1B              0.294  0.452  0.043
+Mistral Nemo 12B       0.712  0.926  0.052
+Qwen3 14B              0.728  0.921  0.052
+Qwen3 0.6B             0.293  0.487  0.058
+Gemma-3 4B             0.573  0.812  0.058
+Ministral 8B           0.622  0.887  0.076
+Qwen3 8B               0.554  0.869  0.096
+OLMo-2 32B             0.494  0.932  0.109
+OLMo-2 7B              0.391  0.869  0.118
+Qwen3 4B               0.540  0.888  0.121
+OLMo-2 13B             0.400  0.883  0.122
+Mistral 7B v0.3        0.083  0.578  0.134
+Aya Expanse 32B        0.230  0.672  0.143
+Mistral Small 3.2 24B  0.394  0.953  0.145
+Qwen3 1.7B             0.222  0.751  0.149
+Qwen3 32B              0.320  0.948  0.167
+Aya Expanse 8B         0.016  0.880  0.224
+
+=== Independent competence vs. the GlotLID match rate (cell-level Spearman) ===
+     measure   n  spearman_rho  p_value
+belebele_acc 273        0.0798   0.1887
+ flores_chrf 252        0.1520   0.0157
+
 === Spearman correlations with the homogenization gap ===
-   level       predictor   n  spearman_rho  p_value
-    cell fertility_vs_en 299     -0.175011 0.002389
-    cell  lid_match_rate 299      0.198345 0.000561
-    cell        log_wiki 299      0.242131 0.000023
-    cell             ttr 253      0.106313 0.091523
-language fertility_vs_en  13      0.203297 0.505315
-language  lid_match_rate  13      0.167813 0.583689
-language        log_wiki  13      0.428571 0.143971
-language             ttr  11      0.254545 0.450037
+   level       predictor   n  spearman_rho      p_value
+    cell fertility_vs_en 273     -0.237334 7.490865e-05
+    cell      competence 273      0.383637 5.293363e-11
+    cell        log_wiki 273      0.252932 2.348300e-05
+    cell             ttr 231      0.083307 2.071339e-01
+language fertility_vs_en  13      0.021978 9.431862e-01
+language      competence  13      0.532967 6.073650e-02
+language        log_wiki  13      0.489011 8.991308e-02
+language             ttr  11      0.109091 7.495086e-01
 
 === Predictor intercorrelations (Spearman, language level) ===
-                 fertility_vs_en  lid_match_rate  log_wiki    ttr
-fertility_vs_en            1.000           0.146    -0.429  0.555
-lid_match_rate             0.146           1.000     0.261  0.014
-log_wiki                  -0.429           0.261     1.000 -0.209
-ttr                        0.555           0.014    -0.209  1.000
+                 fertility_vs_en  competence  log_wiki    ttr
+fertility_vs_en            1.000      -0.549    -0.473  0.382
+competence                -0.549       1.000     0.813 -0.318
+log_wiki                  -0.473       0.813     1.000 -0.209
+ttr                        0.382      -0.318    -0.209  1.000
 
 === Gap decomposition: LLM side vs human side (language level) ===
 A predictor acting through human_intra would be an artifact of how varied
 the human responses happen to be, not a fact about the models.
       predictor     outcome  n  spearman_rho  p_value
-fertility_vs_en         gap 13        0.2033   0.5053
+fertility_vs_en         gap 13        0.0220   0.9432
 fertility_vs_en   llm_intra 13       -0.7967   0.0011
-fertility_vs_en human_intra 13       -0.6868   0.0095
- lid_match_rate         gap 13        0.1678   0.5837
- lid_match_rate   llm_intra 13       -0.1678   0.5837
- lid_match_rate human_intra 13       -0.0028   0.9929
-       log_wiki         gap 13        0.4286   0.1440
+fertility_vs_en human_intra 13       -0.5824   0.0367
+     competence         gap 13        0.5330   0.0607
+     competence   llm_intra 13        0.4176   0.1557
+     competence human_intra 13        0.1484   0.6286
+       log_wiki         gap 13        0.4890   0.0899
        log_wiki   llm_intra 13        0.4121   0.1618
        log_wiki human_intra 13        0.1538   0.6158
-            ttr         gap 11        0.2545   0.4500
+            ttr         gap 11        0.1091   0.7495
             ttr   llm_intra 11       -0.4364   0.1797
             ttr human_intra 11       -0.7182   0.0128
 
 === Language-level summary (sorted by gap) ===
-language    gap  fertility_vs_en  lid_match_rate  log_wiki    ttr  mean_word_len
-      eu 0.0487           1.7688          0.8643    5.6942 0.4258         6.7487
-   pt-BR 0.0991           1.3737          0.9175    6.0724 0.2742         5.0319
-      vi 0.1029           1.6557          0.9815    6.1153 0.0990         3.4559
-      ja 0.1397           1.4812          0.9588    6.1807    NaN            NaN
-      zh 0.1453           1.1926          0.8341    6.1912    NaN            NaN
-      de 0.1503           1.4635          0.9312    6.4981 0.3243         5.9509
-      es 0.1550           1.4332          0.8758    6.3294 0.2555         4.9327
-      en 0.1557           1.0000          0.9720    6.8594 0.2615         4.9311
-      it 0.1577           1.5160          0.9175    6.2977 0.2901         5.3129
-      fr 0.1655           1.5055          0.9146    6.4436 0.2648         5.0695
-      pl 0.1699           1.6763          0.9555    6.2321 0.4486         6.0492
-      ca 0.1871           1.6139          0.8796    5.9046 0.2706         4.8408
-      ru 0.1883           1.6590          0.9749    6.3255 0.4484         6.1156
+language    gap  fertility_vs_en  competence  lid_match_rate  log_wiki    ttr  mean_word_len
+      eu 0.0397           1.7596      0.5022          0.8540    5.6942 0.4258         6.7487
+   pt-BR 0.0963           1.3662      0.5663          0.9137    6.0724 0.2742         5.0319
+      vi 0.0974           1.6767      0.5983          0.9797    6.1153 0.0990         3.4559
+      ja 0.1355           1.4887      0.5902          0.9560    6.1807    NaN            NaN
+      zh 0.1425           1.2106      0.6808          0.8329    6.1912    NaN            NaN
+      de 0.1473           1.4544      0.6937          0.9306    6.4981 0.3243         5.9509
+      it 0.1526           1.5055      0.6711          0.9159    6.2977 0.2901         5.3129
+      es 0.1527           1.4246      0.6871          0.8792    6.3294 0.2555         4.9327
+      en 0.1542           1.0000      0.7735          0.9701    6.8594 0.2615         4.9311
+      pl 0.1636           1.6678      0.6556          0.9522    6.2321 0.4486         6.0492
+      fr 0.1638           1.4983      0.6934          0.9153    6.4436 0.2648         5.0695
+      ca 0.1832           1.6069      0.6756          0.8699    5.9046 0.2706         4.8408
+      ru 0.1844           1.6498      0.6323          0.9733    6.3255 0.4484         6.1156
 
 === Spec A: gap ~ all four predictors + (1 | model) ===
-n = 253 cells, 23 models, 11 languages (crossed random intercepts for model and language)
+n = 231 cells, 21 models, 11 languages (crossed random intercepts for model and language)
 
            Mixed Linear Model Regression Results
 ============================================================
 Model:              MixedLM   Dependent Variable:   gap     
-No. Observations:   253       Method:               REML    
-No. Groups:         1         Scale:                0.0006  
-Min. group size:    253       Log-Likelihood:       489.0876
-Max. group size:    253       Converged:            Yes     
-Mean group size:    253.0                                   
+No. Observations:   231       Method:               REML    
+No. Groups:         1         Scale:                0.0008  
+Min. group size:    231       Log-Likelihood:       425.0711
+Max. group size:    231       Converged:            Yes     
+Mean group size:    231.0                                   
 ------------------------------------------------------------
                   Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------
-Intercept          0.144    0.016  8.941 0.000  0.112  0.175
-z_fertility_vs_en -0.005    0.003 -1.761 0.078 -0.010  0.001
-z_lid_match_rate   0.018    0.002  8.055 0.000  0.014  0.023
-z_log_wiki         0.015    0.013  1.165 0.244 -0.010  0.040
-z_ttr              0.009    0.013  0.695 0.487 -0.016  0.034
-language Var       0.002    0.035                           
-model Var          0.002    0.029                           
+Intercept          0.140    0.015  9.199 0.000  0.110  0.169
+z_fertility_vs_en -0.006    0.003 -1.939 0.053 -0.012  0.000
+z_competence       0.021    0.005  4.344 0.000  0.011  0.030
+z_log_wiki         0.016    0.012  1.322 0.186 -0.008  0.039
+z_ttr              0.009    0.012  0.725 0.468 -0.015  0.032
+language Var       0.001    0.027                           
+model Var          0.002    0.024                           
 ============================================================
 
 
 === Spec B: drop ttr, recovering zh and ja ===
-n = 299 cells, 23 models, 13 languages (crossed random intercepts for model and language)
+n = 273 cells, 21 models, 13 languages (crossed random intercepts for model and language)
 
            Mixed Linear Model Regression Results
 ============================================================
 Model:              MixedLM   Dependent Variable:   gap     
-No. Observations:   299       Method:               REML    
-No. Groups:         1         Scale:                0.0006  
-Min. group size:    299       Log-Likelihood:       593.6638
-Max. group size:    299       Converged:            Yes     
-Mean group size:    299.0                                   
+No. Observations:   273       Method:               REML    
+No. Groups:         1         Scale:                0.0008  
+Min. group size:    273       Log-Likelihood:       510.0133
+Max. group size:    273       Converged:            Yes     
+Mean group size:    273.0                                   
 ------------------------------------------------------------
                   Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------
-Intercept          0.143    0.014 10.012 0.000  0.115  0.172
-z_fertility_vs_en -0.004    0.002 -1.484 0.138 -0.008  0.001
-z_lid_match_rate   0.020    0.002  9.379 0.000  0.016  0.024
-z_log_wiki         0.013    0.010  1.249 0.212 -0.007  0.033
-language Var       0.001    0.024                           
-model Var          0.002    0.029                           
+Intercept          0.139    0.014 10.220 0.000  0.113  0.166
+z_fertility_vs_en -0.007    0.003 -2.453 0.014 -0.013 -0.001
+z_competence       0.020    0.005  4.233 0.000  0.010  0.029
+z_log_wiki         0.014    0.010  1.412 0.158 -0.005  0.032
+language Var       0.001    0.018                           
+model Var          0.002    0.024                           
 ============================================================
 
 
-=== Spec C: spec B on fluent cells only (lid_match_rate >= 0.80; 22 of 299 cells dropped) ===
-n = 277 cells, 23 models, 13 languages (crossed random intercepts for model and language)
+=== Spec C: spec B on fluent cells only (outcome-quality filter: lid_match_rate >= 0.80; 22 of 273 cells dropped) ===
+n = 251 cells, 21 models, 13 languages (crossed random intercepts for model and language)
 
            Mixed Linear Model Regression Results
 ============================================================
 Model:              MixedLM   Dependent Variable:   gap     
-No. Observations:   277       Method:               REML    
-No. Groups:         1         Scale:                0.0005  
-Min. group size:    277       Log-Likelihood:       561.9926
-Max. group size:    277       Converged:            Yes     
-Mean group size:    277.0                                   
+No. Observations:   251       Method:               REML    
+No. Groups:         1         Scale:                0.0007  
+Min. group size:    251       Log-Likelihood:       483.9814
+Max. group size:    251       Converged:            Yes     
+Mean group size:    251.0                                   
 ------------------------------------------------------------
                   Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------
-Intercept          0.148    0.014 10.372 0.000  0.120  0.176
-z_fertility_vs_en -0.004    0.002 -1.548 0.122 -0.008  0.001
-z_lid_match_rate   0.018    0.002  8.116 0.000  0.014  0.023
-z_log_wiki         0.012    0.010  1.191 0.234 -0.008  0.032
-language Var       0.001    0.026                           
-model Var          0.002    0.031                           
+Intercept          0.144    0.013 11.014 0.000  0.119  0.170
+z_fertility_vs_en -0.006    0.003 -2.042 0.041 -0.011 -0.000
+z_competence       0.018    0.004  4.151 0.000  0.009  0.026
+z_log_wiki         0.011    0.009  1.222 0.222 -0.006  0.028
+language Var       0.001    0.017                           
+model Var          0.002    0.025                           
 ============================================================
 
 
 === Spec D: outcome = llm_intra instead of the gap (spec B predictors) ===
-n = 299 cells, 23 models, 13 languages (crossed random intercepts for model and language)
+n = 273 cells, 21 models, 13 languages (crossed random intercepts for model and language)
 
            Mixed Linear Model Regression Results
 ============================================================
 Model:               MixedLM  Dependent Variable:  llm_intra
-No. Observations:    299      Method:              REML     
-No. Groups:          1        Scale:               0.0006   
-Min. group size:     299      Log-Likelihood:      593.1473 
-Max. group size:     299      Converged:           Yes      
-Mean group size:     299.0                                  
+No. Observations:    273      Method:              REML     
+No. Groups:          1        Scale:               0.0008   
+Min. group size:     273      Log-Likelihood:      509.6380 
+Max. group size:     273      Converged:           Yes      
+Mean group size:     273.0                                  
 ------------------------------------------------------------
                   Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------
-Intercept          0.870    0.015 59.361 0.000  0.841  0.899
-z_fertility_vs_en -0.004    0.002 -1.685 0.092 -0.009  0.001
-z_lid_match_rate   0.020    0.002  9.277 0.000  0.016  0.024
-z_log_wiki         0.018    0.011  1.692 0.091 -0.003  0.040
-language Var       0.001    0.026                           
-model Var          0.002    0.029                           
+Intercept          0.866    0.014 62.505 0.000  0.839  0.893
+z_fertility_vs_en -0.008    0.003 -2.728 0.006 -0.013 -0.002
+z_competence       0.019    0.005  4.121 0.000  0.010  0.028
+z_log_wiki         0.019    0.010  1.907 0.057 -0.001  0.038
+language Var       0.001    0.019                           
+model Var          0.002    0.024                           
 ============================================================
 
 
@@ -150,28 +189,77 @@ n = 13 languages
 
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:            human_intra   R-squared:                       0.370
-Model:                            OLS   Adj. R-squared:                  0.160
-Method:                 Least Squares   F-statistic:                     1.762
-Date:                Tue, 06 Oct 2026   Prob (F-statistic):              0.224
-Time:                        12:51:37   Log-Likelihood:                 27.067
-No. Observations:                  13   AIC:                            -46.13
-Df Residuals:                       9   BIC:                            -43.87
+Dep. Variable:            human_intra   R-squared:                       0.504
+Model:                            OLS   Adj. R-squared:                  0.338
+Method:                 Least Squares   F-statistic:                     3.045
+Date:                Sat, 10 Oct 2026   Prob (F-statistic):             0.0850
+Time:                        21:42:43   Log-Likelihood:                 28.618
+No. Observations:                  13   AIC:                            -49.24
+Df Residuals:                       9   BIC:                            -46.98
 Df Model:                           3                                         
 Covariance Type:            nonrobust                                         
 =====================================================================================
                         coef    std err          t      P>|t|      [0.025      0.975]
 -------------------------------------------------------------------------------------
-Intercept             0.7267      0.010     72.268      0.000       0.704       0.749
-z_fertility_vs_en    -0.0362      0.017     -2.151      0.060      -0.074       0.002
-z_lid_match_rate      0.0098      0.014      0.696      0.504      -0.022       0.042
-z_log_wiki           -0.0228      0.019     -1.207      0.258      -0.065       0.020
+Intercept             0.7267      0.009     81.429      0.000       0.707       0.747
+z_fertility_vs_en    -0.0340      0.013     -2.644      0.027      -0.063      -0.005
+z_competence         -0.0303      0.017     -1.828      0.101      -0.068       0.007
+z_log_wiki            0.0076      0.017      0.442      0.669      -0.031       0.047
 ==============================================================================
-Omnibus:                        0.809   Durbin-Watson:                   2.477
-Prob(Omnibus):                  0.667   Jarque-Bera (JB):                0.653
-Skew:                           0.160   Prob(JB):                        0.721
-Kurtosis:                       1.950   Cond. No.                         3.30
+Omnibus:                        0.572   Durbin-Watson:                   2.620
+Prob(Omnibus):                  0.751   Jarque-Bera (JB):                0.606
+Skew:                           0.344   Prob(JB):                        0.739
+Kurtosis:                       2.196   Cond. No.                         3.69
 ==============================================================================
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+=== Spec F: spec B + GlotLID match rate (does the old proxy add anything?) ===
+If lid_match_rate stays significant next to independent competence, it is
+tracking something other than competence -- e.g. language purity or
+formulaic output -- rather than standing in for it.
+n = 273 cells, 21 models, 13 languages (crossed random intercepts for model and language)
+
+           Mixed Linear Model Regression Results
+============================================================
+Model:              MixedLM   Dependent Variable:   gap     
+No. Observations:   273       Method:               REML    
+No. Groups:         1         Scale:                0.0006  
+Min. group size:    273       Log-Likelihood:       537.3508
+Max. group size:    273       Converged:            Yes     
+Mean group size:    273.0                                   
+------------------------------------------------------------
+                  Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+------------------------------------------------------------
+Intercept          0.139    0.014  9.930 0.000  0.112  0.167
+z_fertility_vs_en -0.003    0.003 -1.330 0.183 -0.008  0.002
+z_competence       0.017    0.004  4.033 0.000  0.009  0.025
+z_log_wiki         0.010    0.010  1.034 0.301 -0.009  0.030
+z_lid_match_rate   0.019    0.002  8.647 0.000  0.015  0.024
+language Var       0.001    0.022                           
+model Var          0.002    0.029                           
+============================================================
+
+
+=== Spec G: spec B with competence = flores_chrf ===
+n = 252 cells, 21 models, 12 languages (crossed random intercepts for model and language)
+
+           Mixed Linear Model Regression Results
+============================================================
+Model:              MixedLM   Dependent Variable:   gap     
+No. Observations:   252       Method:               REML    
+No. Groups:         1         Scale:                0.0008  
+Min. group size:    252       Log-Likelihood:       474.1444
+Max. group size:    252       Converged:            Yes     
+Mean group size:    252.0                                   
+------------------------------------------------------------
+                  Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+------------------------------------------------------------
+Intercept          0.138    0.016  8.609 0.000  0.107  0.170
+z_fertility_vs_en -0.002    0.003 -0.808 0.419 -0.008  0.003
+z_competence       0.040    0.007  5.621 0.000  0.026  0.054
+z_log_wiki         0.013    0.013  0.957 0.338 -0.013  0.039
+language Var       0.002    0.036                           
+model Var          0.002    0.023                           
+============================================================
