@@ -162,6 +162,13 @@ def build_table(f_tests: Path, fertility: Path, fluency: Path, competence: Path,
     df = df.merge(comp, on=["model", "language"], how="left")
     if df[measure].isna().all():
         raise ValueError(f"no {measure} values for any cell in {competence}")
+    # A model with no benchmark run at all (e.g. too large for the GPU) leaves the
+    # whole analysis, not just the competence fits, so every level -- cell fits,
+    # language means, placebo -- describes the same set of models.
+    unscored = sorted(set(df["model"]) - set(df.loc[df[measure].notna(), "model"]))
+    if unscored:
+        print(f"dropping {len(unscored)} models without {measure}: {', '.join(unscored)}")
+        df = df[~df["model"].isin(unscored)].reset_index(drop=True)
     df["competence"] = df[measure]
     df["competence_measure"] = measure
 
