@@ -1,23 +1,26 @@
 \begin{table*}[t]
 \centering
-\caption{\textbf{Standardised coefficients from the crossed-effects model of the homogenization gap, fitted in each embedding space.} Spec A uses all four predictors on the 11 languages for which morphology is defined (253 cells; the type-token ratio is undefined for \texttt{zh}/\texttt{ja}); B drops morphology to recover all 13 languages (299 cells); C repeats B on the 277 cells with a GlotLID match rate $\geq 0.80$, confirming the effect is not driven by degenerate generation. Target-language fidelity (the competence proxy) is significant in every specification and all three embedding spaces. Resource level reaches $p<0.05$ only under \texttt{text-embedding-3-small}, and tokenization fertility only in specification C under two embedders; neither is a robust finding. $^{*}p<0.05$, $^{***}p<0.001$.}
+\caption{\textbf{Standardised coefficients from the crossed-effects model of the homogenization gap, fitted in each embedding space.} Competence is Belebele reading-comprehension accuracy (900 parallel questions per language), a held-out benchmark that shares no prompts or outputs with the similarity scores. Spec A uses all four predictors on the languages for which morphology is defined (231 cells; the type-token ratio is undefined for \texttt{zh}/\texttt{ja}); B drops morphology to recover them (273 cells); C repeats B on the 251 cells whose generations have a GlotLID target-language match rate $\geq 0.80$, so degenerate output cannot drive the fit; F adds that match rate to B as a fifth predictor, testing whether it carries signal beyond competence. $^{*}p<0.05$, $^{***}p<0.001$.}
 \small
 \setlength{\tabcolsep}{3.5pt}
-\begin{tabular}{llcccc}
+\begin{tabular}{llccccc}
 \toprule
-\textbf{Space} & \textbf{Spec} & \textbf{Target-lang.\ fidelity} & \textbf{Resource level} & \textbf{Tokenization fertility} & \textbf{Morph. complexity} \\
+\textbf{Space} & \textbf{Spec} & \textbf{Competence} & \textbf{Resource level} & \textbf{Tokenization fertility} & \textbf{Morph. complexity} & \textbf{GlotLID} \\
 \midrule
-OpenAI & A & $+0.023^{***}$ & $+0.027$ & $-0.005$ & $+0.006$ \\
- & B & $+0.026^{***}$ & $+0.023^{*}$ & $-0.005$ & --- \\
- & C & $+0.022^{***}$ & $+0.021$ & $-0.006^{*}$ & --- \\
+OpenAI & A & $+0.018^{*}$ & $+0.030^{*}$ & $-0.007$ & $+0.005$ & --- \\
+ & B & $+0.017^{*}$ & $+0.025^{*}$ & $-0.010^{*}$ & --- & --- \\
+ & C & $+0.016^{*}$ & $+0.021^{*}$ & $-0.009^{*}$ & --- & --- \\
+ & F & $+0.013^{*}$ & $+0.021$ & $-0.005$ & --- & $+0.025^{***}$ \\
 \midrule
-BGE-M3 & A & $+0.018^{***}$ & $+0.015$ & $-0.005$ & $+0.009$ \\
- & B & $+0.020^{***}$ & $+0.013$ & $-0.004$ & --- \\
- & C & $+0.018^{***}$ & $+0.012$ & $-0.004$ & --- \\
+BGE-M3 & A & $+0.021^{***}$ & $+0.016$ & $-0.006$ & $+0.009$ & --- \\
+ & B & $+0.020^{***}$ & $+0.014$ & $-0.007^{*}$ & --- & --- \\
+ & C & $+0.018^{***}$ & $+0.011$ & $-0.006^{*}$ & --- & --- \\
+ & F & $+0.017^{***}$ & $+0.010$ & $-0.003$ & --- & $+0.019^{***}$ \\
 \midrule
-Qwen3-Emb & A & $+0.018^{***}$ & $+0.013$ & $-0.006$ & $+0.010$ \\
- & B & $+0.020^{***}$ & $+0.010$ & $-0.005$ & --- \\
- & C & $+0.018^{***}$ & $+0.009$ & $-0.005^{*}$ & --- \\
+Qwen3-Emb & A & $+0.020^{***}$ & $+0.013$ & $-0.007^{*}$ & $+0.010$ & --- \\
+ & B & $+0.019^{***}$ & $+0.011$ & $-0.008^{*}$ & --- & --- \\
+ & C & $+0.017^{***}$ & $+0.008$ & $-0.007^{*}$ & --- & --- \\
+ & F & $+0.016^{***}$ & $+0.008$ & $-0.005$ & --- & $+0.019^{***}$ \\
 \bottomrule
 \end{tabular}
 \label{tab:regression}
