@@ -45,8 +45,10 @@ def load_flores(cache_dir: Path) -> dict[str, list[str]]:
         print(f"downloading FLORES-200 ({len(missing)} languages missing) ...")
         raw = urllib.request.urlopen(FLORES_URL, timeout=600).read()
         with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tar:
+            # The published tarball stores members as ./flores200_dataset/...
+            names = {n.removeprefix("./"): n for n in tar.getnames()}
             for code in FLORES_CODE.values():
-                member = tar.extractfile(f"flores200_dataset/devtest/{code}.devtest")
+                member = tar.extractfile(names[f"flores200_dataset/devtest/{code}.devtest"])
                 (cache_dir / f"{code}.devtest").write_bytes(member.read())
 
     out = {}
