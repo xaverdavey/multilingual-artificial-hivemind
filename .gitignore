@@ -39,6 +39,9 @@ results/linguistic/flores/
 !results/fluency/
 results/fluency/*
 !results/fluency/fluency_summary__glotlid.parquet
+!results/competence/
+results/competence/*
+!results/competence/competence_summary.parquet
 logs/
 
 # Local working notes (submission logistics; not project state)

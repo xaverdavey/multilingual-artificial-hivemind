@@ -126,22 +126,36 @@ def fertility_table(path: Path) -> str:
                  "tab:fertility", star=True, colsep_pt=4)
 
 
+COMPETENCE_PRETTY = {"belebele_acc": "Competence", "flores_chrf": "Competence",
+                     "flores_comet": "Competence"}  # the caption names the measure
+COMPETENCE_CAPTION = {
+    "belebele_acc": "Belebele reading-comprehension accuracy (900 parallel questions per language)",
+    "flores_chrf": "FLORES+ English$\\to$target translation chrF++",
+    "flores_comet": "FLORES+ English$\\to$target translation COMET",
+}
+
+
 def regression_table(tables: dict[str, Path]) -> str:
     """Predictors x (embedding space x specification) coefficient table."""
     from experiments.run_linguistic import mixed_model_coefs, PREDICTORS
     no_morph = [p for p in PREDICTORS if p != "ttr"]
-    pretty = {"lid_match_rate": "Target-lang.\\ fidelity", "log_wiki": "Resource level",
-              "fertility_vs_en": "Tokenization fertility", "ttr": "Morph. complexity"}
+    specs = {"A": PREDICTORS, "B": no_morph, "C": no_morph, "F": no_morph + ["lid_match_rate"]}
 
     fits: dict[tuple[str, str], pd.DataFrame] = {}
+    n_cells: dict[str, int] = {}
     for emb, path in tables.items():
         df = pd.read_parquet(path)
-        for spec, preds, d in [("A", PREDICTORS, df), ("B", no_morph, df),
-                               ("C", no_morph, df[df["lid_match_rate"] >= 0.80])]:
+        measure = df["competence_measure"].iloc[0]
+        for spec, preds in specs.items():
+            d = df[df["lid_match_rate"] >= 0.80] if spec == "C" else df
             fits[(emb, spec)] = mixed_model_coefs(d, preds).set_index("predictor")
+            n_cells[spec] = len(d.dropna(subset=["gap"] + preds))
 
+    pretty = {"competence": COMPETENCE_PRETTY[measure], "log_wiki": "Resource level",
+              "fertility_vs_en": "Tokenization fertility", "ttr": "Morph. complexity",
+              "lid_match_rate": "GlotLID"}
     embs = list(tables)
-    order = ["lid_match_rate", "log_wiki", "fertility_vs_en", "ttr"]
+    order = ["competence", "log_wiki", "fertility_vs_en", "ttr", "lid_match_rate"]
     header = (r"\textbf{Space} & \textbf{Spec} & "
               + " & ".join(f"\\textbf{{{pretty[p]}}}" for p in order) + r" \\")
 
@@ -156,23 +170,26 @@ def regression_table(tables: dict[str, Path]) -> str:
     for i, emb in enumerate(embs):
         if i:
             rows.append(r"\midrule")
-        for j, spec in enumerate(("A", "B", "C")):
+        for j, spec in enumerate(specs):
             f = fits[(emb, spec)]
             label = emb if j == 0 else ""
             rows.append(f"{label} & {spec} & "
                         + " & ".join(cell(f, p) for p in order) + r" \\")
 
+    # Descriptive only: the sentence stating what the fits show is written once
+    # the benchmark results are in, not generated here.
     return _wrap("\n".join(rows), header, "ll" + "c" * len(order),
                  "Standardised coefficients from the crossed-effects model of the "
-                 "homogenization gap, fitted in each embedding space. Spec A uses all four "
-                 "predictors on the 11 languages for which morphology is defined (253 cells; the "
-                 "type-token ratio is undefined for \\texttt{zh}/\\texttt{ja}); B drops morphology "
-                 "to recover all 13 languages (299 cells); C repeats B on the 277 cells with a "
-                 "GlotLID match rate $\\geq 0.80$, confirming the effect is not driven by degenerate "
-                 "generation. Target-language fidelity (the competence proxy) is significant in every "
-                 "specification and all three embedding spaces. Resource level reaches $p<0.05$ only "
-                 "under \\texttt{text-embedding-3-small}, and tokenization fertility only in "
-                 "specification C under two embedders; neither is a robust finding. "
+                 "homogenization gap, fitted in each embedding space. Competence is "
+                 f"{COMPETENCE_CAPTION[measure]}, a held-out benchmark that shares no prompts or "
+                 "outputs with the similarity scores. Spec A uses all four "
+                 "predictors on the languages for which morphology is defined "
+                 f"({n_cells['A']} cells; the type-token ratio is undefined for "
+                 "\\texttt{zh}/\\texttt{ja}); B drops morphology to recover them "
+                 f"({n_cells['B']} cells); C repeats B on the {n_cells['C']} cells whose generations "
+                 "have a GlotLID target-language match rate $\\geq 0.80$, so degenerate output "
+                 "cannot drive the fit; F adds that match rate to B as a fifth predictor, testing "
+                 "whether it carries signal beyond competence. "
                  "$^{*}p<0.05$, $^{***}p<0.001$.",
                  "tab:regression", star=True, colsep_pt=3.5)
 

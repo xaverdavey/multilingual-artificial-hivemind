@@ -2,11 +2,11 @@
 
 Two stacked panels, drawn at one-column width so no LaTeX downscaling is needed:
 
-  (a) cell-level scatter of the homogenization gap against target-language fidelity,
-      one point per (model, language) -- the level the effect actually lives
-      at. Plotted per language it would vanish: the language-level Spearman is
-      non-significant, because competence varies far more across models within
-      a language than it does between languages.
+  (a) cell-level scatter of the homogenization gap against held-out competence
+      (Belebele accuracy by default; whichever measure run_linguistic was given),
+      one point per (model, language) -- the level the effect actually lives at,
+      because competence varies far more across models within a language than
+      it does between languages.
   (b) standardised coefficients with 95% CIs from the crossed-effects model,
       fitted separately in each embedding space -- shows which properties
       survive both when all four compete and when the embedder changes.
@@ -22,13 +22,18 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+# Axis label and coefficient-row label for each competence measure.
+MEASURE_LABEL = {
+    "belebele_acc": ("Belebele accuracy", "Competence\n(Belebele accuracy)"),
+    "flores_chrf": ("FLORES+ en$\\to$xx chrF++", "Competence\n(FLORES+ chrF++)"),
+    "flores_comet": ("FLORES+ en$\\to$xx COMET", "Competence\n(FLORES+ COMET)"),
+}
 PRETTY = {
-    "lid_match_rate": "Target-language fidelity\n(GlotLID match rate)",
     "log_wiki": "Resource level\n(log$_{10}$ Wikipedia articles)",
     "fertility_vs_en": "Tokenization fertility\n(vs. English, FLORES-200)",
     "ttr": "Morphological complexity\n(type-token ratio)",
 }
-ORDER = ["lid_match_rate", "log_wiki", "fertility_vs_en", "ttr"]
+ORDER = ["competence", "log_wiki", "fertility_vs_en", "ttr"]
 
 # Results directory -> series label for each extra embedding space.
 ALT_LABELS = {"linguistic_bge": "BGE-M3", "linguistic_qwen": "Qwen3-Emb"}
@@ -47,7 +52,9 @@ def main(table: Path, out_path: Path, width_in: float, alt_tables: list[Path] | 
         if Path(alt).exists():
             tables[ALT_LABELS.get(Path(alt).parent.name, Path(alt).parent.name)] = Path(alt)
     df = pd.read_parquet(table)
-    cells = df.dropna(subset=["gap", "lid_match_rate"])
+    cells = df.dropna(subset=["gap", "competence"])
+    x_label, comp_label = MEASURE_LABEL[df["competence_measure"].iloc[0]]
+    row_labels = {**PRETTY, "competence": comp_label}
     fits = {name: mixed_model_coefs(pd.read_parquet(t), PREDICTORS).set_index("predictor").loc[ORDER]
             for name, t in tables.items()}
 
@@ -63,13 +70,13 @@ def main(table: Path, out_path: Path, width_in: float, alt_tables: list[Path] | 
     # --- (a) gap vs model competence, one point per (model, language) --------
     # No on-plot title: the stats printed below belong in the LaTeX subcaption.
     fig, ax1 = plt.subplots(figsize=(width_in, width_in * 0.82))
-    ax1.scatter(cells["lid_match_rate"], cells["gap"], s=7, color=SERIES_COLORS[0],
+    ax1.scatter(cells["competence"], cells["gap"], s=7, color=SERIES_COLORS[0],
                 alpha=0.34, linewidth=0, zorder=3)
-    slope, intercept, r, p_, _ = stats.linregress(cells["lid_match_rate"], cells["gap"])
-    xs = np.linspace(cells["lid_match_rate"].min(), cells["lid_match_rate"].max(), 20)
+    slope, intercept, r, p_, _ = stats.linregress(cells["competence"], cells["gap"])
+    xs = np.linspace(cells["competence"].min(), cells["competence"].max(), 20)
     ax1.plot(xs, intercept + slope * xs, color="#c0392b", lw=1.2, zorder=4)
-    rho, prho = stats.spearmanr(cells["lid_match_rate"], cells["gap"])
-    ax1.set_xlabel("GlotLID match rate", fontsize=7.5)
+    rho, prho = stats.spearmanr(cells["competence"], cells["gap"])
+    ax1.set_xlabel(x_label, fontsize=7.5)
     ax1.set_ylabel("homogenization gap\n(LLM $-$ human intra-sim)", fontsize=7.5)
     ax1.grid(alpha=0.22, lw=0.5)
     style(ax1)
@@ -93,7 +100,7 @@ def main(table: Path, out_path: Path, width_in: float, alt_tables: list[Path] | 
         ax2.scatter(f["coef"][~sig], y[~sig], s=26, facecolor="white",
                     edgecolor=col, linewidth=1.1, zorder=3)
     ax2.set_yticks(base)
-    ax2.set_yticklabels([PRETTY[p] for p in ORDER], fontsize=6.5)
+    ax2.set_yticklabels([row_labels[p] for p in ORDER], fontsize=6.5)
     ax2.set_xlabel("standardised coefficient (95% CI)", fontsize=7.5)
     if len(fits) > 1:
         ax2.legend(fontsize=6, frameon=False, loc="upper left", handletextpad=0.3,

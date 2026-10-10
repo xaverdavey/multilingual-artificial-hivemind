@@ -10,14 +10,25 @@ Four candidate predictors, matching the four the reviewer suggested:
   fertility_vs_en   per (model, language). Subword tokens this model's tokenizer
                     spends on FLORES-200 parallel text relative to English.
                     From run_fertility.
-  lid_match_rate    per (model, language). GlotLID target-language match rate --
-                    a competence proxy. From run_fluency.
+  competence        per (model, language). Held-out benchmark score, from
+                    run_competence + score_competence; --competence-measure picks
+                    belebele_acc (default; reading comprehension, parallel across
+                    all 13 languages), flores_chrf or flores_comet (en -> xx
+                    translation; undefined for en, so those fits drop English).
   log_wiki          per language. log10 Wikipedia articles, a standard
                     resource-level proxy (fetched live, cached).
   ttr               per language. Type-token ratio on the FLORES parallel text,
                     a morphological-richness proxy. Undefined for zh and ja,
                     which have no whitespace word boundaries -- those two cells
                     are NaN rather than silently mis-segmented.
+
+Competence used to be the GlotLID target-language match rate of the generations
+themselves. That is circular -- it comes from the same samples as the similarity
+scores, and generic formulaic text scores well on both -- so it is no longer a
+predictor. It survives in two clearly separate roles: as an outcome-quality
+filter (spec C drops cells whose generations are not in the target language),
+and in spec F, which puts it next to the independent measure to ask whether
+it carries any signal beyond competence.
 
 Analysis is deliberately two-level, because the levels carry different power:
   - cell level (n=299): mixed model with a random intercept per model, so
@@ -120,8 +131,12 @@ def load_gap(f_tests: Path) -> pd.DataFrame:
     }).reset_index(drop=True)
 
 
-def build_table(f_tests: Path, fertility: Path, fluency: Path, flores_dir: Path,
-                wiki_cache: Path, models_yaml: Path) -> pd.DataFrame:
+COMPETENCE_MEASURES = ["belebele_acc", "flores_chrf", "flores_comet"]
+
+
+def build_table(f_tests: Path, fertility: Path, fluency: Path, competence: Path,
+                measure: str, flores_dir: Path, wiki_cache: Path,
+                models_yaml: Path) -> pd.DataFrame:
     import yaml
     entries = yaml.safe_load(models_yaml.read_text()) or []
     families = {e.get("display_name", e["id"]): e.get("family", "Other") for e in entries}
@@ -138,6 +153,18 @@ def build_table(f_tests: Path, fertility: Path, fluency: Path, flores_dir: Path,
     df = df.merge(flu.rename(columns={"match_rate": "lid_match_rate"}),
                   on=["model", "language"], how="left")
 
+    if not competence.exists():
+        raise FileNotFoundError(f"{competence} not found; run experiments.run_competence "
+                                f"for each model, then experiments.score_competence")
+    comp = pd.read_parquet(competence)
+    comp = comp[["model", "language", "belebele_letter_mass"] + COMPETENCE_MEASURES].copy()
+    comp["model"] = comp["model"].map(lambda m: hf_to_name.get(m, m))
+    df = df.merge(comp, on=["model", "language"], how="left")
+    if df[measure].isna().all():
+        raise ValueError(f"no {measure} values for any cell in {competence}")
+    df["competence"] = df[measure]
+    df["competence_measure"] = measure
+
     wiki = wikipedia_articles(wiki_cache)
     df["log_wiki"] = df["language"].map(lambda l: np.log10(wiki[l]))
     df = df.merge(morphology_from_flores(flores_dir), on="language", how="left")
@@ -148,7 +175,7 @@ def build_table(f_tests: Path, fertility: Path, fluency: Path, flores_dir: Path,
 # Analysis
 # ---------------------------------------------------------------------------
 
-PREDICTORS = ["fertility_vs_en", "lid_match_rate", "log_wiki", "ttr"]
+PREDICTORS = ["fertility_vs_en", "competence", "log_wiki", "ttr"]
 
 
 def correlation_table(df: pd.DataFrame, level: str) -> pd.DataFrame:
@@ -241,11 +268,46 @@ def decomposition(lang: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def competence_diagnostics(df: pd.DataFrame, measure: str) -> str:
+    """Is there enough within-model spread for the competence effect to be estimated?
+
+    With a random intercept per model, the coefficient is identified mostly from
+    how competence moves across languages *within* a model. A benchmark at its
+    ceiling (or at chance) for most models leaves little of that to work with.
+    """
+    sub = df.dropna(subset=["competence"])
+    within = sub["competence"] - sub.groupby("model")["competence"].transform("mean")
+    lines = [f"measure = {measure}: {len(sub)} cells, {sub['model'].nunique()} models, "
+             f"{sub['language'].nunique()} languages",
+             f"within-model share of competence variance: {within.var() / sub['competence'].var():.3f}"]
+    if measure == "belebele_acc":
+        lines += [f"cells at ceiling (acc >= 0.95): {(sub['competence'] >= 0.95).sum()}",
+                  f"cells near chance (acc <= 0.35; chance = 0.25): {(sub['competence'] <= 0.35).sum()}",
+                  f"cells with letter mass < 0.5 (format not followed; acc understates "
+                  f"comprehension): {(sub['belebele_letter_mass'] < 0.5).sum()}"]
+    spread = (sub.groupby("model")["competence"].agg(["min", "max", "std"])
+              .sort_values("std").round(3))
+    return "\n".join(lines) + "\n\nper-model spread across languages:\n" + spread.to_string()
+
+
+def proxy_agreement(df: pd.DataFrame) -> pd.DataFrame:
+    """Cell-level Spearman of each independent measure against the old GlotLID proxy."""
+    from scipy import stats
+    rows = []
+    for m in COMPETENCE_MEASURES:
+        sub = df[[m, "lid_match_rate"]].dropna()
+        if len(sub) < 4:
+            continue
+        rho, pval = stats.spearmanr(sub[m], sub["lid_match_rate"])
+        rows.append({"measure": m, "n": len(sub), "spearman_rho": rho, "p_value": pval})
+    return pd.DataFrame(rows)
+
+
 def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
-         models_yaml: Path, out_dir: Path):
+         competence: Path, measure: str, models_yaml: Path, out_dir: Path):
     slug = embed_model.replace("/", "_")
     df = build_table(metrics_dir / f"f_tests__{slug}.parquet",
-                     ling_dir / "fertility.parquet", fluency,
+                     ling_dir / "fertility.parquet", fluency, competence, measure,
                      ling_dir / "flores", ling_dir / "wikipedia.json", models_yaml)
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -254,7 +316,8 @@ def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
 
     lang = (df.groupby("language")
             .agg(gap=("gap", "mean"), fertility_vs_en=("fertility_vs_en", "mean"),
-                 lid_match_rate=("lid_match_rate", "mean"), log_wiki=("log_wiki", "first"),
+                 competence=("competence", "mean"), lid_match_rate=("lid_match_rate", "mean"),
+                 log_wiki=("log_wiki", "first"),
                  ttr=("ttr", "first"), mean_word_len=("mean_word_len", "first"))
             .reset_index().sort_values("gap"))
     lang.to_parquet(out_dir / "language_summary.parquet", index=False)
@@ -267,11 +330,20 @@ def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
     # back those two languages at the cost of one predictor.
     no_morph = [p for p in PREDICTORS if p != "ttr"]
     # Degenerate generations read as "diverse" to every diversity metric, so
-    # re-fit on cells the language-ID check considers fluent.
+    # re-fit on cells the language-ID check considers fluent. This filters the
+    # outcome; GlotLID is not a predictor here.
     fluent = df[df["lid_match_rate"] >= 0.80]
+    # The other independent measures, refit under spec B as a robustness check.
+    alt_measures = [m for m in COMPETENCE_MEASURES if m != measure and df[m].notna().any()]
 
     corr = pd.concat([correlation_table(df, "cell"), correlation_table(lang, "language")])
     report = [
+        f"Competence predictor: {measure} (held-out benchmark; not computed from the generations)",
+        "",
+        "=== Competence diagnostics: ceiling, floor, within-model spread ===",
+        competence_diagnostics(df, measure), "",
+        "=== Independent competence vs. the GlotLID match rate (cell-level Spearman) ===",
+        proxy_agreement(df).round(4).to_string(index=False), "",
         "=== Spearman correlations with the homogenization gap ===",
         corr.to_string(index=False), "",
         "=== Predictor intercorrelations (Spearman, language level) ===",
@@ -286,8 +358,8 @@ def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
         fit_mixed_model(df, PREDICTORS), "",
         "=== Spec B: drop ttr, recovering zh and ja ===",
         fit_mixed_model(df, no_morph), "",
-        f"=== Spec C: spec B on fluent cells only (lid_match_rate >= 0.80; "
-        f"{len(df) - len(fluent)} of {len(df)} cells dropped) ===",
+        f"=== Spec C: spec B on fluent cells only (outcome-quality filter: "
+        f"lid_match_rate >= 0.80; {len(df) - len(fluent)} of {len(df)} cells dropped) ===",
         fit_mixed_model(fluent, no_morph), "",
         "=== Spec D: outcome = llm_intra instead of the gap (spec B predictors) ===",
         fit_mixed_model(df, no_morph, outcome="llm_intra"), "",
@@ -295,8 +367,16 @@ def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
         "human_intra is one value per language, identical for every model, so it is",
         "fitted at the language level (n=13) -- a cell-level fit would replicate 13",
         "numbers 21 times and report standard errors ~sqrt(21)x too small.",
-        placebo_language_level(lang_full, no_morph),
+        placebo_language_level(lang_full, no_morph), "",
+        "=== Spec F: spec B + GlotLID match rate (does the old proxy add anything?) ===",
+        "If lid_match_rate stays significant next to independent competence, it is",
+        "tracking something other than competence -- e.g. language purity or",
+        "formulaic output -- rather than standing in for it.",
+        fit_mixed_model(df, no_morph + ["lid_match_rate"]),
     ]
+    for m in alt_measures:
+        report += ["", f"=== Spec G: spec B with competence = {m} ===",
+                   fit_mixed_model(df.assign(competence=df[m]), no_morph)]
     text = "\n".join(report)
     (out_dir / "regression.txt").write_text(text)
     print("\n" + text)
@@ -310,8 +390,11 @@ if __name__ == "__main__":
     ap.add_argument("--ling-dir", type=Path, default=Path("results/linguistic"))
     ap.add_argument("--fluency", type=Path,
                     default=Path("results/fluency/fluency_summary__glotlid.parquet"))
+    ap.add_argument("--competence", type=Path,
+                    default=Path("results/competence/competence_summary.parquet"))
+    ap.add_argument("--competence-measure", choices=COMPETENCE_MEASURES, default="belebele_acc")
     ap.add_argument("--models-yaml", type=Path, default=Path("experiments/models.yaml"))
     ap.add_argument("--out-dir", type=Path, default=Path("results/linguistic"))
     args = ap.parse_args()
     main(args.metrics_dir, args.embed_model, args.ling_dir, args.fluency,
-         args.models_yaml, args.out_dir)
+         args.competence, args.competence_measure, args.models_yaml, args.out_dir)
