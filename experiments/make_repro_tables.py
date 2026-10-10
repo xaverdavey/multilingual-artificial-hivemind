@@ -126,9 +126,9 @@ def models_table(models_yaml: Path, commits: dict, dtypes: dict, gen: Path, flue
                     f"{r.mean_chars:,} & {r.trunc_pct:.1f} & {r.think} \\\\")
     tex = "\n".join([
         r"\begin{table*}[t]",
-        r"\caption{\textbf{The 23 open-weight model variants and how each was run.} Revision is the Hugging Face commit "
-        r"that was the repository head when generation ran. Precision is the dtype declared in the checkpoint's config, "
-        r"which vLLM serves by default. Chars is the mean response length in "
+        r"\caption{\textbf{Breakdown of the 23 open-weight model variants across 5 families utilized in the multilingual "
+        r"homogeneity evaluation.} Revision is the Hugging Face commit that was the repository head when generation ran. "
+        r"Precision is the dtype declared in the checkpoint's config. Chars is the mean response length in "
         r"characters, reasoning block included where present; Trunc.\ is the share of responses cut off by the 2048-token "
         r"limit; Think marks checkpoints whose responses carry a \texttt{<think>} reasoning block.}",
         r"\centering", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}",
