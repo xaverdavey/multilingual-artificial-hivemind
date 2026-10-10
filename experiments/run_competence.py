@@ -30,12 +30,18 @@ Output: results/competence/raw/{model}.parquet  one row per (task, language, ite
 import argparse
 import json
 import math
+import os
 import time
 from pathlib import Path
 
 import pandas as pd
 
 from experiments.run_fluency import strip_think_blocks
+
+# Every decode here is greedy or a single argmax, so the sampler kernel is never
+# exercised; skipping FlashInfer's sampler avoids a JIT compile that fails on
+# machines whose CUDA toolkit lacks cicc (seen on an sm_120 workstation).
+os.environ.setdefault("VLLM_USE_FLASHINFER_SAMPLER", "0")
 
 # Project language code -> Belebele / FLORES+ code. Both por_Latn are Brazilian
 # Portuguese. Belebele keeps the FLORES-200 Chinese label; FLORES+ renamed it.
