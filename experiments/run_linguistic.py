@@ -101,6 +101,8 @@ def morphology_from_flores(flores_dir: Path) -> pd.DataFrame:
     The corpus is parallel, so differences across languages reflect the language
     rather than the subject matter.
     """
+    from experiments.run_fertility import load_flores
+    load_flores(flores_dir)   # downloads the devtest files if this checkout lacks them
     rows = []
     for lang, code in FLORES_CODE.items():
         text = (flores_dir / f"{code}.devtest").read_text(encoding="utf-8")
