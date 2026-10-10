@@ -26,7 +26,9 @@ and are available from the authors. Licensed under MIT.
 | `experiments/run_lexical.py` | Embedder-free diversity: mean pairwise character n-gram Jaccard (`--truncate` for the length control) |
 | `experiments/run_robustness.py` | Compare the homogenization gap across every metric on disk → `results/robustness/` |
 | `experiments/run_fertility.py` | Tokenization fertility per (tokenizer, language) on FLORES-200 parallel text |
-| `experiments/run_linguistic.py` | Regress the gap on fertility / competence / resource / morphology (crossed random effects) |
+| `experiments/run_competence.py` | Held-out competence per (model, language): Belebele reading comprehension + FLORES+ en→xx translation (vLLM) → `results/competence/raw/` |
+| `experiments/score_competence.py` | Belebele accuracy, FLORES+ chrF++ and (optionally) COMET per (model, language) → `results/competence/competence_summary.parquet` |
+| `experiments/run_linguistic.py` | Regress the gap on fertility / held-out competence / resource / morphology (crossed random effects) |
 | `experiments/plot_respondent_matrix.py` | Respondent-respondent similarity matrices, drawn at final print size |
 | `experiments/plot_linguistic.py` | Two-panel figure for the linguistic-property analysis |
 | `experiments/plot_pca_grid.py` | Per-language PCA grid over all 13 languages (appendix companion to the 4-language Figure 1) |
@@ -53,6 +55,7 @@ else is an analysis layer that only reads stage-3 outputs from disk.
 3 metrics      run_metrics      (once per embedding model)     → results/metrics*/
                run_lexical      (no embedder; stages 2+3)      → results/lexical/
   predictors   run_fluency (GlotLID) · run_fertility (FLORES)  → results/fluency|linguistic/
+               run_competence → score_competence (Belebele, FLORES+) → results/competence/
 4 analysis     run_robustness   (every metric found on disk)   → results/robustness/
                run_linguistic   (gap ~ predictors, crossed RE) → results/linguistic*/
                run_prompt_tests (paired, prompt-level, corrected) → results/prompt_tests/
@@ -124,6 +127,15 @@ To submit a sweep:
 squeue -u "$USER"                # job status
 ls logs/sweep-*.out              # per-job stdout
 ls "$SCRATCH_BASE/results/raw"   # generations as they finish
+```
+
+The competence benchmarks use the same per-model jobs (FLORES+ is gated: accept its terms on Hugging Face first):
+
+```sh
+./experiments/submit_sweep.sh competence          # one job per model, walltime capped at 2h
+python -m experiments.score_competence --raw-dir "$SCRATCH_BASE/results/competence/raw" \
+    --out results/competence/competence_summary.parquet [--comet]
+python -m experiments.run_linguistic               # --competence-measure belebele_acc|flores_chrf|flores_comet
 ```
 
 Add a new model by appending `{id, gpus, time}` to `models.yaml`. Sizing rule: total VRAM ≥ 1.5 × params × bytes_per_param (2 for fp16/bf16, 1 for FP8); stay within your cluster's single-node ceiling unless you wire up multi-node tensor parallelism.

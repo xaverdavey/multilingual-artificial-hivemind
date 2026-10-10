@@ -1,5 +1,7 @@
 #!/bin/bash
 # One model per job. Submit via experiments/submit_sweep.sh -- see README for setup.
+# TASK=generation (default) samples the OASST2 responses; TASK=competence runs the
+# Belebele + FLORES+ benchmarks (experiments/run_competence.py).
 
 #SBATCH -A NAISS2025-22-1727
 #SBATCH -J hivemind
@@ -20,8 +22,15 @@ export HF_TOKEN=$(cat "$HOME/.cache/huggingface/token")
 module load Python/3.12.3-GCCcore-13.3.0 CUDA/13.0.0
 source "$SCRATCH_BASE/envs/hivemind/bin/activate"
 
-echo "[$(date -Is)] $MODEL on $(hostname) with ${SLURM_GPUS_PER_NODE:-?}"
+TASK=${TASK:-generation}
+echo "[$(date -Is)] $TASK: $MODEL on $(hostname) with ${SLURM_GPUS_PER_NODE:-?}"
 
-python -m experiments.run_generation \
-  --model "$MODEL" \
-  --out-dir "$SCRATCH_BASE/results/raw"
+if [ "$TASK" = competence ]; then
+  python -m experiments.run_competence \
+    --model "$MODEL" \
+    --out-dir "$SCRATCH_BASE/results/competence/raw"
+else
+  python -m experiments.run_generation \
+    --model "$MODEL" \
+    --out-dir "$SCRATCH_BASE/results/raw"
+fi

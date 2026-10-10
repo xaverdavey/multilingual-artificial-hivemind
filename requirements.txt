@@ -20,3 +20,5 @@ matplotlib
 plotly
 fasttext         # GlotLID multilingual language ID for fluency scoring
 transformers     # tokenizers for experiments/run_fertility.py
+sacrebleu        # chrF++ for the FLORES+ competence benchmark (score_competence.py)
+# unbabel-comet  # only for score_competence --comet; pins its own torch, so install in a separate env if it clashes with vllm
