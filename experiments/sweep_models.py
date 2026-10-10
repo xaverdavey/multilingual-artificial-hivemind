@@ -14,13 +14,15 @@ Single-GPU workstation run of the competence benchmarks, e.g.:
 """
 
 import argparse
+import fnmatch
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 from threading import Thread
 
 import yaml
-from huggingface_hub import scan_cache_dir, snapshot_download
+from huggingface_hub import HfApi, constants, scan_cache_dir, snapshot_download
 
 DEFAULT_MODELS_FILE = Path(__file__).parent / "models.yaml"
 RESULTS = Path(__file__).parent.parent / "results"
@@ -38,8 +40,43 @@ def load_models(path: Path) -> list[str]:
     return [m["id"] for m in yaml.safe_load(path.read_text()) if m.get("gpus")]
 
 
+# Mistral repos ship every checkpoint twice: consolidated*.safetensors (the
+# mistral format vLLM loads) and model-*.safetensors (the HF format). Fetching
+# both doubles the disk footprint -- 96 GB instead of 48 for Mistral Small 3.2.
+# If vLLM ever wants the skipped copy it downloads it itself at load time.
+HF_DUPLICATE_SHARDS = ["model-*.safetensors", "model.safetensors", "model.safetensors.index.json"]
+# Headroom left free on the cache disk after a prefetch, for vLLM's own files.
+FREE_MARGIN_BYTES = 10 * 2**30
+
+
+def ignore_patterns(files: list[str]) -> list[str]:
+    patterns = ["original/*"]                     # Llama-style raw .pth duplicates
+    if any(f.startswith("consolidated") and f.endswith(".safetensors") for f in files):
+        patterns += HF_DUPLICATE_SHARDS
+    return patterns
+
+
 def prefetch(model: str) -> None:
-    snapshot_download(model)
+    """Download model ahead of its run, but only if it fits next to the current one.
+
+    A failed or skipped prefetch is not fatal: vLLM downloads whatever is missing
+    when the model's own run starts, by which point the previous model is purged.
+    """
+    try:
+        info = HfApi().model_info(model, files_metadata=True)
+        files = {s.rfilename: s.size or 0 for s in info.siblings}
+        ignore = ignore_patterns(list(files))
+        need = sum(size for f, size in files.items()
+                   if not any(fnmatch.fnmatch(f, p) for p in ignore))
+        free = shutil.disk_usage(constants.HF_HUB_CACHE).free
+        if need + FREE_MARGIN_BYTES > free:
+            print(f"prefetch skipped for {model}: needs {need / 1e9:.0f} GB, "
+                  f"{free / 1e9:.0f} GB free; it downloads when its run starts")
+            return
+        snapshot_download(model, ignore_patterns=ignore)
+    except Exception as e:
+        print(f"prefetch failed for {model} ({type(e).__name__}: {e}); "
+              f"it downloads when its run starts")
 
 
 def purge(model: str) -> None:
