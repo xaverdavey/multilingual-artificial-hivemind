@@ -3,10 +3,11 @@
 Reads every results/competence/raw/{model}.parquet and reports, per cell:
 
   belebele_acc          accuracy over the 900 parallel questions (chance 0.25)
-  belebele_letter_mass  mean probability the model puts on A-D at all. Low mass
-                        means the model is not following the answer format, so
-                        its accuracy understates comprehension -- check this
-                        before reading the smallest models' scores.
+  belebele_letter_mass  mean probability on A-D at the answer position. Low mass
+                        means the model hesitates between a letter and something
+                        else there -- check it before reading the smallest models.
+  belebele_answered     share of items where the model wrote an answer letter at
+                        all within the token budget (unanswered = wrong)
   flores_chrf           corpus chrF++ (sacrebleu) of the en -> xx translations
   flores_comet          mean segment COMET (Unbabel/wmt22-comet-da), only with
                         --comet; needs a GPU and the unbabel-comet package
@@ -59,6 +60,7 @@ def summarise(raw: pd.DataFrame, comet_cache: Path | None, batch_size: int) -> p
     model = raw["model"].iloc[0]
     bele = (raw[raw["task"] == "belebele"].groupby("language")
             .agg(belebele_acc=("correct", "mean"), belebele_letter_mass=("letter_mass", "mean"),
+                 belebele_answered=("prediction", lambda p: p.notna().mean()),
                  belebele_n=("correct", "size")))
 
     flores = raw[raw["task"] == "flores"].reset_index(drop=True)

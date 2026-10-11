@@ -92,10 +92,11 @@ def run(module: str, model: str, out_dir: Path, passthrough: list[str]) -> None:
 
 
 def main(models: list[str], task: str, out_dir: Path | None, passthrough: list[str],
-         keep: bool, keep_going: bool) -> None:
+         keep: bool, keep_going: bool, rerun: bool) -> None:
     module, default_out = TASKS[task]
     out_dir = out_dir or default_out
-    done = [m for m in models if (out_dir / f"{m.replace('/', '_')}.parquet").exists()]
+    done = [] if rerun else [m for m in models
+                             if (out_dir / f"{m.replace('/', '_')}.parquet").exists()]
     models = [m for m in models if m not in done]
     if done:
         print(f"skipping {len(done)} models already in {out_dir}")
@@ -133,8 +134,10 @@ if __name__ == "__main__":
     ap.add_argument("--out-dir", type=Path, default=None,
                     help="Output dir passed to the task script (default: its own)")
     ap.add_argument("--keep", action="store_true", help="Don't delete model from HF cache after run")
+    ap.add_argument("--rerun", action="store_true",
+                    help="Run models even if their output exists (e.g. with --tasks belebele)")
     ap.add_argument("--keep-going", action="store_true",
                     help="Log a failed model and move on instead of stopping the sweep")
     args, passthrough = ap.parse_known_args()
     models = [m for m in (args.models or load_models(args.models_file)) if m not in args.exclude]
-    main(models, args.task, args.out_dir, passthrough, args.keep, args.keep_going)
+    main(models, args.task, args.out_dir, passthrough, args.keep, args.keep_going, args.rerun)

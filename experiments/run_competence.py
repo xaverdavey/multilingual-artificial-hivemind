@@ -9,8 +9,10 @@ the OASST2 prompts or the sampled responses:
             choice questions per language over FLORES passages. Fully parallel --
             the same questions in every language -- so a model's accuracy in two
             languages differs because of the language, not the items. Scored
-            zero-shot from the next-token distribution over the answer letters:
-            no sampling and no answer parsing. Chance is 0.25.
+            zero-shot and greedy: the model writes a short answer, and the
+            prediction is the argmax over A-D at the first position where it
+            writes an answer letter -- not at the first token, since many models
+            open with "(", "**" or "The answer is". Chance is 0.25.
   flores    English -> target translation of the 1012 FLORES+ devtest sentences,
             greedy. Tests *writing* in the target language, which Belebele cannot:
             a model that can only produce generic text in a language scores
@@ -61,10 +63,13 @@ LANG_NAME = {
 }
 
 LETTERS = ["A", "B", "C", "D"]
-# vLLM's default max_logprobs; the four letters are virtually always in the top 20
-# for an instruction-tuned model that follows the format.
+# vLLM's default max_logprobs; at the answer position the four letters are
+# virtually always in the top 20.
 TOP_LOGPROBS = 20
+# Room for a preamble like "The correct answer is (B)" before the letter.
+BELEBELE_MAX_TOKENS = 32
 FLORES_MAX_TOKENS = 256
+TASKS = ["belebele", "flores"]
 
 # The zero-shot instruction Bandarkar et al. use for instruction-tuned models.
 BELEBELE_TEMPLATE = (
@@ -133,8 +138,14 @@ def load_flores_plus(langs: list[str], split: str = "devtest") -> pd.DataFrame:
 # Scoring helpers
 # ---------------------------------------------------------------------------
 
+def as_letter(token: str | None) -> str | None:
+    """The answer letter a token spells, ignoring wrapping such as "(A", "**B" or "C."."""
+    tok = (token or "").strip().strip("(*[:.)]").strip()
+    return tok if tok in LETTERS else None
+
+
 def letter_probs(top_logprobs: dict) -> dict[str, float]:
-    """Probability of each answer letter at the first generated position.
+    """Probability of each answer letter at one generated position.
 
     Several vocabulary entries can render as the same letter ("A", " A"); take the
     most probable of them rather than summing, so a tokenizer with many surface
@@ -142,10 +153,25 @@ def letter_probs(top_logprobs: dict) -> dict[str, float]:
     """
     probs = dict.fromkeys(LETTERS, 0.0)
     for lp in top_logprobs.values():
-        tok = (lp.decoded_token or "").strip().strip("(").strip(")")
-        if tok in probs:
-            probs[tok] = max(probs[tok], math.exp(lp.logprob))
+        letter = as_letter(lp.decoded_token)
+        if letter:
+            probs[letter] = max(probs[letter], math.exp(lp.logprob))
     return probs
+
+
+def score_belebele(gen) -> tuple[str | None, float, int]:
+    """(prediction, letter mass, answer position) for one greedy Belebele answer.
+
+    Walks the generated tokens to the first one that is an answer letter and
+    reads the A-D distribution there. vLLM always includes the chosen token in a
+    position's logprobs, so the lookup cannot miss. No letter within the token
+    budget means no answer: prediction None, scored wrong.
+    """
+    for pos, (tok_id, top) in enumerate(zip(gen.token_ids, gen.logprobs or [])):
+        if as_letter(top[tok_id].decoded_token):
+            probs = letter_probs(top)
+            return max(probs, key=probs.get), sum(probs.values()), pos
+    return None, 0.0, -1
 
 
 QUOTE_PAIRS = [('"', '"'), ("“", "”"), ("«", "»"), ("「", "」")]
@@ -168,13 +194,14 @@ def clean_translation(text: str) -> str:
 # Run
 # ---------------------------------------------------------------------------
 
-def run(model: str, langs: list[str], gpu_mem_util: float, flores_limit: int | None):
+def run(model: str, langs: list[str], tasks: list[str], gpu_mem_util: float,
+        flores_limit: int | None):
     import torch
     import vllm
     from vllm import LLM, SamplingParams
 
-    bele = load_belebele(langs)
-    flores = load_flores_plus(langs)
+    bele = load_belebele(langs) if "belebele" in tasks else pd.DataFrame()
+    flores = load_flores_plus(langs) if "flores" in tasks else pd.DataFrame(columns=["language"])
     if flores_limit:
         flores = flores.groupby("language", sort=False).head(flores_limit).reset_index(drop=True)
 
@@ -194,20 +221,21 @@ def run(model: str, langs: list[str], gpu_mem_util: float, flores_limit: int | N
                                              a1=r.mc_answer1, a2=r.mc_answer2,
                                              a3=r.mc_answer3, a4=r.mc_answer4)
                     for r in bele.itertuples(index=False)]
-    outs = chat(bele_prompts, SamplingParams(max_tokens=1, temperature=0.0,
-                                             logprobs=TOP_LOGPROBS))
+    outs = chat(bele_prompts, SamplingParams(max_tokens=BELEBELE_MAX_TOKENS, temperature=0.0,
+                                             logprobs=TOP_LOGPROBS)) if bele_prompts else []
     for r, out in zip(bele.itertuples(index=False), outs):
-        probs = letter_probs(out.outputs[0].logprobs[0])
-        mass = sum(probs.values())
-        pred = max(probs, key=probs.get) if mass > 0 else None
+        gen = out.outputs[0]
+        pred, mass, pos = score_belebele(gen)
         gold = LETTERS[int(r.correct_answer_num) - 1]
         rows.append({"model": model, "task": "belebele", "language": r.language,
                      "item_id": r.item_id, "prediction": pred, "gold": gold,
-                     "correct": pred == gold, "letter_mass": mass})
+                     "correct": pred == gold, "letter_mass": mass, "answer_pos": pos,
+                     "response": gen.text})
 
     flores_prompts = [FLORES_TEMPLATE.format(lang=LANG_NAME[r.language], src=r.source)
                       for r in flores.itertuples(index=False)]
-    outs = chat(flores_prompts, SamplingParams(max_tokens=FLORES_MAX_TOKENS, temperature=0.0))
+    outs = chat(flores_prompts, SamplingParams(max_tokens=FLORES_MAX_TOKENS,
+                                               temperature=0.0)) if flores_prompts else []
     for r, out in zip(flores.itertuples(index=False), outs):
         gen = out.outputs[0]
         rows.append({"model": model, "task": "flores", "language": r.language,
@@ -225,8 +253,10 @@ def run(model: str, langs: list[str], gpu_mem_util: float, flores_limit: int | N
         "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
         "gpu_count": torch.cuda.device_count(),
         "chat_template_kwargs": chat_kwargs,
+        "tasks_run": tasks,
         "belebele": {"n_items_per_lang": len(bele) // len(langs),
-                     "decoding": "argmax over A-D at token 1", "top_logprobs": TOP_LOGPROBS},
+                     "decoding": "greedy; argmax over A-D at the first answer-letter token",
+                     "max_tokens": BELEBELE_MAX_TOKENS, "top_logprobs": TOP_LOGPROBS},
         "flores": {"split": "devtest", "direction": "en->xx", "decoding": "greedy",
                    "max_tokens": FLORES_MAX_TOKENS, "limit_per_lang": flores_limit},
         "elapsed_seconds": round(elapsed, 1),
@@ -234,19 +264,26 @@ def run(model: str, langs: list[str], gpu_mem_util: float, flores_limit: int | N
     return rows, meta
 
 
-def main(model: str, out_dir: Path, gpu_mem_util: float, flores_limit: int | None):
+def main(model: str, out_dir: Path, tasks: list[str], gpu_mem_util: float,
+         flores_limit: int | None):
     langs = list(BELEBELE_CODE)
-    rows, meta_extra = run(model, langs, gpu_mem_util, flores_limit)
+    rows, meta_extra = run(model, langs, tasks, gpu_mem_util, flores_limit)
 
     out_path = out_dir / f"{model.replace('/', '_')}.parquet"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame(rows)
+    # Re-running a subset of tasks replaces only those tasks' rows in an existing file.
+    if out_path.exists() and set(tasks) != set(TASKS):
+        kept = pd.read_parquet(out_path)
+        df = pd.concat([kept[~kept["task"].isin(tasks)], df], ignore_index=True)
     df.to_parquet(out_path, index=False)
     print(f"wrote {len(df)} rows to {out_path}")
 
     bele = df[df["task"] == "belebele"]
-    print(bele.groupby("language").agg(acc=("correct", "mean"),
-                                       letter_mass=("letter_mass", "mean")).round(3).to_string())
+    if len(bele):
+        print(bele.groupby("language").agg(
+            acc=("correct", "mean"), letter_mass=("letter_mass", "mean"),
+            answered=("prediction", lambda p: p.notna().mean())).round(3).to_string())
 
     meta = {"model": model, "languages": langs, "n_rows": len(df),
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"), **meta_extra}
@@ -259,8 +296,10 @@ if __name__ == "__main__":
     ap.add_argument("--model", required=True, help="HF model id (vLLM backend only)")
     ap.add_argument("--out-dir", type=Path,
                     default=Path(__file__).parent.parent / "results" / "competence" / "raw")
+    ap.add_argument("--tasks", nargs="+", choices=TASKS, default=TASKS,
+                    help="Run a subset; its rows replace the same tasks' rows in an existing output")
     ap.add_argument("--gpu-mem-util", type=float, default=0.9)
     ap.add_argument("--flores-limit", type=int, default=None,
                     help="Translate only the first N devtest sentences per language (smoke tests)")
     args = ap.parse_args()
-    main(args.model, args.out_dir, args.gpu_mem_util, args.flores_limit)
+    main(args.model, args.out_dir, args.tasks, args.gpu_mem_util, args.flores_limit)
