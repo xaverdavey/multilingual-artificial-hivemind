@@ -1,26 +1,26 @@
 \begin{table*}[t]
 \centering
-\caption{\textbf{Standardised coefficients from the crossed-effects model of the homogenization gap, fitted in each embedding space.} Competence is Belebele reading-comprehension accuracy (900 parallel questions per language), a held-out benchmark that shares no prompts or outputs with the similarity scores. Spec A uses all four predictors on the languages for which morphology is defined (231 cells; the type-token ratio is undefined for \texttt{zh}/\texttt{ja}); B drops morphology to recover them (273 cells); C repeats B on the 251 cells whose generations have a GlotLID target-language match rate $\geq 0.80$, so degenerate output cannot drive the fit; F adds that match rate to B as a fifth predictor, testing whether it carries signal beyond competence. $^{*}p<0.05$, $^{***}p<0.001$.}
+\caption{\textbf{Standardised coefficients from the crossed-effects model of the homogenization gap, fitted in each embedding space.} Competence is FLORES+ English$\to$target translation chrF++, a held-out benchmark that shares no prompts or outputs with the similarity scores; English is excluded, since the translations are from English. Spec A uses all four predictors on the languages for which morphology is defined (210 cells; the type-token ratio is undefined for \texttt{zh}/\texttt{ja}); B drops morphology to recover them (252 cells); C repeats B on the 230 cells whose generations have a GlotLID target-language match rate $\geq 0.80$, so degenerate output cannot drive the fit; F adds that match rate to B as a fifth predictor, testing whether it carries signal beyond competence. Competence is significant ($p \leq 0.003$) in every specification and embedding space, including F, where the GlotLID match rate is also significant; resource level, tokenization fertility and morphological complexity are significant in none. $^{*}p<0.05$, $^{***}p<0.001$.}
 \small
 \setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{llccccc}
 \toprule
 \textbf{Space} & \textbf{Spec} & \textbf{Competence} & \textbf{Resource level} & \textbf{Tokenization fertility} & \textbf{Morph. complexity} & \textbf{GlotLID} \\
 \midrule
-OpenAI & A & $+0.018^{*}$ & $+0.030^{*}$ & $-0.007$ & $+0.005$ & --- \\
- & B & $+0.017^{*}$ & $+0.025^{*}$ & $-0.010^{*}$ & --- & --- \\
- & C & $+0.016^{*}$ & $+0.021^{*}$ & $-0.009^{*}$ & --- & --- \\
- & F & $+0.013^{*}$ & $+0.021$ & $-0.005$ & --- & $+0.025^{***}$ \\
+OpenAI & A & $+0.036^{***}$ & $+0.023$ & $-0.001$ & $+0.015$ & --- \\
+ & B & $+0.038^{***}$ & $+0.020$ & $-0.006$ & --- & --- \\
+ & C & $+0.044^{***}$ & $+0.011$ & $-0.004$ & --- & --- \\
+ & F & $+0.023^{*}$ & $+0.019$ & $-0.002$ & --- & $+0.024^{***}$ \\
 \midrule
-BGE-M3 & A & $+0.021^{***}$ & $+0.016$ & $-0.006$ & $+0.009$ & --- \\
- & B & $+0.020^{***}$ & $+0.014$ & $-0.007^{*}$ & --- & --- \\
- & C & $+0.018^{***}$ & $+0.011$ & $-0.006^{*}$ & --- & --- \\
- & F & $+0.017^{***}$ & $+0.010$ & $-0.003$ & --- & $+0.019^{***}$ \\
+BGE-M3 & A & $+0.038^{***}$ & $+0.015$ & $+0.000$ & $+0.018$ & --- \\
+ & B & $+0.040^{***}$ & $+0.013$ & $-0.002$ & --- & --- \\
+ & C & $+0.044^{***}$ & $+0.007$ & $-0.001$ & --- & --- \\
+ & F & $+0.029^{***}$ & $+0.012$ & $+0.000$ & --- & $+0.018^{***}$ \\
 \midrule
-Qwen3-Emb & A & $+0.020^{***}$ & $+0.013$ & $-0.007^{*}$ & $+0.010$ & --- \\
- & B & $+0.019^{***}$ & $+0.011$ & $-0.008^{*}$ & --- & --- \\
- & C & $+0.017^{***}$ & $+0.008$ & $-0.007^{*}$ & --- & --- \\
- & F & $+0.016^{***}$ & $+0.008$ & $-0.005$ & --- & $+0.019^{***}$ \\
+Qwen3-Emb & A & $+0.039^{***}$ & $+0.014$ & $+0.000$ & $+0.020$ & --- \\
+ & B & $+0.041^{***}$ & $+0.012$ & $-0.003$ & --- & --- \\
+ & C & $+0.043^{***}$ & $+0.007$ & $-0.002$ & --- & --- \\
+ & F & $+0.029^{***}$ & $+0.011$ & $-0.001$ & --- & $+0.018^{***}$ \\
 \bottomrule
 \end{tabular}
 \label{tab:regression}

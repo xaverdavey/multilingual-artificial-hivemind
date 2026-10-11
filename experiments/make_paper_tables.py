@@ -135,6 +135,16 @@ COMPETENCE_CAPTION = {
 }
 
 
+# What the fits show, per competence measure. Written by hand from regression.txt
+# (21 models, all three spaces), so re-check it whenever the inputs change.
+RESULTS_SENTENCE = {
+    "flores_chrf": "Competence is significant ($p \\leq 0.003$) in every specification and "
+                   "embedding space, including F, where the GlotLID match rate is also significant; "
+                   "resource level, tokenization fertility and morphological complexity are "
+                   "significant in none. ",
+}
+
+
 def regression_table(tables: dict[str, Path]) -> str:
     """Predictors x (embedding space x specification) coefficient table."""
     from experiments.run_linguistic import mixed_model_coefs, PREDICTORS
@@ -176,13 +186,13 @@ def regression_table(tables: dict[str, Path]) -> str:
             rows.append(f"{label} & {spec} & "
                         + " & ".join(cell(f, p) for p in order) + r" \\")
 
-    # Descriptive only: the sentence stating what the fits show is written once
-    # the benchmark results are in, not generated here.
     return _wrap("\n".join(rows), header, "ll" + "c" * len(order),
                  "Standardised coefficients from the crossed-effects model of the "
                  "homogenization gap, fitted in each embedding space. Competence is "
                  f"{COMPETENCE_CAPTION[measure]}, a held-out benchmark that shares no prompts or "
-                 "outputs with the similarity scores. Spec A uses all four "
+                 "outputs with the similarity scores"
+                 + ("; English is excluded, since the translations are from English" if measure.startswith("flores") else "")
+                 + ". Spec A uses all four "
                  "predictors on the languages for which morphology is defined "
                  f"({n_cells['A']} cells; the type-token ratio is undefined for "
                  "\\texttt{zh}/\\texttt{ja}); B drops morphology to recover them "
@@ -190,7 +200,8 @@ def regression_table(tables: dict[str, Path]) -> str:
                  "have a GlotLID target-language match rate $\\geq 0.80$, so degenerate output "
                  "cannot drive the fit; F adds that match rate to B as a fifth predictor, testing "
                  "whether it carries signal beyond competence. "
-                 "$^{*}p<0.05$, $^{***}p<0.001$.",
+                 + RESULTS_SENTENCE.get(measure, "")
+                 + "$^{*}p<0.05$, $^{***}p<0.001$.",
                  "tab:regression", star=True, colsep_pt=3.5)
 
 

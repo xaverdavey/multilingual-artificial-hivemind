@@ -12,9 +12,11 @@ Four candidate predictors, matching the four the reviewer suggested:
                     From run_fertility.
   competence        per (model, language). Held-out benchmark score, from
                     run_competence + score_competence; --competence-measure picks
-                    belebele_acc (default; reading comprehension, parallel across
-                    all 13 languages), flores_chrf or flores_comet (en -> xx
-                    translation; undefined for en, so those fits drop English).
+                    flores_chrf (default) or flores_comet -- en -> xx translation,
+                    undefined for en, so those fits drop English -- or
+                    belebele_acc (reading comprehension, all 13 languages).
+                    Belebele scores from the first-token scorer (summaries
+                    without a belebele_answered column) are invalid and ignored.
   log_wiki          per language. log10 Wikipedia articles, a standard
                     resource-level proxy (fetched live, cached).
   ttr               per language. Type-token ratio on the FLORES parallel text,
@@ -133,7 +135,7 @@ def load_gap(f_tests: Path) -> pd.DataFrame:
     }).reset_index(drop=True)
 
 
-COMPETENCE_MEASURES = ["belebele_acc", "flores_chrf", "flores_comet"]
+COMPETENCE_MEASURES = ["flores_chrf", "flores_comet", "belebele_acc"]
 
 
 def build_table(f_tests: Path, fertility: Path, fluency: Path, competence: Path,
@@ -159,7 +161,14 @@ def build_table(f_tests: Path, fertility: Path, fluency: Path, competence: Path,
         raise FileNotFoundError(f"{competence} not found; run experiments.run_competence "
                                 f"for each model, then experiments.score_competence")
     comp = pd.read_parquet(competence)
-    comp = comp[["model", "language", "belebele_letter_mass"] + COMPETENCE_MEASURES].copy()
+    if "belebele_answered" not in comp:
+        # Scored at the first generated token, before run_competence read the answer
+        # at the first letter the model writes: many models open with "(" or "**",
+        # leaving below-chance accuracies. Not a competence measure.
+        print("ignoring belebele_acc: scored by the old first-token method")
+        comp["belebele_acc"] = np.nan
+    comp = comp.reindex(columns=["model", "language", "belebele_letter_mass"]
+                        + COMPETENCE_MEASURES)
     comp["model"] = comp["model"].map(lambda m: hf_to_name.get(m, m))
     df = df.merge(comp, on=["model", "language"], how="left")
     if df[measure].isna().all():
@@ -344,6 +353,8 @@ def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
     fluent = df[df["lid_match_rate"] >= 0.80]
     # The other independent measures, refit under spec B as a robustness check.
     alt_measures = [m for m in COMPETENCE_MEASURES if m != measure and df[m].notna().any()]
+    within_lang = df.assign(competence=df.groupby("language")["competence"].transform(
+        lambda x: (x - x.mean()) / x.std()))
 
     corr = pd.concat([correlation_table(df, "cell"), correlation_table(lang, "language")])
     report = [
@@ -382,6 +393,12 @@ def main(metrics_dir: Path, embed_model: str, ling_dir: Path, fluency: Path,
         "tracking something other than competence -- e.g. language purity or",
         "formulaic output -- rather than standing in for it.",
         fit_mixed_model(df, no_morph + ["lid_match_rate"]),
+        "",
+        "=== Spec H: specs B and F with competence standardised within each language ===",
+        "Each model is scored against the other models in the same language, so no",
+        "difference between languages (e.g. chrF's dependence on script) can enter.",
+        fit_mixed_model(within_lang, no_morph), "",
+        fit_mixed_model(within_lang, no_morph + ["lid_match_rate"]),
     ]
     for m in alt_measures:
         report += ["", f"=== Spec G: spec B with competence = {m} ===",
@@ -401,7 +418,7 @@ if __name__ == "__main__":
                     default=Path("results/fluency/fluency_summary__glotlid.parquet"))
     ap.add_argument("--competence", type=Path,
                     default=Path("results/competence/competence_summary.parquet"))
-    ap.add_argument("--competence-measure", choices=COMPETENCE_MEASURES, default="belebele_acc")
+    ap.add_argument("--competence-measure", choices=COMPETENCE_MEASURES, default="flores_chrf")
     ap.add_argument("--models-yaml", type=Path, default=Path("experiments/models.yaml"))
     ap.add_argument("--out-dir", type=Path, default=Path("results/linguistic"))
     args = ap.parse_args()
