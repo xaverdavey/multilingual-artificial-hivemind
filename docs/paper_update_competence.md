@@ -3,6 +3,12 @@
 Handoff for whoever edits the paper. Branch: `competence-benchmarks`. Every number below is
 from `results/linguistic*/regression.txt` and `results/tables/tab_regression.tex` as committed.
 
+> **Do not mention Belebele anywhere in the paper or the reviewer response** -- not in the text,
+> tables, figures, footnotes, appendix or bibliography. Its scores were computed incorrectly and are
+> not used. If the current draft already mentions Belebele (an earlier version of this note proposed
+> it, and the §5 Results paragraph may carry Belebele-era numbers such as β = +0.018/+0.021/+0.020),
+> remove every such mention and number. The only competence measure is FLORES+ chrF++.
+
 ## Why
 
 A reviewer called §5's competence analysis circular: "model competence" was the GlotLID
@@ -26,9 +32,10 @@ for the result to be stated as an association, not as "improving competence redu
 - Qwen3 thinking was disabled for the benchmark (`enable_thinking=False`).
 - GlotLID is no longer a predictor. It remains the spec C filter (drops 22 cells with match rate
   < 0.80) and a fifth predictor in the new **spec F**.
-- **Do not report Belebele.** It was also run, but scored at the first generated token, where many
-  models write "(" or "**" rather than the letter; the scores include below-chance accuracies and
-  are invalid. The scorer is fixed in code for any future rerun; `run_linguistic` ignores the old scores.
+- **Belebele is not part of the paper (see the note at the top).** It was also run, but scored at
+  the first generated token, where many models write "(" or "**" rather than the letter; the scores
+  include below-chance accuracies and are invalid. The scorer is fixed in code for any future rerun;
+  `run_linguistic` ignores the old scores.
 
 Regenerate everything (no GPU needed) with:
 ```sh
@@ -77,7 +84,7 @@ Other numbers:
 
 Line numbers are from the 7 Sep submission PDF; the current draft's §5 Results paragraph already
 has Belebele-era numbers in it, which must all be replaced. Search for "competence",
-"target-language fidelity" and "match rate".
+"target-language fidelity", "match rate" and "Belebele" (the last should end with zero hits).
 
 1. **Abstract, L13–16.** "The size of the homogenization gap is associated with a model's
    competence in a language, measured by held-out translation quality, robustly across embedding
@@ -142,7 +149,7 @@ has Belebele-era numbers in it, which must all be replaced. Search for "competen
    "is associated with"; "should be expected to grow" → "may grow".
 9. **Appendix D / Table 5.** `\input` the regenerated `results/tables/tab_regression.tex`; its
    caption already states the result. Mention specification H and the placebo in one sentence each.
-10. **Bibliography.** Add FLORES+/NLLB (NLLB Team, 2022, "No Language Left Behind: Scaling
+10. **Bibliography.** Do not cite Belebele. Add FLORES+/NLLB (NLLB Team, 2022, "No Language Left Behind: Scaling
     Human-Centered Machine Translation") and chrF++ (Popović, 2017, "chrF++: words helping character
     n-grams", WMT).
 
